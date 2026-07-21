@@ -45,8 +45,6 @@ interface ItemRow {
   haste: number;
   regen: number;
   manaregen: number;
-  mindmg: number;
-  maxdmg: number;
   delay: number;
   reqlevel: number;
   reclevel: number;
@@ -55,13 +53,13 @@ interface ItemRow {
 
 function Field({ label, name, value, type = "number" }: { label: string; name: string; value: any; type?: string }) {
   return (
-    <div>
-      <label className="block text-xs mb-1" style={{ color: "var(--muted)" }}>{label}</label>
+    <div className="flex items-center gap-1.5">
+      <label className="text-xs shrink-0 w-14 text-right" style={{ color: "var(--muted)" }}>{label}</label>
       <input
         type={type}
         name={name}
         defaultValue={value ?? ""}
-        className="w-full px-2 py-1.5 rounded border text-sm"
+        className="w-full px-1.5 py-0.5 rounded border text-xs"
         style={{ backgroundColor: "var(--input-bg)", borderColor: "var(--input-border)", color: "var(--foreground)" }}
       />
     </div>
@@ -101,7 +99,7 @@ export default async function ItemEditPage({
 
   return (
     <div>
-      <div className="flex items-center gap-4 mb-6">
+      <div className="flex items-center gap-3 mb-3">
         <Link href="/items" className="text-sm hover:underline" style={{ color: "var(--muted)" }}>
           Items
         </Link>
@@ -115,102 +113,95 @@ export default async function ItemEditPage({
       <form action={updateItem}>
         <input type="hidden" name="id" value={item.id} />
 
-        <div className="space-y-6">
+        <div className="space-y-2">
           {/* Basic Info */}
-          <div className="rounded-lg border p-4" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
-            <h2 className="text-sm font-semibold mb-3" style={{ color: "var(--accent)" }}>Basic Info</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="rounded border p-2" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
+            <h2 className="text-xs font-semibold mb-1 uppercase tracking-wider" style={{ color: "var(--accent)" }}>Basic</h2>
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-1">
               <div className="col-span-2">
                 <Field label="Name" name="Name" value={item.Name} type="text" />
               </div>
-              <Field label="Item Type" name="itemtype" value={item.itemtype} />
+              <Field label="Type" name="itemtype" value={item.itemtype} />
               <Field label="Weight" name="weight" value={item.weight} />
               <Field label="Price" name="price" value={item.price} />
-              <Field label="Req Level" name="reqlevel" value={item.reqlevel} />
-              <Field label="Rec Level" name="reclevel" value={item.reclevel} />
-              <Field label="Req Skill" name="reqskill" value={item.reqskill} />
-            </div>
-          </div>
-
-          {/* Equipment */}
-          <div className="rounded-lg border p-4" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
-            <h2 className="text-sm font-semibold mb-3" style={{ color: "var(--accent)" }}>Equipment</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <Field label="Req Lvl" name="reqlevel" value={item.reqlevel} />
+              <Field label="Rec Lvl" name="reclevel" value={item.reclevel} />
+              <Field label="Req Skl" name="reqskill" value={item.reqskill} />
               <Field label="Classes" name="classes" value={item.classes} />
               <Field label="Races" name="races" value={item.races} />
               <Field label="Slots" name="slots" value={item.slots} />
             </div>
           </div>
 
-          {/* Combat Stats */}
-          <div className="rounded-lg border p-4" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
-            <h2 className="text-sm font-semibold mb-3" style={{ color: "var(--accent)" }}>Combat</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              <Field label="AC" name="ac" value={item.ac} />
-              <Field label="Damage" name="damage" value={item.damage} />
-              <Field label="Min Damage" name="mindmg" value={item.mindmg} />
-              <Field label="Max Damage" name="maxdmg" value={item.maxdmg} />
-              <Field label="Delay" name="delay" value={item.delay} />
-              <Field label="HP" name="hp" value={item.hp} />
-              <Field label="Mana" name="mana" value={item.mana} />
-              <Field label="Haste" name="haste" value={item.haste} />
-              <Field label="Attack" name="attack" value={item.attack} />
-              <Field label="Regen" name="regen" value={item.regen} />
-              <Field label="Mana Regen" name="manaregen" value={item.manaregen} />
+          {/* Combat + Stats combined */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div className="rounded border p-2" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
+              <h2 className="text-xs font-semibold mb-1 uppercase tracking-wider" style={{ color: "var(--accent)" }}>Combat</h2>
+              <div className="grid grid-cols-3 gap-1">
+                <Field label="AC" name="ac" value={item.ac} />
+                <Field label="Damage" name="damage" value={item.damage} />
+                <Field label="Delay" name="delay" value={item.delay} />
+                <Field label="HP" name="hp" value={item.hp} />
+                <Field label="Mana" name="mana" value={item.mana} />
+                <Field label="Haste" name="haste" value={item.haste} />
+                <Field label="Attack" name="attack" value={item.attack} />
+                <Field label="Regen" name="regen" value={item.regen} />
+                <Field label="Mana Rgn" name="manaregen" value={item.manaregen} />
+              </div>
+            </div>
+
+            <div className="rounded border p-2" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
+              <h2 className="text-xs font-semibold mb-1 uppercase tracking-wider" style={{ color: "var(--accent)" }}>Stats</h2>
+              <div className="grid grid-cols-3 gap-1">
+                <Field label="AGI" name="aagi" value={item.aagi} />
+                <Field label="STA" name="asta" value={item.asta} />
+                <Field label="CHA" name="acha" value={item.acha} />
+                <Field label="DEX" name="adex" value={item.adex} />
+                <Field label="INT" name="aint" value={item.aint} />
+                <Field label="WIS" name="awis" value={item.awis} />
+              </div>
             </div>
           </div>
 
-          {/* Stats */}
-          <div className="rounded-lg border p-4" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
-            <h2 className="text-sm font-semibold mb-3" style={{ color: "var(--accent)" }}>Stats</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              <Field label="AGI" name="aagi" value={item.aagi} />
-              <Field label="STA" name="asta" value={item.asta} />
-              <Field label="CHA" name="acha" value={item.acha} />
-              <Field label="DEX" name="adex" value={item.adex} />
-              <Field label="INT" name="aint" value={item.aint} />
-              <Field label="WIS" name="awis" value={item.awis} />
+          {/* Resists + Heroics combined */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div className="rounded border p-2" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
+              <h2 className="text-xs font-semibold mb-1 uppercase tracking-wider" style={{ color: "var(--accent)" }}>Resists</h2>
+              <div className="grid grid-cols-3 gap-1">
+                <Field label="Cold" name="cr" value={item.cr} />
+                <Field label="Disease" name="dr" value={item.dr} />
+                <Field label="Fire" name="fr" value={item.fr} />
+                <Field label="Magic" name="mr" value={item.mr} />
+                <Field label="Poison" name="pr" value={item.pr} />
+              </div>
             </div>
-          </div>
 
-          {/* Resists */}
-          <div className="rounded-lg border p-4" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
-            <h2 className="text-sm font-semibold mb-3" style={{ color: "var(--accent)" }}>Resists</h2>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-              <Field label="Cold" name="cr" value={item.cr} />
-              <Field label="Disease" name="dr" value={item.dr} />
-              <Field label="Fire" name="fr" value={item.fr} />
-              <Field label="Magic" name="mr" value={item.mr} />
-              <Field label="Poison" name="pr" value={item.pr} />
-            </div>
-          </div>
-
-          {/* Heroic Stats */}
-          <div className="rounded-lg border p-4" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
-            <h2 className="text-sm font-semibold mb-3" style={{ color: "var(--accent)" }}>Heroic Stats</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              <Field label="H.STR" name="heroic_str" value={item.heroic_str} />
-              <Field label="H.STA" name="heroic_sta" value={item.heroic_sta} />
-              <Field label="H.AGI" name="heroic_agi" value={item.heroic_agi} />
-              <Field label="H.DEX" name="heroic_dex" value={item.heroic_dex} />
-              <Field label="H.INT" name="heroic_int" value={item.heroic_int} />
-              <Field label="H.WIS" name="heroic_wis" value={item.heroic_wis} />
-              <Field label="H.CHA" name="heroic_cha" value={item.heroic_cha} />
+            <div className="rounded border p-2" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
+              <h2 className="text-xs font-semibold mb-1 uppercase tracking-wider" style={{ color: "var(--accent)" }}>Heroic Stats</h2>
+              <div className="grid grid-cols-3 gap-1">
+                <Field label="H.STR" name="heroic_str" value={item.heroic_str} />
+                <Field label="H.STA" name="heroic_sta" value={item.heroic_sta} />
+                <Field label="H.AGI" name="heroic_agi" value={item.heroic_agi} />
+                <Field label="H.DEX" name="heroic_dex" value={item.heroic_dex} />
+                <Field label="H.INT" name="heroic_int" value={item.heroic_int} />
+                <Field label="H.WIS" name="heroic_wis" value={item.heroic_wis} />
+                <Field label="H.CHA" name="heroic_cha" value={item.heroic_cha} />
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-6 flex gap-3">
+        <div className="mt-3 flex gap-2">
           <button
             type="submit"
-            className="px-6 py-2 rounded-lg text-sm font-medium text-black"
+            className="px-4 py-1.5 rounded text-xs font-medium text-black"
             style={{ backgroundColor: "var(--accent)" }}
           >
             Save Changes
           </button>
           <Link
             href="/items"
-            className="px-6 py-2 rounded-lg text-sm border"
+            className="px-4 py-1.5 rounded text-xs border"
             style={{ borderColor: "var(--card-border)", color: "var(--foreground)" }}
           >
             Cancel
@@ -219,8 +210,8 @@ export default async function ItemEditPage({
       </form>
 
       {/* Dropped By */}
-      <div className="mt-6 rounded-lg border p-4" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
-        <h2 className="text-sm font-semibold mb-3 uppercase tracking-wider" style={{ color: "var(--accent)" }}>
+      <div className="mt-6 rounded border p-2" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
+        <h2 className="text-sm font-semibold mb-2 uppercase tracking-wider" style={{ color: "var(--accent)" }}>
           Dropped By ({npcDrops.length}{npcDrops.length === 50 ? "+" : ""} NPCs)
         </h2>
         {npcDrops.length === 0 ? (

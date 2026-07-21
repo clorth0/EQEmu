@@ -14,11 +14,11 @@ export async function updateItem(formData: FormData) {
   const fields = [
     "Name", "itemtype", "ac", "damage", "hp", "mana",
     "classes", "races", "slots", "weight", "price",
-    "aagi", "asta", "acha", "adex", "aint", "asta", "awis",
+    "aagi", "asta", "acha", "adex", "aint", "awis",
     "cr", "dr", "fr", "mr", "pr",
     "heroic_str", "heroic_sta", "heroic_agi", "heroic_dex", "heroic_int", "heroic_wis", "heroic_cha",
     "attack", "haste", "regen", "manaregen",
-    "mindmg", "maxdmg", "delay",
+    "delay",
     "reqlevel", "reclevel", "reqskill",
   ];
 
