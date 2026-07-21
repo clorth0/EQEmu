@@ -1,6 +1,6 @@
 "use server";
 
-import { execute } from "@/lib/db";
+import { execute, query } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { exec } from "child_process";
@@ -288,4 +288,54 @@ export async function saveQuestFile(formData: FormData) {
   );
 
   revalidatePath("/quests");
+}
+
+// Item search
+export async function searchItems(searchTerm: string): Promise<{ id: number; Name: string }[]> {
+  if (!searchTerm || searchTerm.length < 2) return [];
+
+  // id:1234 — exact ID lookup
+  const idMatch = searchTerm.match(/^id:(\d+)$/);
+  if (idMatch) {
+    return query<{ id: number; Name: string }>(
+      "SELECT id, Name FROM items WHERE id = ?",
+      [idMatch[1]]
+    );
+  }
+
+  const words = searchTerm.trim().split(/\s+/);
+  const includes: string[] = [];
+  const excludes: string[] = [];
+
+  for (const word of words) {
+    if (word.startsWith("-") && word.length > 1) {
+      excludes.push(word.slice(1));
+    } else if (word.length >= 2) {
+      includes.push(word);
+    }
+  }
+
+  if (includes.length === 0) return [];
+
+  const conditions: string[] = [];
+  const params: any[] = [];
+
+  for (const word of includes) {
+    conditions.push("Name LIKE ?");
+    params.push(`%${word}%`);
+  }
+  for (const word of excludes) {
+    conditions.push("Name NOT LIKE ?");
+    params.push(`%${word}%`);
+  }
+
+  // Sort: exact match first, then starts-with, then shortest name
+  const firstInclude = includes[0];
+  params.push(firstInclude, `${firstInclude}%`);
+
+  const results = await query<{ id: number; Name: string }>(
+    `SELECT id, Name FROM items WHERE ${conditions.join(" AND ")} ORDER BY Name = ? DESC, Name LIKE ? DESC, LENGTH(Name), Name LIMIT 50`,
+    params
+  );
+  return results;
 }

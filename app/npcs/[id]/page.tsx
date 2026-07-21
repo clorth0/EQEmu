@@ -48,13 +48,13 @@ interface NpcRow {
 
 function Field({ label, name, value, type = "number" }: { label: string; name: string; value: any; type?: string }) {
   return (
-    <div>
-      <label className="block text-xs mb-1" style={{ color: "var(--muted)" }}>{label}</label>
+    <div className="flex items-center gap-1.5">
+      <label className="text-xs shrink-0 w-14 text-right" style={{ color: "var(--muted)" }}>{label}</label>
       <input
         type={type}
         name={name}
         defaultValue={value ?? ""}
-        className="w-full px-2 py-1.5 rounded border text-sm"
+        className="w-full px-1.5 py-0.5 rounded border text-xs"
         style={{ backgroundColor: "var(--input-bg)", borderColor: "var(--input-border)", color: "var(--foreground)" }}
       />
     </div>
@@ -81,7 +81,7 @@ export default async function NpcEditPage({
 
   return (
     <div>
-      <div className="flex items-center gap-4 mb-6">
+      <div className="flex items-center gap-3 mb-3">
         <Link href="/npcs" className="text-sm hover:underline" style={{ color: "var(--muted)" }}>NPCs</Link>
         <span style={{ color: "var(--muted)" }}>/</span>
         <h1 className="text-2xl font-bold" style={{ color: "var(--accent)" }}>{npc.name}</h1>
@@ -91,96 +91,98 @@ export default async function NpcEditPage({
       <form action={updateNpc}>
         <input type="hidden" name="id" value={npc.id} />
 
-        <div className="space-y-6">
+        <div className="space-y-2">
           {/* Basic Info */}
-          <div className="rounded-lg border p-4" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
-            <h2 className="text-sm font-semibold mb-3" style={{ color: "var(--accent)" }}>Basic Info</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="rounded border p-2" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
+            <h2 className="text-xs font-semibold mb-1 uppercase tracking-wider" style={{ color: "var(--accent)" }}>Basic</h2>
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-1">
               <div className="col-span-2">
                 <Field label="Name" name="name" value={npc.name} type="text" />
               </div>
               <Field label="Level" name="level" value={npc.level} />
               <Field label="Race" name="race" value={npc.race} />
               <Field label="Class" name="class" value={npc.class} />
-              <Field label="Body Type" name="bodytype" value={npc.bodytype} />
-              <Field label="Run Speed" name="runspeed" value={npc.runspeed} />
-              <Field label="Trackable" name="trackable" value={npc.trackable} />
+              <Field label="Body" name="bodytype" value={npc.bodytype} />
+              <Field label="Speed" name="runspeed" value={npc.runspeed} />
+              <Field label="Track" name="trackable" value={npc.trackable} />
             </div>
           </div>
 
-          {/* Combat */}
-          <div className="rounded-lg border p-4" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
-            <h2 className="text-sm font-semibold mb-3" style={{ color: "var(--accent)" }}>Combat</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              <Field label="HP" name="hp" value={npc.hp} />
-              <Field label="Mana" name="mana" value={npc.mana} />
-              <Field label="AC" name="ac" value={npc.ac} />
-              <Field label="Min Damage" name="mindmg" value={npc.mindmg} />
-              <Field label="Max Damage" name="maxdmg" value={npc.maxdmg} />
-              <Field label="Attack Speed" name="attack_speed" value={npc.attack_speed} />
-              <Field label="Attack Delay" name="attack_delay" value={npc.attack_delay} />
-              <Field label="Accuracy" name="accuracy" value={npc.accuracy} />
-              <Field label="Aggro" name="npc_aggro" value={npc.npc_aggro} />
-              <Field label="HP Regen" name="hp_regen_rate" value={npc.hp_regen_rate} />
-              <Field label="Mana Regen" name="mana_regen_rate" value={npc.mana_regen_rate} />
+          {/* Combat + Stats side by side */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div className="rounded border p-2" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
+              <h2 className="text-xs font-semibold mb-1 uppercase tracking-wider" style={{ color: "var(--accent)" }}>Combat</h2>
+              <div className="grid grid-cols-3 gap-1">
+                <Field label="HP" name="hp" value={npc.hp} />
+                <Field label="Mana" name="mana" value={npc.mana} />
+                <Field label="AC" name="ac" value={npc.ac} />
+                <Field label="Min Dmg" name="mindmg" value={npc.mindmg} />
+                <Field label="Max Dmg" name="maxdmg" value={npc.maxdmg} />
+                <Field label="Atk Spd" name="attack_speed" value={npc.attack_speed} />
+                <Field label="Atk Dly" name="attack_delay" value={npc.attack_delay} />
+                <Field label="Accuracy" name="accuracy" value={npc.accuracy} />
+                <Field label="Aggro" name="npc_aggro" value={npc.npc_aggro} />
+                <Field label="HP Rgn" name="hp_regen_rate" value={npc.hp_regen_rate} />
+                <Field label="Mana Rgn" name="mana_regen_rate" value={npc.mana_regen_rate} />
+              </div>
+            </div>
+
+            <div className="rounded border p-2" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
+              <h2 className="text-xs font-semibold mb-1 uppercase tracking-wider" style={{ color: "var(--accent)" }}>Stats</h2>
+              <div className="grid grid-cols-3 gap-1">
+                <Field label="STR" name="str" value={npc.str} />
+                <Field label="STA" name="sta" value={npc.sta} />
+                <Field label="AGI" name="agi" value={npc.agi} />
+                <Field label="DEX" name="dex" value={npc.dex} />
+                <Field label="INT" name="int" value={npc.int} />
+                <Field label="WIS" name="wis" value={npc.wis} />
+                <Field label="CHA" name="cha" value={npc.cha} />
+              </div>
             </div>
           </div>
 
-          {/* Stats */}
-          <div className="rounded-lg border p-4" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
-            <h2 className="text-sm font-semibold mb-3" style={{ color: "var(--accent)" }}>Stats</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              <Field label="STR" name="str" value={npc.str} />
-              <Field label="STA" name="sta" value={npc.sta} />
-              <Field label="AGI" name="agi" value={npc.agi} />
-              <Field label="DEX" name="dex" value={npc.dex} />
-              <Field label="INT" name="int" value={npc.int} />
-              <Field label="WIS" name="wis" value={npc.wis} />
-              <Field label="CHA" name="cha" value={npc.cha} />
+          {/* Resists + Abilities side by side */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div className="rounded border p-2" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
+              <h2 className="text-xs font-semibold mb-1 uppercase tracking-wider" style={{ color: "var(--accent)" }}>Resists</h2>
+              <div className="grid grid-cols-3 gap-1">
+                <Field label="Cold" name="cr" value={npc.cr} />
+                <Field label="Disease" name="dr" value={npc.dr} />
+                <Field label="Fire" name="fr" value={npc.fr} />
+                <Field label="Magic" name="mr" value={npc.mr} />
+                <Field label="Poison" name="pr" value={npc.pr} />
+              </div>
             </div>
-          </div>
 
-          {/* Resists */}
-          <div className="rounded-lg border p-4" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
-            <h2 className="text-sm font-semibold mb-3" style={{ color: "var(--accent)" }}>Resists</h2>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-              <Field label="Cold" name="cr" value={npc.cr} />
-              <Field label="Disease" name="dr" value={npc.dr} />
-              <Field label="Fire" name="fr" value={npc.fr} />
-              <Field label="Magic" name="mr" value={npc.mr} />
-              <Field label="Poison" name="pr" value={npc.pr} />
-            </div>
-          </div>
-
-          {/* Abilities */}
-          <div className="rounded-lg border p-4" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
-            <h2 className="text-sm font-semibold mb-3" style={{ color: "var(--accent)" }}>Abilities</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              <Field label="See Invis" name="see_invis" value={npc.see_invis} />
-              <Field label="See Invis Undead" name="see_invis_undead" value={npc.see_invis_undead} />
-              <Field label="See Hide" name="see_hide" value={npc.see_hide} />
-              <Field label="See Improved Hide" name="see_improved_hide" value={npc.see_improved_hide} />
+            <div className="rounded border p-2" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
+              <h2 className="text-xs font-semibold mb-1 uppercase tracking-wider" style={{ color: "var(--accent)" }}>Abilities</h2>
+              <div className="grid grid-cols-2 gap-1">
+                <Field label="See Inv" name="see_invis" value={npc.see_invis} />
+                <Field label="Inv Und" name="see_invis_undead" value={npc.see_invis_undead} />
+                <Field label="See Hid" name="see_hide" value={npc.see_hide} />
+                <Field label="Imp Hid" name="see_improved_hide" value={npc.see_improved_hide} />
+              </div>
             </div>
           </div>
 
           {/* References */}
-          <div className="rounded-lg border p-4" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
-            <h2 className="text-sm font-semibold mb-3" style={{ color: "var(--accent)" }}>References</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              <Field label="Loot Table ID" name="loottable_id" value={npc.loottable_id} />
-              <Field label="Merchant ID" name="merchant_id" value={npc.merchant_id} />
-              <Field label="Spells ID" name="npc_spells_id" value={npc.npc_spells_id} />
-              <Field label="Melee Texture 1" name="d_melee_texture1" value={npc.d_melee_texture1} />
-              <Field label="Melee Texture 2" name="d_melee_texture2" value={npc.d_melee_texture2} />
+          <div className="rounded border p-2" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
+            <h2 className="text-xs font-semibold mb-1 uppercase tracking-wider" style={{ color: "var(--accent)" }}>References</h2>
+            <div className="grid grid-cols-3 md:grid-cols-5 gap-1">
+              <Field label="Loot Tbl" name="loottable_id" value={npc.loottable_id} />
+              <Field label="Merch" name="merchant_id" value={npc.merchant_id} />
+              <Field label="Spells" name="npc_spells_id" value={npc.npc_spells_id} />
+              <Field label="Melee 1" name="d_melee_texture1" value={npc.d_melee_texture1} />
+              <Field label="Melee 2" name="d_melee_texture2" value={npc.d_melee_texture2} />
             </div>
           </div>
         </div>
 
-        <div className="mt-6 flex gap-3">
-          <button type="submit" className="px-6 py-2 rounded-lg text-sm font-medium text-black" style={{ backgroundColor: "var(--accent)" }}>
+        <div className="mt-3 flex gap-2">
+          <button type="submit" className="px-4 py-1.5 rounded text-xs font-medium text-black" style={{ backgroundColor: "var(--accent)" }}>
             Save Changes
           </button>
-          <Link href="/npcs" className="px-6 py-2 rounded-lg text-sm border" style={{ borderColor: "var(--card-border)", color: "var(--foreground)" }}>
+          <Link href="/npcs" className="px-4 py-1.5 rounded text-xs border" style={{ borderColor: "var(--card-border)", color: "var(--foreground)" }}>
             Cancel
           </Link>
         </div>
@@ -258,8 +260,8 @@ async function LootTableSection({ npcId, loottableId }: { npcId: number; loottab
   }
 
   return (
-    <div className="mt-6 rounded-lg border p-4" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
-      <h2 className="text-sm font-semibold mb-3" style={{ color: "var(--accent)" }}>Loot Table</h2>
+    <div className="mt-3 rounded border p-2" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
+      <h2 className="text-xs font-semibold mb-1 uppercase tracking-wider" style={{ color: "var(--accent)" }}>Loot Table</h2>
       <LootTableEditor npcId={npcId} lootTable={lootTable} />
     </div>
   );

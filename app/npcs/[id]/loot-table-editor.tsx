@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useRef, useEffect, useCallback } from "react";
 import {
   addLootDropItem,
   removeLootDropItem,
   updateLootDropItemChance,
   createLootTableForNpc,
+  searchItems,
 } from "@/app/actions";
 import Link from "next/link";
 
@@ -248,82 +249,155 @@ function AddItemForm({
 }) {
   const [isPending, startTransition] = useTransition();
   const [itemId, setItemId] = useState("");
+  const [itemName, setItemName] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [results, setResults] = useState<{ id: number; Name: string }[]>([]);
+  const [showResults, setShowResults] = useState(false);
   const [chance, setChance] = useState("100");
   const [charges, setCharges] = useState("1");
+  const searchRef = useRef<HTMLDivElement>(null);
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
+
+  const doSearch = useCallback((term: string) => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    if (term.length < 2) { setResults([]); setShowResults(false); return; }
+    debounceRef.current = setTimeout(async () => {
+      const items = await searchItems(term);
+      setResults(items);
+      setShowResults(true);
+    }, 200);
+  }, []);
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
+        setShowResults(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
 
   return (
-    <form
-      className="flex items-center gap-2 mt-2 pt-2"
-      style={{ borderTop: "1px solid var(--card-border)" }}
-      action={(formData) => {
-        startTransition(async () => {
-          await addLootDropItem(formData);
-          setItemId("");
-          setChance("100");
-          setCharges("1");
-        });
-      }}
-    >
-      <input type="hidden" name="lootdrop_id" value={lootdropId} />
-      <input type="hidden" name="npc_id" value={npcId} />
-      <input
-        type="number"
-        name="item_id"
-        value={itemId}
-        onChange={(e) => setItemId(e.target.value)}
-        placeholder="Item ID"
-        className="w-24 px-2 py-1 text-xs rounded border"
-        style={{
-          backgroundColor: "var(--input-bg)",
-          borderColor: "var(--input-border)",
-          color: "var(--foreground)",
-        }}
-        min="1"
-        required
-      />
-      <input
-        type="number"
-        name="chance"
-        value={chance}
-        onChange={(e) => setChance(e.target.value)}
-        placeholder="Chance %"
-        step="0.01"
-        min="0"
-        max="100"
-        className="w-20 px-2 py-1 text-xs rounded border"
-        style={{
-          backgroundColor: "var(--input-bg)",
-          borderColor: "var(--input-border)",
-          color: "var(--foreground)",
-        }}
-      />
-      <input
-        type="number"
-        name="item_charges"
-        value={charges}
-        onChange={(e) => setCharges(e.target.value)}
-        placeholder="Charges"
-        min="0"
-        className="w-16 px-2 py-1 text-xs rounded border"
-        style={{
-          backgroundColor: "var(--input-bg)",
-          borderColor: "var(--input-border)",
-          color: "var(--foreground)",
-        }}
-      />
-      <button
-        type="submit"
-        disabled={isPending}
-        className="px-3 py-1 text-xs rounded font-medium"
-        style={{
-          backgroundColor: "var(--accent)",
-          color: "#000",
-          opacity: isPending ? 0.5 : 1,
-        }}
-      >
-        {isPending ? "Adding..." : "Add Item"}
-      </button>
-    </form>
+    <div className="mt-2 pt-2" style={{ borderTop: "1px solid var(--card-border)" }}>
+      <div className="text-xs font-medium mb-1" style={{ color: "var(--accent)" }}>Add Item to Drop</div>
+      <div className="relative mb-1.5" ref={searchRef}>
+        <input
+          type="text"
+          value={itemId ? `[${itemId}] ${itemName}` : searchQuery}
+          onChange={(e) => {
+            if (itemId) { setItemId(""); setItemName(""); }
+            setSearchQuery(e.target.value);
+            doSearch(e.target.value);
+          }}
+          onFocus={() => { if (results.length > 0) setShowResults(true); }}
+          placeholder="Search items... (multiple words = AND, -word = exclude, id:1234)"
+          className="w-full px-2 py-1.5 text-xs rounded border"
+          style={{
+            backgroundColor: "var(--input-bg)",
+            borderColor: itemId ? "var(--accent)" : "var(--input-border)",
+            color: "var(--foreground)",
+          }}
+        />
+        {showResults && results.length > 0 && (
+          <div
+            className="absolute left-0 right-0 top-full mt-1 rounded border overflow-auto z-50"
+            style={{
+              backgroundColor: "var(--card-bg)",
+              borderColor: "var(--card-border)",
+              maxHeight: "240px",
+            }}
+          >
+            {results.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className="w-full text-left px-2 py-1.5 text-xs hover:bg-white/10 flex justify-between"
+                style={{ color: "var(--foreground)" }}
+                onClick={() => {
+                  setItemId(item.id.toString());
+                  setItemName(item.Name);
+                  setSearchQuery("");
+                  setShowResults(false);
+                }}
+              >
+                <span style={{ color: "var(--accent)" }}>{item.Name}</span>
+                <span style={{ color: "var(--muted)" }}>#{item.id}</span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+      {itemId && (
+        <form
+          className="flex items-center gap-2"
+          action={(formData) => {
+            startTransition(async () => {
+              await addLootDropItem(formData);
+              setItemId("");
+              setItemName("");
+              setSearchQuery("");
+              setChance("100");
+              setCharges("1");
+            });
+          }}
+        >
+          <input type="hidden" name="lootdrop_id" value={lootdropId} />
+          <input type="hidden" name="npc_id" value={npcId} />
+          <input type="hidden" name="item_id" value={itemId} />
+          <span className="text-xs" style={{ color: "var(--muted)" }}>Chance %</span>
+          <input
+            type="number"
+            name="chance"
+            value={chance}
+            onChange={(e) => setChance(e.target.value)}
+            step="0.01"
+            min="0"
+            max="100"
+            className="w-20 px-2 py-1 text-xs rounded border"
+            style={{
+              backgroundColor: "var(--input-bg)",
+              borderColor: "var(--input-border)",
+              color: "var(--foreground)",
+            }}
+          />
+          <span className="text-xs" style={{ color: "var(--muted)" }}>Charges</span>
+          <input
+            type="number"
+            name="item_charges"
+            value={charges}
+            onChange={(e) => setCharges(e.target.value)}
+            min="0"
+            className="w-16 px-2 py-1 text-xs rounded border"
+            style={{
+              backgroundColor: "var(--input-bg)",
+              borderColor: "var(--input-border)",
+              color: "var(--foreground)",
+            }}
+          />
+          <button
+            type="submit"
+            disabled={isPending}
+            className="px-3 py-1 text-xs rounded font-medium whitespace-nowrap"
+            style={{
+              backgroundColor: "var(--accent)",
+              color: "#000",
+              opacity: isPending ? 0.5 : 1,
+            }}
+          >
+            {isPending ? "Adding..." : `Add ${itemName}`}
+          </button>
+          <button
+            type="button"
+            onClick={() => { setItemId(""); setItemName(""); setSearchQuery(""); }}
+            className="text-xs px-1"
+            style={{ color: "var(--muted)" }}
+          >
+            Cancel
+          </button>
+        </form>
+      )}
+    </div>
   );
 }
 
