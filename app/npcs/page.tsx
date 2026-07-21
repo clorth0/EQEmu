@@ -1,4 +1,5 @@
 import { query } from "@/lib/db";
+import { parseSearch } from "@/lib/search";
 import Link from "next/link";
 
 const PER_PAGE = 50;
@@ -39,8 +40,9 @@ export default async function NpcsPage({
     const params: any[] = [];
 
     if (search) {
-      conditions.push("n.name LIKE ?");
-      params.push(`%${search}%`);
+      const parsed = parseSearch(search, "n.name");
+      conditions.push(...parsed.conditions);
+      params.push(...parsed.params);
     }
     if (zone) {
       conditions.push("n.id IN (SELECT se.npcID FROM spawnentry se JOIN spawngroup sg ON se.spawngroupID = sg.id JOIN spawn2 s ON s.spawngroupID = sg.id WHERE s.zone = ?)");
@@ -87,7 +89,7 @@ export default async function NpcsPage({
           type="text"
           name="search"
           defaultValue={search || ""}
-          placeholder="Search by name..."
+          placeholder="Search NPCs... (multiple words = AND, -word = exclude, id:1234)"
           className="flex-1 px-3 py-2 rounded-lg border text-sm"
           style={{ backgroundColor: "var(--input-bg)", borderColor: "var(--input-border)", color: "var(--foreground)" }}
         />

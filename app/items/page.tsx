@@ -1,4 +1,5 @@
 import { query } from "@/lib/db";
+import { parseSearch } from "@/lib/search";
 import Link from "next/link";
 
 const ITEMS_PER_PAGE = 50;
@@ -38,30 +39,21 @@ export default async function ItemsPage({
   let error = "";
 
   try {
-    if (search) {
-      const [countResult, itemsResult] = await Promise.all([
-        query<{ count: number }>(
-          "SELECT COUNT(*) as count FROM items WHERE Name LIKE ?",
-          [`%${search}%`]
-        ),
-        query<Item>(
-          "SELECT id, Name, itemtype, ac, damage, classes, races, slots FROM items WHERE Name LIKE ? ORDER BY id LIMIT ? OFFSET ?",
-          [`%${search}%`, ITEMS_PER_PAGE, offset]
-        ),
-      ]);
-      totalCount = countResult[0]?.count ?? 0;
-      items = itemsResult;
-    } else {
-      const [countResult, itemsResult] = await Promise.all([
-        query<{ count: number }>("SELECT COUNT(*) as count FROM items"),
-        query<Item>(
-          "SELECT id, Name, itemtype, ac, damage, classes, races, slots FROM items ORDER BY id LIMIT ? OFFSET ?",
-          [ITEMS_PER_PAGE, offset]
-        ),
-      ]);
-      totalCount = countResult[0]?.count ?? 0;
-      items = itemsResult;
-    }
+    const { conditions, params } = search ? parseSearch(search, "Name") : { conditions: [], params: [] };
+    const whereClause = conditions.length > 0 ? "WHERE " + conditions.join(" AND ") : "";
+
+    const [countResult, itemsResult] = await Promise.all([
+      query<{ count: number }>(
+        `SELECT COUNT(*) as count FROM items ${whereClause}`,
+        params
+      ),
+      query<Item>(
+        `SELECT id, Name, itemtype, ac, damage, classes, races, slots FROM items ${whereClause} ORDER BY id LIMIT ? OFFSET ?`,
+        [...params, ITEMS_PER_PAGE, offset]
+      ),
+    ]);
+    totalCount = countResult[0]?.count ?? 0;
+    items = itemsResult;
   } catch (e: any) {
     error = e.message || "Failed to query items";
   }
@@ -86,7 +78,7 @@ export default async function ItemsPage({
           type="text"
           name="search"
           defaultValue={search || ""}
-          placeholder="Search items by name..."
+          placeholder="Search items... (multiple words = AND, -word = exclude, id:1234)"
           className="flex-1 px-3 py-2 rounded-lg border text-sm"
           style={{ backgroundColor: "var(--input-bg)", borderColor: "var(--input-border)", color: "var(--foreground)" }}
         />
