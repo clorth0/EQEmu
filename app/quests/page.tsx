@@ -3,6 +3,7 @@ import { promisify } from "util";
 import { query } from "@/lib/db";
 import { parseQuest, type QuestParsed } from "@/lib/quest-parser";
 import { saveQuestFile } from "@/app/actions";
+import { QuestBuilder } from "./quest-builder";
 import Link from "next/link";
 
 const execAsync = promisify(exec);
@@ -154,6 +155,17 @@ export default async function QuestsPage({
             <div className="p-2 border-b text-xs font-semibold uppercase tracking-wider" style={{ borderColor: "var(--card-border)", color: "var(--accent)" }}>
               {selectedZone} ({files.length})
             </div>
+            <Link
+              href={`/quests?zone=${selectedZone}&tab=build`}
+              className="block px-2 py-1.5 text-xs border-b text-center font-medium"
+              style={{
+                borderColor: "var(--card-border)",
+                color: activeTab === "build" && !selectedFile ? "#000" : "var(--accent)",
+                backgroundColor: activeTab === "build" && !selectedFile ? "var(--accent)" : "transparent",
+              }}
+            >
+              + New Quest
+            </Link>
             {files.length === 0 ? (
               <div className="p-2 text-xs" style={{ color: "var(--muted)" }}>No quest files</div>
             ) : (
@@ -184,7 +196,10 @@ export default async function QuestsPage({
 
         {/* Main Content */}
         <div className="flex-1 rounded border" style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--card-border)" }}>
-          {selectedFile && parsed ? (
+          {/* New Quest Builder */}
+          {selectedZone && !selectedFile && activeTab === "build" ? (
+            <QuestBuilder zone={selectedZone} />
+          ) : selectedFile && parsed ? (
             <div className="flex flex-col h-full">
               {/* Header */}
               <div className="p-2 border-b flex items-center justify-between" style={{ borderColor: "var(--card-border)" }}>
@@ -207,6 +222,17 @@ export default async function QuestsPage({
                     Summary
                   </Link>
                   <Link
+                    href={`/quests?zone=${selectedZone}&file=${encodeURIComponent(selectedFile)}&tab=build`}
+                    className="px-2 py-1 text-xs rounded"
+                    style={{
+                      backgroundColor: activeTab === "build" ? "var(--accent)" : "var(--input-bg)",
+                      color: activeTab === "build" ? "#000" : "var(--foreground)",
+                      fontWeight: activeTab === "build" ? 600 : 400,
+                    }}
+                  >
+                    Builder
+                  </Link>
+                  <Link
                     href={`/quests?zone=${selectedZone}&file=${encodeURIComponent(selectedFile)}&tab=edit`}
                     className="px-2 py-1 text-xs rounded"
                     style={{
@@ -220,7 +246,9 @@ export default async function QuestsPage({
                 </div>
               </div>
 
-              {activeTab === "summary" ? (
+              {activeTab === "build" ? (
+                <QuestBuilder zone={selectedZone!} filePath={selectedFile} initialCode={fileContent} />
+              ) : activeTab === "summary" ? (
                 <div className="p-3 overflow-y-auto" style={{ maxHeight: "calc(80vh - 40px)" }}>
                   {/* Events */}
                   {parsed.events.length > 0 && (
