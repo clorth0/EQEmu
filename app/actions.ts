@@ -126,7 +126,7 @@ export async function updateZone(formData: FormData) {
 // Server controls
 export async function serverAction(formData: FormData) {
   const action = formData.get("action") as string;
-  const container = "eqemu-eqemu-1";
+  const container = "eqemu-eqemu-server-1";
 
   try {
     switch (action) {
@@ -275,7 +275,7 @@ export async function createLootTableForNpc(formData: FormData) {
 export async function saveQuestFile(formData: FormData) {
   const filePath = formData.get("filePath") as string;
   const content = formData.get("content") as string;
-  const container = "eqemu-eqemu-1";
+  const container = "eqemu-eqemu-server-1";
 
   // Sanitize the file path to prevent injection
   if (!filePath.startsWith("/home/eqemu/server/quests/")) {
