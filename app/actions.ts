@@ -291,6 +291,34 @@ export async function saveQuestFile(formData: FormData) {
   revalidatePath("/quests");
 }
 
+// NPC search by zone
+export async function searchNpcsByZone(zone: string, searchTerm: string): Promise<{ id: number; name: string }[]> {
+  if (!zone) return [];
+  if (!searchTerm || searchTerm.length < 2) {
+    // Return all NPCs in zone (limited)
+    return query<{ id: number; name: string }>(
+      `SELECT DISTINCT n.id, n.name FROM npc_types n
+       JOIN spawnentry se ON se.npcID = n.id
+       JOIN spawngroup sg ON sg.id = se.spawngroupID
+       JOIN spawn2 s ON s.spawngroupID = sg.id
+       WHERE s.zone = ?
+       ORDER BY n.name LIMIT 100`,
+      [zone]
+    );
+  }
+  const { conditions, params } = parseSearch(searchTerm, "n.name");
+  if (conditions.length === 0) return [];
+  return query<{ id: number; name: string }>(
+    `SELECT DISTINCT n.id, n.name FROM npc_types n
+     JOIN spawnentry se ON se.npcID = n.id
+     JOIN spawngroup sg ON sg.id = se.spawngroupID
+     JOIN spawn2 s ON s.spawngroupID = sg.id
+     WHERE s.zone = ? AND ${conditions.join(" AND ")}
+     ORDER BY n.name LIMIT 50`,
+    [zone, ...params]
+  );
+}
+
 // Item search
 export async function searchItems(searchTerm: string): Promise<{ id: number; Name: string }[]> {
   if (!searchTerm || searchTerm.length < 2) return [];

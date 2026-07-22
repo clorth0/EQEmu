@@ -247,7 +247,7 @@ export default async function QuestsPage({
               </div>
 
               {activeTab === "build" ? (
-                <QuestBuilder zone={selectedZone!} filePath={selectedFile} initialCode={fileContent} />
+                <QuestBuilder zone={selectedZone!} filePath={selectedFile} initialCode={fileContent} parsedData={parsed} />
               ) : activeTab === "summary" ? (
                 <div className="p-3 overflow-y-auto" style={{ maxHeight: "calc(80vh - 40px)" }}>
                   {/* Events */}
