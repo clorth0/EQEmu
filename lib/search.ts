@@ -27,7 +27,7 @@ export function parseSearch(search: string, nameColumn: string = "Name") {
   }
 
   const conditions: string[] = [];
-  const params: any[] = [];
+  const params: (string | number)[] = [];
 
   for (const word of includes) {
     conditions.push(`${nameColumn} LIKE ?`);

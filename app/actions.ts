@@ -24,13 +24,14 @@ export async function updateItem(formData: FormData) {
   ];
 
   const setClauses: string[] = [];
-  const values: any[] = [];
+  const values: (string | number | null)[] = [];
 
   for (const field of fields) {
     const val = formData.get(field);
     if (val !== null) {
       setClauses.push(`\`${field}\` = ?`);
-      values.push(val);
+      // Form fields are always strings; keep runtime behavior identical to before.
+      values.push(val as string);
     }
   }
 
@@ -63,13 +64,14 @@ export async function updateNpc(formData: FormData) {
   ];
 
   const setClauses: string[] = [];
-  const values: any[] = [];
+  const values: (string | number | null)[] = [];
 
   for (const field of fields) {
     const val = formData.get(field);
     if (val !== null) {
       setClauses.push(`\`${field}\` = ?`);
-      values.push(val);
+      // Form fields are always strings; keep runtime behavior identical to before.
+      values.push(val as string);
     }
   }
 
@@ -100,13 +102,14 @@ export async function updateZone(formData: FormData) {
   ];
 
   const setClauses: string[] = [];
-  const values: any[] = [];
+  const values: (string | number | null)[] = [];
 
   for (const field of fields) {
     const val = formData.get(field);
     if (val !== null) {
       setClauses.push(`\`${field}\` = ?`);
-      values.push(val);
+      // Form fields are always strings; keep runtime behavior identical to before.
+      values.push(val as string);
     }
   }
 
@@ -243,14 +246,14 @@ export async function createLootTableForNpc(formData: FormData) {
   }
 
   // Create the loottable
-  const ltResult: any = await execute(
+  const ltResult = await execute(
     "INSERT INTO loottable (name, mincash, maxcash) VALUES (?, 0, 0)",
     [table_name]
   );
   const loottable_id = ltResult.insertId;
 
   // Create a lootdrop
-  const ldResult: any = await execute(
+  const ldResult = await execute(
     "INSERT INTO lootdrop (name) VALUES (?)",
     [`${table_name}_drop`]
   );

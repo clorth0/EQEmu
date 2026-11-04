@@ -37,7 +37,7 @@ export default async function NpcsPage({
 
   try {
     const conditions: string[] = [];
-    const params: any[] = [];
+    const params: (string | number)[] = [];
 
     if (search) {
       const parsed = parseSearch(search, "n.name");
@@ -68,8 +68,8 @@ export default async function NpcsPage({
 
     totalCount = countResult[0]?.count ?? 0;
     npcs = npcResult;
-  } catch (e: any) {
-    error = e.message || "Failed to query NPCs";
+  } catch (e) {
+    error = (e instanceof Error ? e.message : String(e)) || "Failed to query NPCs";
   }
 
   const totalPages = Math.ceil(totalCount / PER_PAGE);
