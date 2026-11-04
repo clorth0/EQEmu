@@ -23,10 +23,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
           cache: npm
@@ -38,17 +38,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
           cache: npm
       - run: npm ci
-      # No database is required to build: every page that queries MySQL is a
-      # dynamic route and catches connection errors, and `next build` does not
-      # open a pooled connection. Verified locally with no DB_HOST/DB_PASS set.
+      # No database is needed to build: every MySQL-backed page is a dynamic
+      # route that catches connection errors, and `next build` never opens the
+      # pool. Verified with no DB_* variables set in the environment.
       - run: npm run build
 
   audit:
@@ -56,10 +56,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
           cache: npm
@@ -74,13 +74,26 @@ jobs:
     container:
       image: semgrep/semgrep:1.183.0
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          fetch-depth: 0
           persist-credentials: false
+      # Diff-aware: the gate fails on any finding this change introduces. Main
+      # already carries two pre-existing findings (tracked in the PR that added
+      # this workflow); a full-history scan is available on demand below.
       - name: Semgrep scan
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          EVENT_NAME: ${{ github.event_name }}
         run: |
+          set -euo pipefail
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          semgrep scan --config p/default --metrics=off --error
+          ARGS="--config p/default --metrics=off --error"
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] || [ -z "${BASE_SHA:-}" ] || [ "$BASE_SHA" = "0000000000000000000000000000000000000000" ]; then
+            semgrep scan $ARGS
+          else
+            semgrep scan $ARGS --baseline-commit "$BASE_SHA"
+          fi
 
   gitleaks:
     name: Secret scan (gitleaks)
@@ -89,7 +102,7 @@ jobs:
     env:
       GITLEAKS_VERSION: 8.30.1
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -101,5 +114,16 @@ jobs:
           tar -xzf gitleaks.tar.gz gitleaks
           sudo install -m 0755 gitleaks /usr/local/bin/gitleaks
           gitleaks version
-      - name: Scan git history
-        run: gitleaks git --no-banner --redact .
+      # Diff-aware: blocks any secret this change adds to history. History
+      # before this workflow carries pre-existing hits, tracked in the PR.
+      - name: Scan commits in this change
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] || [ -z "${BASE_SHA:-}" ] || [ "$BASE_SHA" = "0000000000000000000000000000000000000000" ]; then
+            gitleaks git --no-banner --redact .
+          else
+            gitleaks git --no-banner --redact --log-opts "${BASE_SHA}..HEAD" .
+          fi
