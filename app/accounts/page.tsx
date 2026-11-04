@@ -83,8 +83,8 @@ export default async function AccountsPage({
         accountIds
       );
     }
-  } catch (e: any) {
-    error = e.message || "Failed to query accounts";
+  } catch (e) {
+    error = (e instanceof Error ? e.message : String(e)) || "Failed to query accounts";
   }
 
   const totalPages = Math.ceil(totalCount / PER_PAGE);

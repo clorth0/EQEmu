@@ -104,8 +104,8 @@ export default async function QuestsPage({
       parsed = parseQuest(fileContent, fileName);
       await resolveNames(parsed);
     }
-  } catch (e: any) {
-    error = e.message || "Failed to connect to Docker container";
+  } catch (e) {
+    error = (e instanceof Error ? e.message : String(e)) || "Failed to connect to Docker container";
   }
 
   const npcName = selectedFile?.split("/").pop()?.replace(/\.(lua|pl|qst)$/, "").replace(/_/g, " ") || "";

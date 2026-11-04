@@ -46,7 +46,7 @@ interface NpcRow {
   mana_regen_rate: number;
 }
 
-function Field({ label, name, value, type = "number" }: { label: string; name: string; value: any; type?: string }) {
+function Field({ label, name, value, type = "number" }: { label: string; name: string; value: string | number; type?: string }) {
   return (
     <div className="flex items-center gap-1.5">
       <label className="text-xs shrink-0 w-14 text-right" style={{ color: "var(--muted)" }}>{label}</label>
