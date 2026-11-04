@@ -31,7 +31,7 @@ interface ZoneRow {
   shutdowndelay: number;
 }
 
-function Field({ label, name, value, type = "number" }: { label: string; name: string; value: any; type?: string }) {
+function Field({ label, name, value, type = "number" }: { label: string; name: string; value: string | number; type?: string }) {
   return (
     <div>
       <label className="block text-xs mb-1" style={{ color: "var(--muted)" }}>{label}</label>

@@ -205,7 +205,7 @@ function ItemSearchField({ value, itemName, onChange }: {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<{ id: number; Name: string }[]>([]);
   const [showResults, setShowResults] = useState(false);
-  const debounceRef = { current: null as ReturnType<typeof setTimeout> | null };
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const doSearch = (term: string) => {
     if (debounceRef.current) clearTimeout(debounceRef.current);

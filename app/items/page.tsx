@@ -54,8 +54,8 @@ export default async function ItemsPage({
     ]);
     totalCount = countResult[0]?.count ?? 0;
     items = itemsResult;
-  } catch (e: any) {
-    error = e.message || "Failed to query items";
+  } catch (e) {
+    error = (e instanceof Error ? e.message : String(e)) || "Failed to query items";
   }
 
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
