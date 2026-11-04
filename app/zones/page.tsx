@@ -52,8 +52,8 @@ export default async function ZonesPage({
 
     totalCount = countResult[0]?.count ?? 0;
     zones = zonesResult;
-  } catch (e: any) {
-    error = e.message || "Failed to query zones";
+  } catch (e) {
+    error = (e instanceof Error ? e.message : String(e)) || "Failed to query zones";
   }
 
   const totalPages = Math.ceil(totalCount / PER_PAGE);

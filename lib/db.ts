@@ -1,4 +1,4 @@
-import mysql from "mysql2/promise";
+import mysql, { type ResultSetHeader } from "mysql2/promise";
 
 let pool: mysql.Pool | null = null;
 
@@ -17,19 +17,19 @@ export function getPool() {
   return pool;
 }
 
-export async function query<T = any>(sql: string, params?: any[]): Promise<T[]> {
+export async function query<T = unknown>(sql: string, params?: (string | number | null)[]): Promise<T[]> {
   const pool = getPool();
   const [rows] = await pool.execute(sql, params);
   return rows as T[];
 }
 
-export async function queryOne<T = any>(sql: string, params?: any[]): Promise<T | null> {
+export async function queryOne<T = unknown>(sql: string, params?: (string | number | null)[]): Promise<T | null> {
   const rows = await query<T>(sql, params);
   return rows[0] || null;
 }
 
-export async function execute(sql: string, params?: any[]) {
+export async function execute(sql: string, params?: (string | number | null)[]): Promise<ResultSetHeader> {
   const pool = getPool();
-  const [result] = await pool.execute(sql, params);
+  const [result] = await pool.execute<ResultSetHeader>(sql, params);
   return result;
 }

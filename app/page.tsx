@@ -52,8 +52,8 @@ export default async function DashboardPage() {
     accountCount = accounts[0]?.count ?? 0;
     charCount = chars[0]?.count ?? 0;
     onlinePlayers = online;
-  } catch (e: any) {
-    error = e.message || "Failed to connect to database";
+  } catch (e) {
+    error = (e instanceof Error ? e.message : String(e)) || "Failed to connect to database";
   }
 
   const stats = [
