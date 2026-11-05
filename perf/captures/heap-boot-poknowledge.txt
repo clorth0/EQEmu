@@ -1,0 +1,3795 @@
+reading file "/workspace/perf/captures/heap-boot-poknowledge.gz" - please wait, this might take some time...
+Debuggee command was: /workspace/build/release/bin/zone poknowledge:7011 perf
+finished reading file, now analyzing data:
+
+MOST CALLS TO ALLOCATION FUNCTIONS
+67339 calls to allocation functions with 5.30M peak consumption from
+std::__new_allocator<>::allocate(unsigned long, void const*)
+  at /usr/include/c++/13/bits/new_allocator.h:151
+  in /workspace/build/release/bin/zone
+std::allocator<>::allocate(unsigned long)
+  at /usr/include/c++/13/bits/allocator.h:198
+std::allocator_traits<>::allocate(std::allocator<>&, unsigned long)
+  at /usr/include/c++/13/bits/alloc_traits.h:482
+std::__cxx11::basic_string<>::_S_allocate(std::allocator<>&, unsigned long)
+  at /usr/include/c++/13/bits/basic_string.h:126
+std::__cxx11::basic_string<>::_M_create(unsigned long&, unsigned long)
+  at /usr/include/c++/13/bits/basic_string.tcc:159
+void std::__cxx11::basic_string<>::_M_construct<>(char const*, char const*, std::forward_iterator_tag)
+  at /usr/include/c++/13/bits/basic_string.tcc:229
+std::__cxx11::basic_string<>::basic_string<>(char const*, std::allocator<> const&)
+  at /usr/include/c++/13/bits/basic_string.h:649
+1060 calls with 39.94K peak consumption from:
+    std::__cxx11::basic_string<>::assign(std::__cxx11::basic_string<> const&)
+      at /usr/include/c++/13/bits/basic_string.h:1608
+      in /workspace/build/release/bin/zone
+    std::__cxx11::basic_string<>::operator=(std::__cxx11::basic_string<> const&)
+      at /usr/include/c++/13/bits/basic_string.h:814
+    TaskManager::LoadTasks(int)
+      at /workspace/zone/task_manager.cpp:217
+    main
+      at /workspace/zone/main.cpp:424
+      in /workspace/build/release/bin/zone
+1060 calls with 0B peak consumption from:
+    std::__cxx11::basic_string<>::basic_string(std::__cxx11::basic_string<> const&)
+      at /usr/include/c++/13/bits/basic_string.h:551
+      in /workspace/build/release/bin/zone
+    BaseTaskActivitiesRepository::TaskActivities::TaskActivities(BaseTaskActivitiesRepository::TaskActivities const&)
+      at /workspace/zone/../common/repositories/base/base_task_activities_repository.h:38
+    decltype (::new ((void*)(0)) BaseTaskActivitiesRepository::TaskActivities((declval<>)())) std::construct_at<>(BaseTaskActivitiesRepository::TaskActivities*, BaseTaskActivitiesRepository::TaskActivities const&)
+      at /usr/include/c++/13/bits/stl_construct.h:97
+    void std::allocator_traits<>::construct<>(std::allocator<>&, BaseTaskActivitiesRepository::TaskActivities*, BaseTaskActivitiesRepository::TaskActivities const&)
+      at /usr/include/c++/13/bits/alloc_traits.h:540
+    std::vector<>::push_back(BaseTaskActivitiesRepository::TaskActivities const&)
+      at /usr/include/c++/13/bits/stl_vector.h:1286
+    BaseTaskActivitiesRepository::GetWhere(Database&, std::__cxx11::basic_string<> const&)
+      at /workspace/zone/../common/repositories/base/base_task_activities_repository.h:522
+    TaskManager::LoadTasks(int)
+      at /workspace/zone/task_manager.cpp:168
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:424
+      in /workspace/build/release/bin/zone
+1002 calls with 0B peak consumption from:
+    RuleManager::LoadRules(Database*, std::__cxx11::basic_string<> const&, bool)
+      at /workspace/common/rulesys.cpp:292
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1140
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+1002 calls with 0B peak consumption from:
+    RuleManager::LoadRules(Database*, std::__cxx11::basic_string<> const&, bool)
+      at /workspace/common/rulesys.cpp:312
+      in /workspace/build/release/bin/zone
+    WorldContentService::SetExpansionContext()
+      at /workspace/common/content/world_content_service.cpp:42
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:395
+      in /workspace/build/release/bin/zone
+1002 calls with 0B peak consumption from:
+    RuleManager::LoadRules(Database*, std::__cxx11::basic_string<> const&, bool)
+      at /workspace/common/rulesys.cpp:312
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:264
+      in /workspace/build/release/bin/zone
+  and 62213 from 24741 other places
+
+58359 calls to allocation functions with 3.27M peak consumption from
+std::__new_allocator<>::allocate(unsigned long, void const*)
+  at /usr/include/c++/13/bits/new_allocator.h:151
+  in /workspace/build/release/bin/zone
+std::allocator<>::allocate(unsigned long)
+  at /usr/include/c++/13/bits/allocator.h:198
+std::allocator_traits<>::allocate(std::allocator<>&, unsigned long)
+  at /usr/include/c++/13/bits/alloc_traits.h:482
+std::_Rb_tree<>::_M_get_node()
+  at /usr/include/c++/13/bits/stl_tree.h:563
+std::_Rb_tree_node<>* std::_Rb_tree<>::_M_create_node<>(std::piecewise_construct_t const&, std::tuple<>&&, std::tuple<>&&)
+  at /usr/include/c++/13/bits/stl_tree.h:613
+std::_Rb_tree<>::_Auto_node::_Auto_node<>(std::_Rb_tree<>&, std::piecewise_construct_t const&, std::tuple<>&&, std::tuple<>&&)
+  at /usr/include/c++/13/bits/stl_tree.h:1637
+std::_Rb_tree_iterator<> std::_Rb_tree<>::_M_emplace_hint_unique<>(std::_Rb_tree_const_iterator<>, std::piecewise_construct_t const&, std::tuple<>&&, std::tuple<>&&)
+  at /usr/include/c++/13/bits/stl_tree.h:2462
+58359 calls with 3.27M peak consumption from:
+    std::map<>::operator[](unsigned long const&)
+      at /usr/include/c++/13/bits/stl_map.h:513
+      in /workspace/build/release/bin/zone
+    SkillCaps::LoadSkillCaps()
+      at /workspace/common/skill_caps.cpp:107
+    main
+      at /workspace/zone/main.cpp:290
+      in /workspace/build/release/bin/zone
+
+39117 calls to allocation functions with 3.16M peak consumption from
+Perl_safesysmalloc
+  in /lib/x86_64-linux-gnu/libperl.so.5.38
+3413 calls with 53.92K peak consumption from:
+    Perl_sv_grow_fresh
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_sv_setpvn_fresh
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newSVpvn_flags
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28484cd1
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+3170 calls with 0B peak consumption from:
+    Perl_sv_grow_fresh
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_scan_str
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+1693 calls with 0B peak consumption from:
+    Perl_sv_grow_fresh
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_sv_setpvn_fresh
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newSVpvn_flags
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284913cb
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+1127 calls with 0B peak consumption from:
+    Perl_sv_grow_fresh
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_sv_setpvn_fresh
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newSVpvn_flags
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28490afb
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f285d64f8
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+729 calls with 0B peak consumption from:
+    Perl_sv_grow_fresh
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_sv_setpvn_fresh
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newSVpvn_flags
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f285e9ec8
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f285d6845
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+  and 28985 from 8432 other places
+
+26739 calls to allocation functions with 5.61M peak consumption from
+PageAlignedAllocatorBase::allocateInternal(unsigned long, unsigned long)
+  at /workspace/common/memory/ksm.cpp:90
+  in /workspace/build/release/bin/zone
+19 calls with 1.05M peak consumption from:
+    PageAlignedAllocator<>::allocate(unsigned long)
+      at /workspace/zone/../common/memory/ksm.h:45
+      in /workspace/build/release/bin/zone
+    std::allocator_traits<>::allocate(PageAlignedAllocator<>&, unsigned long)
+      at /usr/include/c++/13/bits/alloc_traits.h:333
+    std::_Vector_base<>::_M_allocate(unsigned long)
+      at /usr/include/c++/13/bits/stl_vector.h:381
+    void std::vector<>::_M_realloc_insert<>(__gnu_cxx::__normal_iterator<>, unsigned int const&)
+      at /usr/include/c++/13/bits/vector.tcc:459
+    std::vector<>::push_back(unsigned int const&)
+      at /usr/include/c++/13/bits/stl_vector.h:1292
+    RAYCAST_MESH::NodeAABB::split(std::vector<> const&, unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:604
+    RAYCAST_MESH::NodeAABB::NodeAABB(unsigned int, float const*, unsigned int, unsigned int*, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:482
+      in /workspace/build/release/bin/zone
+    RAYCAST_MESH::MyRaycastMesh::MyRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:820
+    createRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:993
+      in /workspace/build/release/bin/zone
+    Map::LoadV2(_IO_FILE*)
+      at /workspace/zone/map.cpp:961
+      in /workspace/build/release/bin/zone
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+19 calls with 1.05M peak consumption from:
+    PageAlignedAllocator<>::allocate(unsigned long)
+      at /workspace/zone/../common/memory/ksm.h:45
+      in /workspace/build/release/bin/zone
+    std::allocator_traits<>::allocate(PageAlignedAllocator<>&, unsigned long)
+      at /usr/include/c++/13/bits/alloc_traits.h:333
+    std::_Vector_base<>::_M_allocate(unsigned long)
+      at /usr/include/c++/13/bits/stl_vector.h:381
+    void std::vector<>::_M_realloc_insert<>(__gnu_cxx::__normal_iterator<>, unsigned int const&)
+      at /usr/include/c++/13/bits/vector.tcc:459
+    std::vector<>::push_back(unsigned int const&)
+      at /usr/include/c++/13/bits/stl_vector.h:1292
+    RAYCAST_MESH::NodeAABB::split(std::vector<> const&, unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:590
+    RAYCAST_MESH::NodeAABB::NodeAABB(unsigned int, float const*, unsigned int, unsigned int*, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:482
+      in /workspace/build/release/bin/zone
+    RAYCAST_MESH::MyRaycastMesh::MyRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:820
+    createRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:993
+      in /workspace/build/release/bin/zone
+    Map::LoadV2(_IO_FILE*)
+      at /workspace/zone/map.cpp:961
+      in /workspace/build/release/bin/zone
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+18 calls with 524.29K peak consumption from:
+    PageAlignedAllocator<>::allocate(unsigned long)
+      at /workspace/zone/../common/memory/ksm.h:45
+      in /workspace/build/release/bin/zone
+    std::allocator_traits<>::allocate(PageAlignedAllocator<>&, unsigned long)
+      at /usr/include/c++/13/bits/alloc_traits.h:333
+    std::_Vector_base<>::_M_allocate(unsigned long)
+      at /usr/include/c++/13/bits/stl_vector.h:381
+    void std::vector<>::_M_realloc_insert<>(__gnu_cxx::__normal_iterator<>, unsigned int const&)
+      at /usr/include/c++/13/bits/vector.tcc:459
+    std::vector<>::push_back(unsigned int const&)
+      at /usr/include/c++/13/bits/stl_vector.h:1292
+    RAYCAST_MESH::NodeAABB::split(std::vector<> const&, unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:590
+    RAYCAST_MESH::NodeAABB::split(std::vector<> const&, unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:616
+      in /workspace/build/release/bin/zone
+    RAYCAST_MESH::NodeAABB::NodeAABB(unsigned int, float const*, unsigned int, unsigned int*, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:482
+      in /workspace/build/release/bin/zone
+    RAYCAST_MESH::MyRaycastMesh::MyRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:820
+    createRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:993
+      in /workspace/build/release/bin/zone
+    Map::LoadV2(_IO_FILE*)
+      at /workspace/zone/map.cpp:961
+      in /workspace/build/release/bin/zone
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+18 calls with 524.29K peak consumption from:
+    PageAlignedAllocator<>::allocate(unsigned long)
+      at /workspace/zone/../common/memory/ksm.h:45
+      in /workspace/build/release/bin/zone
+    std::allocator_traits<>::allocate(PageAlignedAllocator<>&, unsigned long)
+      at /usr/include/c++/13/bits/alloc_traits.h:333
+    std::_Vector_base<>::_M_allocate(unsigned long)
+      at /usr/include/c++/13/bits/stl_vector.h:381
+    void std::vector<>::_M_realloc_insert<>(__gnu_cxx::__normal_iterator<>, unsigned int const&)
+      at /usr/include/c++/13/bits/vector.tcc:459
+    std::vector<>::push_back(unsigned int const&)
+      at /usr/include/c++/13/bits/stl_vector.h:1292
+    RAYCAST_MESH::NodeAABB::split(std::vector<> const&, unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:604
+    RAYCAST_MESH::NodeAABB::split(std::vector<> const&, unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:616
+      in /workspace/build/release/bin/zone
+    RAYCAST_MESH::NodeAABB::split(std::vector<> const&, unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:616
+      in /workspace/build/release/bin/zone
+    RAYCAST_MESH::NodeAABB::NodeAABB(unsigned int, float const*, unsigned int, unsigned int*, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:482
+      in /workspace/build/release/bin/zone
+    RAYCAST_MESH::MyRaycastMesh::MyRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:820
+    createRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:993
+      in /workspace/build/release/bin/zone
+    Map::LoadV2(_IO_FILE*)
+      at /workspace/zone/map.cpp:961
+      in /workspace/build/release/bin/zone
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+17 calls with 262.14K peak consumption from:
+    PageAlignedAllocator<>::allocate(unsigned long)
+      at /workspace/zone/../common/memory/ksm.h:45
+      in /workspace/build/release/bin/zone
+    std::allocator_traits<>::allocate(PageAlignedAllocator<>&, unsigned long)
+      at /usr/include/c++/13/bits/alloc_traits.h:333
+    std::_Vector_base<>::_M_allocate(unsigned long)
+      at /usr/include/c++/13/bits/stl_vector.h:381
+    void std::vector<>::_M_realloc_insert<>(__gnu_cxx::__normal_iterator<>, unsigned int const&)
+      at /usr/include/c++/13/bits/vector.tcc:459
+    std::vector<>::push_back(unsigned int const&)
+      at /usr/include/c++/13/bits/stl_vector.h:1292
+    RAYCAST_MESH::NodeAABB::split(std::vector<> const&, unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:604
+    RAYCAST_MESH::NodeAABB::split(std::vector<> const&, unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:616
+      in /workspace/build/release/bin/zone
+    RAYCAST_MESH::NodeAABB::NodeAABB(unsigned int, float const*, unsigned int, unsigned int*, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:482
+      in /workspace/build/release/bin/zone
+    RAYCAST_MESH::MyRaycastMesh::MyRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:820
+    createRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:993
+      in /workspace/build/release/bin/zone
+    Map::LoadV2(_IO_FILE*)
+      at /workspace/zone/map.cpp:961
+      in /workspace/build/release/bin/zone
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+  and 26648 from 5635 other places
+
+25095 calls to allocation functions with 1.81M peak consumption from
+std::__new_allocator<>::allocate(unsigned long, void const*)
+  at /usr/include/c++/13/bits/new_allocator.h:151
+  in /workspace/build/release/bin/zone
+std::allocator<>::allocate(unsigned long)
+  at /usr/include/c++/13/bits/allocator.h:198
+std::allocator_traits<>::allocate(std::allocator<>&, unsigned long)
+  at /usr/include/c++/13/bits/alloc_traits.h:482
+std::_Rb_tree<>::_M_get_node()
+  at /usr/include/c++/13/bits/stl_tree.h:563
+std::_Rb_tree_node<>* std::_Rb_tree<>::_M_create_node<>(std::pair<> const&)
+  at /usr/include/c++/13/bits/stl_tree.h:613
+std::_Rb_tree_node<>* std::_Rb_tree<>::_Alloc_node::operator()<>(std::pair<> const&) const
+  at /usr/include/c++/13/bits/stl_tree.h:531
+std::_Rb_tree_iterator<> std::_Rb_tree<>::_M_insert_<>(std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, std::pair<> const&, std::_Rb_tree<>::_Alloc_node&)
+  at /usr/include/c++/13/bits/stl_tree.h:1831
+std::_Rb_tree_iterator<> std::_Rb_tree<>::_M_insert_unique_<>(std::_Rb_tree_const_iterator<>, std::pair<> const&, std::_Rb_tree<>::_Alloc_node&)
+  at /usr/include/c++/13/bits/stl_tree.h:2284
+std::enable_if<>::type std::_Rb_tree<>::_M_insert_range_unique<>(std::pair<> const*, std::pair<> const*)
+  at /usr/include/c++/13/bits/stl_tree.h:1104
+std::map<>::map(std::initializer_list<>, std::less<> const&, std::allocator<> const&)
+  at /usr/include/c++/13/bits/stl_map.h:244
+39 calls with 2.81K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../common/bodytypes.h:111
+      in /workspace/build/release/bin/zone
+39 calls with 2.81K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../common/bodytypes.h:111
+      in /workspace/build/release/bin/zone
+39 calls with 2.81K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../common/bodytypes.h:111
+      in /workspace/build/release/bin/zone
+39 calls with 2.81K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../common/bodytypes.h:111
+      in /workspace/build/release/bin/zone
+39 calls with 2.81K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../common/bodytypes.h:111
+      in /workspace/build/release/bin/zone
+  and 24900 from 1261 other places
+
+24354 calls to allocation functions with 1.75M peak consumption from
+std::__new_allocator<>::allocate(unsigned long, void const*)
+  at /usr/include/c++/13/bits/new_allocator.h:151
+  in /workspace/build/release/bin/zone
+std::allocator<>::allocate(unsigned long)
+  at /usr/include/c++/13/bits/allocator.h:198
+std::allocator_traits<>::allocate(std::allocator<>&, unsigned long)
+  at /usr/include/c++/13/bits/alloc_traits.h:482
+std::_Rb_tree<>::_M_get_node()
+  at /usr/include/c++/13/bits/stl_tree.h:563
+std::_Rb_tree_node<>* std::_Rb_tree<>::_M_create_node<>(std::pair<> const&)
+  at /usr/include/c++/13/bits/stl_tree.h:613
+std::_Rb_tree_node<>* std::_Rb_tree<>::_Alloc_node::operator()<>(std::pair<> const&) const
+  at /usr/include/c++/13/bits/stl_tree.h:531
+std::_Rb_tree_iterator<> std::_Rb_tree<>::_M_insert_<>(std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, std::pair<> const&, std::_Rb_tree<>::_Alloc_node&)
+  at /usr/include/c++/13/bits/stl_tree.h:1831
+std::_Rb_tree_iterator<> std::_Rb_tree<>::_M_insert_unique_<>(std::_Rb_tree_const_iterator<>, std::pair<> const&, std::_Rb_tree<>::_Alloc_node&)
+  at /usr/include/c++/13/bits/stl_tree.h:2284
+std::enable_if<>::type std::_Rb_tree<>::_M_insert_range_unique<>(std::pair<> const*, std::pair<> const*)
+  at /usr/include/c++/13/bits/stl_tree.h:1104
+std::map<>::map(std::initializer_list<>, std::less<> const&, std::allocator<> const&)
+  at /usr/include/c++/13/bits/stl_map.h:244
+72 calls with 5.18K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../common/spdat.h:895
+      in /workspace/build/release/bin/zone
+72 calls with 5.18K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../common/spdat.h:895
+      in /workspace/build/release/bin/zone
+72 calls with 5.18K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../common/spdat.h:820
+      in /workspace/build/release/bin/zone
+72 calls with 5.18K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../common/spdat.h:895
+      in /workspace/build/release/bin/zone
+72 calls with 5.18K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../common/spdat.h:895
+      in /workspace/build/release/bin/zone
+  and 23994 from 545 other places
+
+20619 calls to allocation functions with 661.79K peak consumption from
+Perl_safesysrealloc
+  in /lib/x86_64-linux-gnu/libperl.so.5.38
+3169 calls with 0B peak consumption from:
+    Perl_scan_str
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+708 calls with 0B peak consumption from:
+    0x7f9f2851d759
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_padnamelist_store
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a1c02
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_pad_add_name_pvn
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28447626
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284916fa
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+459 calls with 672B peak consumption from:
+    0x7f9f2851d759
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_padnamelist_store
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_pad_alloc
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845e3f4
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newUNOP
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a425f
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+433 calls with 0B peak consumption from:
+    0x7f9f2851d759
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_padnamelist_store
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a1c02
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_pad_add_name_pvn
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28447626
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284916fa
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+407 calls with 28B peak consumption from:
+    0x7f9f2848d443
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+  and 15443 from 1860 other places
+
+19437 calls to allocation functions with 983.37K peak consumption from
+Perl_safesyscalloc
+  in /lib/x86_64-linux-gnu/libperl.so.5.38
+1267 calls with 74.40K peak consumption from:
+    Perl_newPADNAMEpvn
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_pad_add_name_pvn
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28447626
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284916fa
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+573 calls with 32.73K peak consumption from:
+    Perl_newPADNAMEpvn
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_pad_add_name_pvn
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28447626
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284916fa
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+207 calls with 0B peak consumption from:
+    0x7f9f284851ba
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+198 calls with 0B peak consumption from:
+    0x7f9f284851ba
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+196 calls with 0B peak consumption from:
+    0x7f9f284851ba
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f285d2cc4
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572a0d
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28577035
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::init_eval_file()
+      at /workspace/zone/embperl.cpp:208
+      in /workspace/build/release/bin/zone
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:115
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+  and 16996 from 11106 other places
+
+11168 calls to allocation functions with 804.10K peak consumption from
+std::__new_allocator<>::allocate(unsigned long, void const*)
+  at /usr/include/c++/13/bits/new_allocator.h:151
+  in /workspace/build/release/bin/zone
+std::allocator<>::allocate(unsigned long)
+  at /usr/include/c++/13/bits/allocator.h:198
+std::allocator_traits<>::allocate(std::allocator<>&, unsigned long)
+  at /usr/include/c++/13/bits/alloc_traits.h:482
+std::_Rb_tree<>::_M_get_node()
+  at /usr/include/c++/13/bits/stl_tree.h:563
+std::_Rb_tree_node<>* std::_Rb_tree<>::_M_create_node<>(std::pair<> const&)
+  at /usr/include/c++/13/bits/stl_tree.h:613
+std::_Rb_tree_node<>* std::_Rb_tree<>::_Alloc_node::operator()<>(std::pair<> const&) const
+  at /usr/include/c++/13/bits/stl_tree.h:531
+std::_Rb_tree_iterator<> std::_Rb_tree<>::_M_insert_<>(std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, std::pair<> const&, std::_Rb_tree<>::_Alloc_node&)
+  at /usr/include/c++/13/bits/stl_tree.h:1831
+std::_Rb_tree_iterator<> std::_Rb_tree<>::_M_insert_unique_<>(std::_Rb_tree_const_iterator<>, std::pair<> const&, std::_Rb_tree<>::_Alloc_node&)
+  at /usr/include/c++/13/bits/stl_tree.h:2284
+std::enable_if<>::type std::_Rb_tree<>::_M_insert_range_unique<>(std::pair<> const*, std::pair<> const*)
+  at /usr/include/c++/13/bits/stl_tree.h:1104
+std::map<>::map(std::initializer_list<>, std::less<> const&, std::allocator<> const&)
+  at /usr/include/c++/13/bits/stl_map.h:244
+62 calls with 4.46K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../zone/dialogue_window.h:468
+      in /workspace/build/release/bin/zone
+62 calls with 4.46K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../zone/dialogue_window.h:468
+      in /workspace/build/release/bin/zone
+62 calls with 4.46K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../zone/dialogue_window.h:468
+      in /workspace/build/release/bin/zone
+62 calls with 4.46K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../zone/dialogue_window.h:468
+      in /workspace/build/release/bin/zone
+62 calls with 4.46K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../zone/dialogue_window.h:468
+      in /workspace/build/release/bin/zone
+  and 10858 from 189 other places
+
+9916 calls to allocation functions with 713.95K peak consumption from
+std::__new_allocator<>::allocate(unsigned long, void const*)
+  at /usr/include/c++/13/bits/new_allocator.h:151
+  in /workspace/build/release/bin/zone
+std::allocator<>::allocate(unsigned long)
+  at /usr/include/c++/13/bits/allocator.h:198
+std::allocator_traits<>::allocate(std::allocator<>&, unsigned long)
+  at /usr/include/c++/13/bits/alloc_traits.h:482
+std::_Rb_tree<>::_M_get_node()
+  at /usr/include/c++/13/bits/stl_tree.h:563
+std::_Rb_tree_node<>* std::_Rb_tree<>::_M_create_node<>(std::pair<> const&)
+  at /usr/include/c++/13/bits/stl_tree.h:613
+std::_Rb_tree_node<>* std::_Rb_tree<>::_Alloc_node::operator()<>(std::pair<> const&) const
+  at /usr/include/c++/13/bits/stl_tree.h:531
+std::_Rb_tree_iterator<> std::_Rb_tree<>::_M_insert_<>(std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, std::pair<> const&, std::_Rb_tree<>::_Alloc_node&)
+  at /usr/include/c++/13/bits/stl_tree.h:1831
+std::_Rb_tree_iterator<> std::_Rb_tree<>::_M_insert_unique_<>(std::_Rb_tree_const_iterator<>, std::pair<> const&, std::_Rb_tree<>::_Alloc_node&)
+  at /usr/include/c++/13/bits/stl_tree.h:2284
+std::enable_if<>::type std::_Rb_tree<>::_M_insert_range_unique<>(std::pair<> const*, std::pair<> const*)
+  at /usr/include/c++/13/bits/stl_tree.h:1104
+std::map<>::map(std::initializer_list<>, std::less<> const&, std::allocator<> const&)
+  at /usr/include/c++/13/bits/stl_map.h:244
+61 calls with 4.39K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../zone/object.h:380
+      in /workspace/build/release/bin/zone
+61 calls with 4.39K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../zone/object.h:380
+      in /workspace/build/release/bin/zone
+61 calls with 4.39K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../zone/object.h:380
+      in /workspace/build/release/bin/zone
+61 calls with 4.39K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../zone/object.h:380
+      in /workspace/build/release/bin/zone
+61 calls with 4.39K peak consumption from:
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../zone/object.h:380
+      in /workspace/build/release/bin/zone
+  and 9611 from 543 other places
+
+
+PEAK MEMORY CONSUMERS
+23.43M peak memory consumed over 5 calls from
+KSM::AllocatePageAligned(unsigned long)
+  at /workspace/common/memory/ksm.cpp:124
+  in /workspace/build/release/bin/zone
+8.82M consumed over 1 calls from:
+    RAYCAST_MESH::MyRaycastMesh::MyRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:786
+      in /workspace/build/release/bin/zone
+    createRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:993
+      in /workspace/build/release/bin/zone
+    Map::LoadV2(_IO_FILE*)
+      at /workspace/zone/map.cpp:961
+      in /workspace/build/release/bin/zone
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+5.50M consumed over 1 calls from:
+    RAYCAST_MESH::MyRaycastMesh::MyRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:779
+      in /workspace/build/release/bin/zone
+    createRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:993
+      in /workspace/build/release/bin/zone
+    Map::LoadV2(_IO_FILE*)
+      at /workspace/zone/map.cpp:961
+      in /workspace/build/release/bin/zone
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+3.90M consumed over 1 calls from:
+    RAYCAST_MESH::MyRaycastMesh::MyRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:793
+      in /workspace/build/release/bin/zone
+    createRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:993
+      in /workspace/build/release/bin/zone
+    Map::LoadV2(_IO_FILE*)
+      at /workspace/zone/map.cpp:961
+      in /workspace/build/release/bin/zone
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+3.90M consumed over 1 calls from:
+    RAYCAST_MESH::MyRaycastMesh::MyRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:806
+      in /workspace/build/release/bin/zone
+    createRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:993
+      in /workspace/build/release/bin/zone
+    Map::LoadV2(_IO_FILE*)
+      at /workspace/zone/map.cpp:961
+      in /workspace/build/release/bin/zone
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+1.30M consumed over 1 calls from:
+    RAYCAST_MESH::MyRaycastMesh::MyRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:800
+      in /workspace/build/release/bin/zone
+    createRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:993
+      in /workspace/build/release/bin/zone
+    Map::LoadV2(_IO_FILE*)
+      at /workspace/zone/map.cpp:961
+      in /workspace/build/release/bin/zone
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+
+13.71M peak memory consumed over 89 calls from
+std::__new_allocator<>::allocate(unsigned long, void const*)
+  at /usr/include/c++/13/bits/new_allocator.h:151
+  in /workspace/build/release/bin/zone
+std::allocator<>::allocate(unsigned long)
+  at /usr/include/c++/13/bits/allocator.h:198
+std::allocator_traits<>::allocate(std::allocator<>&, unsigned long)
+  at /usr/include/c++/13/bits/alloc_traits.h:482
+std::_Vector_base<>::_M_allocate(unsigned long)
+  at /usr/include/c++/13/bits/stl_vector.h:381
+std::vector<>::reserve(unsigned long)
+  at /usr/include/c++/13/bits/vector.tcc:79
+13.14M consumed over 2 calls from:
+    Map::LoadV2(_IO_FILE*)
+      at /workspace/zone/map.cpp:648
+      in /workspace/build/release/bin/zone
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+568.93K consumed over 84 calls from:
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+
+5.61M peak memory consumed over 26739 calls from
+PageAlignedAllocatorBase::allocateInternal(unsigned long, unsigned long)
+  at /workspace/common/memory/ksm.cpp:90
+  in /workspace/build/release/bin/zone
+1.30M consumed over 1 calls from:
+    PageAlignedAllocator<>::allocate(unsigned long)
+      at /workspace/zone/../common/memory/ksm.h:45
+      in /workspace/build/release/bin/zone
+    std::allocator_traits<>::allocate(PageAlignedAllocator<>&, unsigned long)
+      at /usr/include/c++/13/bits/alloc_traits.h:333
+    std::_Vector_base<>::_M_allocate(unsigned long)
+      at /usr/include/c++/13/bits/stl_vector.h:381
+    std::vector<>::reserve(unsigned long)
+      at /usr/include/c++/13/bits/vector.tcc:79
+    RAYCAST_MESH::NodeAABB::NodeAABB(unsigned int, float const*, unsigned int, unsigned int*, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:469
+    RAYCAST_MESH::MyRaycastMesh::MyRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:820
+    createRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:993
+      in /workspace/build/release/bin/zone
+    Map::LoadV2(_IO_FILE*)
+      at /workspace/zone/map.cpp:961
+      in /workspace/build/release/bin/zone
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+1.05M consumed over 19 calls from:
+    PageAlignedAllocator<>::allocate(unsigned long)
+      at /workspace/zone/../common/memory/ksm.h:45
+      in /workspace/build/release/bin/zone
+    std::allocator_traits<>::allocate(PageAlignedAllocator<>&, unsigned long)
+      at /usr/include/c++/13/bits/alloc_traits.h:333
+    std::_Vector_base<>::_M_allocate(unsigned long)
+      at /usr/include/c++/13/bits/stl_vector.h:381
+    void std::vector<>::_M_realloc_insert<>(__gnu_cxx::__normal_iterator<>, unsigned int const&)
+      at /usr/include/c++/13/bits/vector.tcc:459
+    std::vector<>::push_back(unsigned int const&)
+      at /usr/include/c++/13/bits/stl_vector.h:1292
+    RAYCAST_MESH::NodeAABB::split(std::vector<> const&, unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:590
+    RAYCAST_MESH::NodeAABB::NodeAABB(unsigned int, float const*, unsigned int, unsigned int*, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:482
+      in /workspace/build/release/bin/zone
+    RAYCAST_MESH::MyRaycastMesh::MyRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:820
+    createRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:993
+      in /workspace/build/release/bin/zone
+    Map::LoadV2(_IO_FILE*)
+      at /workspace/zone/map.cpp:961
+      in /workspace/build/release/bin/zone
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+1.05M consumed over 19 calls from:
+    PageAlignedAllocator<>::allocate(unsigned long)
+      at /workspace/zone/../common/memory/ksm.h:45
+      in /workspace/build/release/bin/zone
+    std::allocator_traits<>::allocate(PageAlignedAllocator<>&, unsigned long)
+      at /usr/include/c++/13/bits/alloc_traits.h:333
+    std::_Vector_base<>::_M_allocate(unsigned long)
+      at /usr/include/c++/13/bits/stl_vector.h:381
+    void std::vector<>::_M_realloc_insert<>(__gnu_cxx::__normal_iterator<>, unsigned int const&)
+      at /usr/include/c++/13/bits/vector.tcc:459
+    std::vector<>::push_back(unsigned int const&)
+      at /usr/include/c++/13/bits/stl_vector.h:1292
+    RAYCAST_MESH::NodeAABB::split(std::vector<> const&, unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:604
+    RAYCAST_MESH::NodeAABB::NodeAABB(unsigned int, float const*, unsigned int, unsigned int*, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:482
+      in /workspace/build/release/bin/zone
+    RAYCAST_MESH::MyRaycastMesh::MyRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:820
+    createRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:993
+      in /workspace/build/release/bin/zone
+    Map::LoadV2(_IO_FILE*)
+      at /workspace/zone/map.cpp:961
+      in /workspace/build/release/bin/zone
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+524.29K consumed over 18 calls from:
+    PageAlignedAllocator<>::allocate(unsigned long)
+      at /workspace/zone/../common/memory/ksm.h:45
+      in /workspace/build/release/bin/zone
+    std::allocator_traits<>::allocate(PageAlignedAllocator<>&, unsigned long)
+      at /usr/include/c++/13/bits/alloc_traits.h:333
+    std::_Vector_base<>::_M_allocate(unsigned long)
+      at /usr/include/c++/13/bits/stl_vector.h:381
+    void std::vector<>::_M_realloc_insert<>(__gnu_cxx::__normal_iterator<>, unsigned int const&)
+      at /usr/include/c++/13/bits/vector.tcc:459
+    std::vector<>::push_back(unsigned int const&)
+      at /usr/include/c++/13/bits/stl_vector.h:1292
+    RAYCAST_MESH::NodeAABB::split(std::vector<> const&, unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:590
+    RAYCAST_MESH::NodeAABB::split(std::vector<> const&, unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:616
+      in /workspace/build/release/bin/zone
+    RAYCAST_MESH::NodeAABB::NodeAABB(unsigned int, float const*, unsigned int, unsigned int*, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:482
+      in /workspace/build/release/bin/zone
+    RAYCAST_MESH::MyRaycastMesh::MyRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:820
+    createRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:993
+      in /workspace/build/release/bin/zone
+    Map::LoadV2(_IO_FILE*)
+      at /workspace/zone/map.cpp:961
+      in /workspace/build/release/bin/zone
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+524.29K consumed over 18 calls from:
+    PageAlignedAllocator<>::allocate(unsigned long)
+      at /workspace/zone/../common/memory/ksm.h:45
+      in /workspace/build/release/bin/zone
+    std::allocator_traits<>::allocate(PageAlignedAllocator<>&, unsigned long)
+      at /usr/include/c++/13/bits/alloc_traits.h:333
+    std::_Vector_base<>::_M_allocate(unsigned long)
+      at /usr/include/c++/13/bits/stl_vector.h:381
+    void std::vector<>::_M_realloc_insert<>(__gnu_cxx::__normal_iterator<>, unsigned int const&)
+      at /usr/include/c++/13/bits/vector.tcc:459
+    std::vector<>::push_back(unsigned int const&)
+      at /usr/include/c++/13/bits/stl_vector.h:1292
+    RAYCAST_MESH::NodeAABB::split(std::vector<> const&, unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:604
+    RAYCAST_MESH::NodeAABB::split(std::vector<> const&, unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:616
+      in /workspace/build/release/bin/zone
+    RAYCAST_MESH::NodeAABB::split(std::vector<> const&, unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:616
+      in /workspace/build/release/bin/zone
+    RAYCAST_MESH::NodeAABB::NodeAABB(unsigned int, float const*, unsigned int, unsigned int*, unsigned int, unsigned int, float, RAYCAST_MESH::NodeInterface*, std::vector<>&)
+      at /workspace/zone/raycast_mesh.cpp:482
+      in /workspace/build/release/bin/zone
+    RAYCAST_MESH::MyRaycastMesh::MyRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:820
+    createRaycastMesh(unsigned int, float const*, unsigned int, unsigned int const*, unsigned int, unsigned int, float)
+      at /workspace/zone/raycast_mesh.cpp:993
+      in /workspace/build/release/bin/zone
+    Map::LoadV2(_IO_FILE*)
+      at /workspace/zone/map.cpp:961
+      in /workspace/build/release/bin/zone
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+  and 1.17M from 5635 other places
+
+5.30M peak memory consumed over 67339 calls from
+std::__new_allocator<>::allocate(unsigned long, void const*)
+  at /usr/include/c++/13/bits/new_allocator.h:151
+  in /workspace/build/release/bin/zone
+std::allocator<>::allocate(unsigned long)
+  at /usr/include/c++/13/bits/allocator.h:198
+std::allocator_traits<>::allocate(std::allocator<>&, unsigned long)
+  at /usr/include/c++/13/bits/alloc_traits.h:482
+std::__cxx11::basic_string<>::_S_allocate(std::allocator<>&, unsigned long)
+  at /usr/include/c++/13/bits/basic_string.h:126
+std::__cxx11::basic_string<>::_M_create(unsigned long&, unsigned long)
+  at /usr/include/c++/13/bits/basic_string.tcc:159
+void std::__cxx11::basic_string<>::_M_construct<>(char const*, char const*, std::forward_iterator_tag)
+  at /usr/include/c++/13/bits/basic_string.tcc:229
+std::__cxx11::basic_string<>::basic_string<>(char const*, std::allocator<> const&)
+  at /usr/include/c++/13/bits/basic_string.h:649
+3.11M consumed over 1 calls from:
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+940.29K consumed over 1 calls from:
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+244.16K consumed over 481 calls from:
+    std::__cxx11::basic_string<>::assign(std::__cxx11::basic_string<> const&)
+      at /usr/include/c++/13/bits/basic_string.h:1608
+      in /workspace/build/release/bin/zone
+    std::__cxx11::basic_string<>::operator=(std::__cxx11::basic_string<> const&)
+      at /usr/include/c++/13/bits/basic_string.h:814
+    TaskManager::LoadTasks(int)
+      at /workspace/zone/task_manager.cpp:95
+    main
+      at /workspace/zone/main.cpp:424
+      in /workspace/build/release/bin/zone
+224.04K consumed over 297 calls from:
+    __static_initialization_and_destruction_0
+      at /workspace/common/../common/database/database_update_manifest.h:7248
+      in /workspace/build/release/bin/zone
+73.77K consumed over 21 calls from:
+    __static_initialization_and_destruction_0
+      at /workspace/common/../common/database/database_update_manifest_bots.h:2188
+      in /workspace/build/release/bin/zone
+  and 700.57K from 24741 other places
+
+4.93M peak memory consumed over 3 calls from
+std::__new_allocator<>::allocate(unsigned long, void const*)
+  at /usr/include/c++/13/bits/new_allocator.h:151
+  in /workspace/build/release/bin/zone
+std::allocator<>::allocate(unsigned long)
+  at /usr/include/c++/13/bits/allocator.h:198
+std::allocator_traits<>::allocate(std::allocator<>&, unsigned long)
+  at /usr/include/c++/13/bits/alloc_traits.h:482
+std::_Vector_base<>::_M_allocate(unsigned long)
+  at /usr/include/c++/13/bits/stl_vector.h:381
+std::vector<>::reserve(unsigned long)
+  at /usr/include/c++/13/bits/vector.tcc:79
+Map::LoadV2(_IO_FILE*)
+  at /workspace/zone/map.cpp:518
+4.93M consumed over 2 calls from:
+    Map::LoadV2(_IO_FILE*)
+      at /workspace/zone/map.cpp:651
+      in /workspace/build/release/bin/zone
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+
+4.70M peak memory consumed over 1974 calls from
+Perl_Slab_Alloc
+  in /lib/x86_64-linux-gnu/libperl.so.5.38
+426.38K consumed over 140 calls from:
+    Perl_newSTATEOP
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a5efc
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+244.10K consumed over 61 calls from:
+    Perl_newLISTOP
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a5efc
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+202.97K consumed over 35 calls from:
+    Perl_newSVOP
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_scan_num
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+185.16K consumed over 21 calls from:
+    Perl_newSVOP
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28484c89
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+182.58K consumed over 63 calls from:
+    Perl_newSTATEOP
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a5efc
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+  and 3.46M from 425 other places
+
+4.30M peak memory consumed over 512 calls from
+std::__detail::_MakeUniq<>::__single_object std::make_unique<>()
+  at /usr/include/c++/13/bits/unique_ptr.h:1070
+  in /workspace/build/release/bin/zone
+WriteReqPool::initialize_pool(unsigned long)
+  at /workspace/common/../common/net/tcp_connection_pooling.h:95
+WriteReqPool::WriteReqPool(unsigned long)
+  at /workspace/common/../common/net/tcp_connection_pooling.h:47
+_GLOBAL__sub_I_tcp_write_pool::__static_initialization_and_destruction_0
+  at /workspace/common/net/tcp_connection.cpp:24
+_GLOBAL__sub_I_tcp_write_pool
+  at /workspace/common/net/tcp_connection.cpp:328
+4.30M consumed over 512 calls from:
+    __libc_start_main_impl::call_init
+      at ../csu/libc-start.c:145
+      in /lib/x86_64-linux-gnu/libc.so.6
+    __libc_start_main_impl
+      at ./csu/../csu/libc-start.c:347
+    _start
+      in /workspace/build/release/bin/zone
+
+3.61M peak memory consumed over 490 calls from
+std::__new_allocator<>::allocate(unsigned long, void const*)
+  at /usr/include/c++/13/bits/new_allocator.h:151
+  in /workspace/build/release/bin/zone
+std::allocator<>::allocate(unsigned long)
+  at /usr/include/c++/13/bits/allocator.h:198
+std::allocator_traits<>::allocate(std::allocator<>&, unsigned long)
+  at /usr/include/c++/13/bits/alloc_traits.h:482
+std::__detail::_Hash_node<>* std::__detail::_Hashtable_alloc<>::_M_allocate_node<>(std::piecewise_construct_t const&, std::tuple<>&&, std::tuple<>&&)
+  at /usr/include/c++/13/bits/hashtable_policy.h:1990
+std::_Hashtable<>::_Scoped_node::_Scoped_node<>(std::__detail::_Hashtable_alloc<>*, std::piecewise_construct_t const&, std::tuple<>&&, std::tuple<>&&)
+  at /usr/include/c++/13/bits/hashtable.h:307
+std::pair<> std::__detail::_Insert_base<>::try_emplace<>(std::__detail::_Node_const_iterator<>, unsigned int&&, TaskInformation&&)
+  at /usr/include/c++/13/bits/hashtable_policy.h:954
+std::pair<> std::unordered_map<>::try_emplace<>(unsigned int&&, TaskInformation&&)
+  at /usr/include/c++/13/bits/unordered_map.h:488
+TaskManager::LoadTasks(int)
+  at /workspace/zone/task_manager.cpp:118
+3.61M consumed over 490 calls from:
+    main
+      at /workspace/zone/main.cpp:424
+      in /workspace/build/release/bin/zone
+
+3.27M peak memory consumed over 58359 calls from
+std::__new_allocator<>::allocate(unsigned long, void const*)
+  at /usr/include/c++/13/bits/new_allocator.h:151
+  in /workspace/build/release/bin/zone
+std::allocator<>::allocate(unsigned long)
+  at /usr/include/c++/13/bits/allocator.h:198
+std::allocator_traits<>::allocate(std::allocator<>&, unsigned long)
+  at /usr/include/c++/13/bits/alloc_traits.h:482
+std::_Rb_tree<>::_M_get_node()
+  at /usr/include/c++/13/bits/stl_tree.h:563
+std::_Rb_tree_node<>* std::_Rb_tree<>::_M_create_node<>(std::piecewise_construct_t const&, std::tuple<>&&, std::tuple<>&&)
+  at /usr/include/c++/13/bits/stl_tree.h:613
+std::_Rb_tree<>::_Auto_node::_Auto_node<>(std::_Rb_tree<>&, std::piecewise_construct_t const&, std::tuple<>&&, std::tuple<>&&)
+  at /usr/include/c++/13/bits/stl_tree.h:1637
+std::_Rb_tree_iterator<> std::_Rb_tree<>::_M_emplace_hint_unique<>(std::_Rb_tree_const_iterator<>, std::piecewise_construct_t const&, std::tuple<>&&, std::tuple<>&&)
+  at /usr/include/c++/13/bits/stl_tree.h:2462
+3.27M consumed over 58359 calls from:
+    std::map<>::operator[](unsigned long const&)
+      at /usr/include/c++/13/bits/stl_map.h:513
+      in /workspace/build/release/bin/zone
+    SkillCaps::LoadSkillCaps()
+      at /workspace/common/skill_caps.cpp:107
+    main
+      at /workspace/zone/main.cpp:290
+      in /workspace/build/release/bin/zone
+
+3.16M peak memory consumed over 39117 calls from
+Perl_safesysmalloc
+  in /lib/x86_64-linux-gnu/libperl.so.5.38
+61.20K consumed over 15 calls from:
+    Perl_more_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newSVpvn_flags
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28484cd1
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+53.92K consumed over 3413 calls from:
+    Perl_sv_grow_fresh
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_sv_setpvn_fresh
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newSVpvn_flags
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28484cd1
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+44.88K consumed over 11 calls from:
+    Perl_more_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28480d8c
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_scan_str
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+31.82K consumed over 9 calls from:
+    Perl_more_bodies
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newSVpvn_flags
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28484cd1
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+29.60K consumed over 555 calls from:
+    0x7f9f285166f4
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_hv_common
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2855e18f
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+  and 2.94M from 8432 other places
+
+
+MOST TEMPORARY ALLOCATIONS
+11517 temporary allocations of 39117 allocations in total (29.44%) from
+Perl_safesysmalloc
+  in /lib/x86_64-linux-gnu/libperl.so.5.38
+3170 temporary allocations of 3170 allocations in total (100.00%) from:
+    Perl_sv_grow_fresh
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_scan_str
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+1312 temporary allocations of 1693 allocations in total (77.50%) from:
+    Perl_sv_grow_fresh
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_sv_setpvn_fresh
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newSVpvn_flags
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284913cb
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+448 temporary allocations of 715 allocations in total (62.66%) from:
+    Perl_sv_grow_fresh
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_sv_setpvn_fresh
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newSVpvn_flags
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284842d2
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28486d51
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+407 temporary allocations of 461 allocations in total (88.29%) from:
+    Perl_sv_grow_fresh
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newSV
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2848c2e1
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+391 temporary allocations of 391 allocations in total (100.00%) from:
+    Perl_sv_grow_fresh
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_scan_str
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+  and 5.79K from 8432 other places
+
+3041 temporary allocations of 67339 allocations in total (4.52%) from
+std::__new_allocator<>::allocate(unsigned long, void const*)
+  at /usr/include/c++/13/bits/new_allocator.h:151
+  in /workspace/build/release/bin/zone
+std::allocator<>::allocate(unsigned long)
+  at /usr/include/c++/13/bits/allocator.h:198
+std::allocator_traits<>::allocate(std::allocator<>&, unsigned long)
+  at /usr/include/c++/13/bits/alloc_traits.h:482
+std::__cxx11::basic_string<>::_S_allocate(std::allocator<>&, unsigned long)
+  at /usr/include/c++/13/bits/basic_string.h:126
+std::__cxx11::basic_string<>::_M_create(unsigned long&, unsigned long)
+  at /usr/include/c++/13/bits/basic_string.tcc:159
+void std::__cxx11::basic_string<>::_M_construct<>(char const*, char const*, std::forward_iterator_tag)
+  at /usr/include/c++/13/bits/basic_string.tcc:229
+std::__cxx11::basic_string<>::basic_string<>(char const*, std::allocator<> const&)
+  at /usr/include/c++/13/bits/basic_string.h:649
+992 temporary allocations of 992 allocations in total (100.00%) from:
+    RuleManager::SetRule(std::__cxx11::basic_string<> const&, std::__cxx11::basic_string<> const&, Database*, bool, bool)
+      at /workspace/common/rulesys.cpp:142
+      in /workspace/build/release/bin/zone
+    RuleManager::LoadRules(Database*, std::__cxx11::basic_string<> const&, bool)
+      at /workspace/common/rulesys.cpp:318
+      in /workspace/build/release/bin/zone
+    WorldContentService::SetExpansionContext()
+      at /workspace/common/content/world_content_service.cpp:42
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:395
+      in /workspace/build/release/bin/zone
+992 temporary allocations of 992 allocations in total (100.00%) from:
+    RuleManager::SetRule(std::__cxx11::basic_string<> const&, std::__cxx11::basic_string<> const&, Database*, bool, bool)
+      at /workspace/common/rulesys.cpp:141
+      in /workspace/build/release/bin/zone
+    RuleManager::LoadRules(Database*, std::__cxx11::basic_string<> const&, bool)
+      at /workspace/common/rulesys.cpp:318
+      in /workspace/build/release/bin/zone
+    WorldContentService::SetExpansionContext()
+      at /workspace/common/content/world_content_service.cpp:42
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:395
+      in /workspace/build/release/bin/zone
+878 temporary allocations of 883 allocations in total (99.43%) from:
+    Map::LoadV2(_IO_FILE*)
+      at /workspace/zone/map.cpp:597
+      in /workspace/build/release/bin/zone
+    Map::Load(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/map.cpp:347
+      in /workspace/build/release/bin/zone
+    Map::LoadMapFile(std::__cxx11::basic_string<>)
+      at /workspace/zone/map.cpp:294
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1149
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+25 temporary allocations of 25 allocations in total (100.00%) from:
+    std::allocator<>::allocate(unsigned long)
+      at /usr/include/c++/13/bits/allocator.h:198
+      in /workspace/build/release/bin/zone
+    std::allocator_traits<>::allocate(std::allocator<>&, unsigned long)
+      at /usr/include/c++/13/bits/alloc_traits.h:482
+    std::__cxx11::basic_string<>::_S_allocate(std::allocator<>&, unsigned long)
+      at /usr/include/c++/13/bits/basic_string.h:126
+    std::__cxx11::basic_string<>::_M_create(unsigned long&, unsigned long)
+      at /usr/include/c++/13/bits/basic_string.tcc:159
+      in /workspace/build/release/bin/zone
+    fmt::v12::vformat[abi:cxx11](fmt::v12::basic_string_view<>, fmt::v12::basic_format_args<>)
+      in /workspace/build/release/bin/zone
+    std::__cxx11::basic_string<> fmt::v12::format<>(fmt::v12::fstring<>::t, char const*&)
+      at /workspace/build/release/vcpkg_installed/x64-linux/include/fmt/format.h:4349
+      in /workspace/build/release/bin/zone
+    EQEmuLogSys::LoadLogDatabaseSettings(bool)
+      at /workspace/common/eqemu_logsys.cpp:663
+    main
+      at /workspace/zone/main.cpp:282
+      in /workspace/build/release/bin/zone
+22 temporary allocations of 22 allocations in total (100.00%) from:
+    PlayerEventLogs::Init()
+      at /workspace/common/events/player_event_logs.cpp:73
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:288
+      in /workspace/build/release/bin/zone
+  and 132B from 24741 other places
+
+2451 temporary allocations of 20619 allocations in total (11.89%) from
+Perl_safesysrealloc
+  in /lib/x86_64-linux-gnu/libperl.so.5.38
+179 temporary allocations of 185 allocations in total (96.76%) from:
+    Perl_sv_grow
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_sv_catpvn_flags
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28491517
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+167 temporary allocations of 168 allocations in total (99.40%) from:
+    Perl_sv_grow
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_scan_str
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+161 temporary allocations of 161 allocations in total (100.00%) from:
+    Perl_sv_grow
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_scan_str
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f285d2cc4
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572a0d
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28577035
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::init_eval_file()
+      at /workspace/zone/embperl.cpp:208
+      in /workspace/build/release/bin/zone
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:115
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+160 temporary allocations of 160 allocations in total (100.00%) from:
+    Perl_sv_grow
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_scan_str
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f285d2cc4
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572a0d
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28577035
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::init_eval_file()
+      at /workspace/zone/embperl.cpp:208
+      in /workspace/build/release/bin/zone
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:115
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+98 temporary allocations of 407 allocations in total (24.08%) from:
+    0x7f9f2848d443
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_yylex
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a33a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+  and 1.69K from 1860 other places
+
+240 temporary allocations of 2915 allocations in total (8.23%) from
+0x7f9f285e466e
+  in /lib/x86_64-linux-gnu/libperl.so.5.38
+58 temporary allocations of 62 allocations in total (93.55%) from:
+    Perl_Slab_Free
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_op_free
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_leave_scope
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28568774
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f285765ad
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+32 temporary allocations of 34 allocations in total (94.12%) from:
+    Perl_Slab_Free
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_op_free
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2849f021
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_sv_clear
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_sv_free2
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a31a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+30 temporary allocations of 31 allocations in total (96.77%) from:
+    Perl_Slab_Free
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_op_free
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2849f021
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_sv_clear
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_sv_free2
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a31a3
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+22 temporary allocations of 22 allocations in total (100.00%) from:
+    Perl_Slab_Free
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_op_free
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845edc1
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a5730
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+15 temporary allocations of 15 allocations in total (100.00%) from:
+    Perl_Slab_Free
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_op_free
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_leave_scope
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28568774
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2856ce6a
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_vcroak
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_croak
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2856882f
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f285765ad
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+  and 83B from 404 other places
+
+120 temporary allocations of 382 allocations in total (31.41%) from
+Json::duplicateAndPrefixStringValue
+  at /workspace/common/json/jsoncpp.cpp:2572
+  in /workspace/build/release/bin/zone
+1 temporary allocations of 1 allocations in total (100.00%) from:
+    Json::Value::Value(Json::Value const&)
+      at /workspace/common/json/jsoncpp.cpp:2896
+      in /workspace/build/release/bin/zone
+    Json::Value::get(char const*, char const*, Json::Value const&) const
+      at /workspace/common/json/jsoncpp.cpp:3573
+      in /workspace/build/release/bin/zone
+    Json::Value::get(char const*, Json::Value const&) const
+      at /workspace/common/json/jsoncpp.cpp:3577
+    EQEmuConfig::parse_config()
+      at /workspace/common/eqemu_config.cpp:137
+      in /workspace/build/release/bin/zone
+    EQEmuConfig::parseFile(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/../common/eqemu_config.h:202
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:136
+      in /workspace/build/release/bin/zone
+1 temporary allocations of 1 allocations in total (100.00%) from:
+    Json::Value::Value(Json::Value const&)
+      at /workspace/common/json/jsoncpp.cpp:2896
+      in /workspace/build/release/bin/zone
+    Json::Value::get(char const*, char const*, Json::Value const&) const
+      at /workspace/common/json/jsoncpp.cpp:3573
+      in /workspace/build/release/bin/zone
+    Json::Value::get(char const*, Json::Value const&) const
+      at /workspace/common/json/jsoncpp.cpp:3577
+    EQEmuConfig::parse_config()
+      at /workspace/common/eqemu_config.cpp:157
+      in /workspace/build/release/bin/zone
+    EQEmuConfig::parseFile(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/../common/eqemu_config.h:202
+      in /workspace/build/release/bin/zone
+    PathManager::Init()
+      at /workspace/common/path_manager.cpp:40
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:111
+      in /workspace/build/release/bin/zone
+1 temporary allocations of 1 allocations in total (100.00%) from:
+    Json::Value::Value(Json::Value const&)
+      at /workspace/common/json/jsoncpp.cpp:2896
+      in /workspace/build/release/bin/zone
+    Json::Value::get(char const*, char const*, Json::Value const&) const
+      at /workspace/common/json/jsoncpp.cpp:3573
+      in /workspace/build/release/bin/zone
+    Json::Value::get(char const*, Json::Value const&) const
+      at /workspace/common/json/jsoncpp.cpp:3577
+    EQEmuConfig::parse_config()
+      at /workspace/common/eqemu_config.cpp:162
+      in /workspace/build/release/bin/zone
+    EQEmuConfig::parseFile(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/../common/eqemu_config.h:202
+      in /workspace/build/release/bin/zone
+    PathManager::Init()
+      at /workspace/common/path_manager.cpp:40
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:111
+      in /workspace/build/release/bin/zone
+1 temporary allocations of 1 allocations in total (100.00%) from:
+    Json::Value::Value(Json::Value const&)
+      at /workspace/common/json/jsoncpp.cpp:2896
+      in /workspace/build/release/bin/zone
+    Json::Value::get(char const*, char const*, Json::Value const&) const
+      at /workspace/common/json/jsoncpp.cpp:3573
+      in /workspace/build/release/bin/zone
+    Json::Value::get(char const*, Json::Value const&) const
+      at /workspace/common/json/jsoncpp.cpp:3577
+    EQEmuConfig::parse_config()
+      at /workspace/common/eqemu_config.cpp:146
+      in /workspace/build/release/bin/zone
+    EQEmuConfig::parseFile(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/../common/eqemu_config.h:202
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:136
+      in /workspace/build/release/bin/zone
+1 temporary allocations of 1 allocations in total (100.00%) from:
+    Json::Value::Value(Json::Value const&)
+      at /workspace/common/json/jsoncpp.cpp:2896
+      in /workspace/build/release/bin/zone
+    Json::Value::get(char const*, char const*, Json::Value const&) const
+      at /workspace/common/json/jsoncpp.cpp:3573
+      in /workspace/build/release/bin/zone
+    Json::Value::get(char const*, Json::Value const&) const
+      at /workspace/common/json/jsoncpp.cpp:3577
+    EQEmuConfig::parse_config()
+      at /workspace/common/eqemu_config.cpp:163
+      in /workspace/build/release/bin/zone
+    EQEmuConfig::parseFile(std::__cxx11::basic_string<> const&)
+      at /workspace/zone/../common/eqemu_config.h:202
+      in /workspace/build/release/bin/zone
+    PathManager::Init()
+      at /workspace/common/path_manager.cpp:40
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:111
+      in /workspace/build/release/bin/zone
+  and 115B from 267 other places
+
+107 temporary allocations of 156 allocations in total (68.59%) from
+_IO_new_fopen::__fopen_internal
+  at ./libio/iofopen.c:65
+  in /lib/x86_64-linux-gnu/libc.so.6
+_IO_new_fopen
+  at ./libio/./libio/iofopen.c:86
+63 temporary allocations of 63 allocations in total (100.00%) from:
+    searchpath
+      in /workspace/build/release/bin/zone
+    lj_cf_package_loader_lua
+      in /workspace/build/release/bin/zone
+    lj_BC_FUNCC
+      in /workspace/build/release/bin/zone
+    lj_cf_package_require
+      in /workspace/build/release/bin/zone
+    lj_BC_FUNCC
+      in /workspace/build/release/bin/zone
+    lua_pcall
+      in /workspace/build/release/bin/zone
+    LuaParser::ReloadQuests()
+      at /workspace/zone/lua_parser.cpp:1184
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+35 temporary allocations of 35 allocations in total (100.00%) from:
+    searchpath
+      in /workspace/build/release/bin/zone
+    lj_cf_package_loader_lua
+      in /workspace/build/release/bin/zone
+    lj_BC_FUNCC
+      in /workspace/build/release/bin/zone
+    lj_cf_package_require
+      in /workspace/build/release/bin/zone
+    lj_BC_FUNCC
+      in /workspace/build/release/bin/zone
+    lj_cf_package_require
+      in /workspace/build/release/bin/zone
+    lj_BC_FUNCC
+      in /workspace/build/release/bin/zone
+    lua_pcall
+      in /workspace/build/release/bin/zone
+    LuaParser::ReloadQuests()
+      at /workspace/zone/lua_parser.cpp:1184
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+7 temporary allocations of 7 allocations in total (100.00%) from:
+    searchpath
+      in /workspace/build/release/bin/zone
+    lj_cf_package_loader_lua
+      in /workspace/build/release/bin/zone
+    lj_BC_FUNCC
+      in /workspace/build/release/bin/zone
+    lj_cf_package_require
+      in /workspace/build/release/bin/zone
+    lj_BC_FUNCC
+      in /workspace/build/release/bin/zone
+    lj_cf_package_require
+      in /workspace/build/release/bin/zone
+    lj_BC_FUNCC
+      in /workspace/build/release/bin/zone
+    lj_cf_package_require
+      in /workspace/build/release/bin/zone
+    lj_BC_FUNCC
+      in /workspace/build/release/bin/zone
+    lua_pcall
+      in /workspace/build/release/bin/zone
+    LuaParser::ReloadQuests()
+      at /workspace/zone/lua_parser.cpp:1184
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+1 temporary allocations of 1 allocations in total (100.00%) from:
+    LuaParser::ReloadQuests()
+      at /workspace/zone/lua_parser.cpp:1226
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+1 temporary allocations of 1 allocations in total (100.00%) from:
+    LuaParser::ReloadQuests()
+      at /workspace/zone/lua_parser.cpp:1180
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+  and 0B from 16 other places
+
+99 temporary allocations of 2479 allocations in total (3.99%) from
+std::__new_allocator<>::allocate(unsigned long, void const*)
+  at /usr/include/c++/13/bits/new_allocator.h:151
+  in /workspace/build/release/bin/zone
+std::allocator<>::allocate(unsigned long)
+  at /usr/include/c++/13/bits/allocator.h:198
+std::allocator_traits<>::allocate(std::allocator<>&, unsigned long)
+  at /usr/include/c++/13/bits/alloc_traits.h:482
+std::_Vector_base<>::_M_allocate(unsigned long)
+  at /usr/include/c++/13/bits/stl_vector.h:381
+void std::vector<>::_M_range_initialize<>(char const* const*, char const* const*, std::forward_iterator_tag)
+  at /usr/include/c++/13/bits/stl_vector.h:1692
+std::vector<>::vector<>(char const* const*, char const* const*, std::allocator<> const&)
+  at /usr/include/c++/13/bits/stl_vector.h:711
+97 temporary allocations of 126 allocations in total (76.98%) from:
+    command_init()
+      at /workspace/zone/command.cpp:279
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:384
+      in /workspace/build/release/bin/zone
+1 temporary allocations of 1 allocations in total (100.00%) from:
+    EQ::SayLinkEngine::LoadCachedSaylinks()
+      at /workspace/common/say_link.cpp:378
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:399
+      in /workspace/build/release/bin/zone
+1 temporary allocations of 1 allocations in total (100.00%) from:
+    BaseTasksetsRepository::SelectColumns[abi:cxx11]()
+      at /workspace/zone/../common/repositories/base/base_tasksets_repository.h:61
+      in /workspace/build/release/bin/zone
+    BaseTasksetsRepository::SelectColumnsRaw[abi:cxx11]()
+      at /workspace/zone/../common/repositories/base/base_tasksets_repository.h:71
+    BaseTasksetsRepository::BaseSelect[abi:cxx11]()
+      at /workspace/zone/../common/repositories/base/base_tasksets_repository.h:83
+    BaseTasksetsRepository::GetWhere(Database&, std::__cxx11::basic_string<> const&)
+      at /workspace/zone/../common/repositories/base/base_tasksets_repository.h:279
+    TaskManager::LoadTaskSets()
+      at /workspace/zone/task_manager.cpp:51
+      in /workspace/build/release/bin/zone
+    TaskManager::LoadTasks(int)
+      at /workspace/zone/task_manager.cpp:67
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:424
+      in /workspace/build/release/bin/zone
+  and 0B from 102 other places
+
+65 temporary allocations of 19437 allocations in total (0.33%) from
+Perl_safesyscalloc
+  in /lib/x86_64-linux-gnu/libperl.so.5.38
+38 temporary allocations of 39 allocations in total (97.44%) from:
+    Perl_regexec_flags
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f285241c0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+16 temporary allocations of 17 allocations in total (94.12%) from:
+    Perl_regexec_flags
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f285241c0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+3 temporary allocations of 4 allocations in total (75.00%) from:
+    Perl_sv_magicext
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_sv_magic
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_mg_copy
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_hv_common
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2852b1f2
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+1 temporary allocations of 1 allocations in total (100.00%) from:
+    Perl_init_i18nl10n
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:94
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+1 temporary allocations of 2 allocations in total (50.00%) from:
+    Perl_regexec_flags
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28531683
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_call_list
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28459ee9
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_newATTRSUB_x
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f2845c5a0
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f284a6311
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28572b64
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    0x7f9f28574d66
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_runops_standard
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_sv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Perl_eval_pv
+      in /lib/x86_64-linux-gnu/libperl.so.5.38
+    Embperl::DoInit()
+      at /workspace/zone/embperl.cpp:171
+      in /workspace/build/release/bin/zone
+    Embperl::Embperl()
+      at /workspace/zone/embperl.cpp:80
+      in /workspace/build/release/bin/zone
+    PerlembParser::ReloadQuests()
+      at /workspace/zone/embparser.cpp:249
+      in /workspace/build/release/bin/zone
+    QuestParserCollection::ReloadQuests(bool)
+      at /workspace/zone/quest_parser_collection.cpp:109
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:458
+      in /workspace/build/release/bin/zone
+  and 6B from 11106 other places
+
+52 temporary allocations of 572 allocations in total (9.09%) from
+std::__new_allocator<>::allocate(unsigned long, void const*)
+  at /usr/include/c++/13/bits/new_allocator.h:151
+  in /workspace/build/release/bin/zone
+std::allocator<>::allocate(unsigned long)
+  at /usr/include/c++/13/bits/allocator.h:198
+std::allocator_traits<>::allocate(std::allocator<>&, unsigned long)
+  at /usr/include/c++/13/bits/alloc_traits.h:482
+std::_Rb_tree<>::_M_get_node()
+  at /usr/include/c++/13/bits/stl_tree.h:563
+std::_Rb_tree_node<>* std::_Rb_tree<>::_M_create_node<>(std::pair<> const&)
+  at /usr/include/c++/13/bits/stl_tree.h:613
+std::_Rb_tree_node<>* std::_Rb_tree<>::_Alloc_node::operator()<>(std::pair<> const&) const
+  at /usr/include/c++/13/bits/stl_tree.h:531
+std::_Rb_tree_iterator<> std::_Rb_tree<>::_M_insert_<>(std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, std::pair<> const&, std::_Rb_tree<>::_Alloc_node&)
+  at /usr/include/c++/13/bits/stl_tree.h:1831
+std::_Rb_tree_iterator<> std::_Rb_tree<>::_M_insert_unique_<>(std::_Rb_tree_const_iterator<>, std::pair<> const&, std::_Rb_tree<>::_Alloc_node&)
+  at /usr/include/c++/13/bits/stl_tree.h:2284
+std::enable_if<>::type std::_Rb_tree<>::_M_insert_range_unique<>(std::pair<> const*, std::pair<> const*)
+  at /usr/include/c++/13/bits/stl_tree.h:1104
+std::map<>::map(std::initializer_list<>, std::less<> const&, std::allocator<> const&)
+  at /usr/include/c++/13/bits/stl_map.h:244
+8 temporary allocations of 24 allocations in total (33.33%) from:
+    EQEmuLogSys::ProcessConsoleMessage(unsigned short, std::__cxx11::basic_string<> const&, char const*, char const*, int)
+      at /workspace/common/eqemu_logsys.cpp:333
+      in /workspace/build/release/bin/zone
+    EQEmuLogSys::Out(Logs::DebugLevel, unsigned short, char const*, char const*, int, char const*, ...)
+      at /workspace/common/eqemu_logsys.cpp:464
+      in /workspace/build/release/bin/zone
+    WorldContentService::ReloadContentFlags()
+      at /workspace/common/content/world_content_service.cpp:196
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:395
+      in /workspace/build/release/bin/zone
+3 temporary allocations of 9 allocations in total (33.33%) from:
+    EQEmuLogSys::ProcessConsoleMessage(unsigned short, std::__cxx11::basic_string<> const&, char const*, char const*, int)
+      at /workspace/common/eqemu_logsys.cpp:333
+      in /workspace/build/release/bin/zone
+    EQEmuLogSys::Out(Logs::DebugLevel, unsigned short, char const*, char const*, int, char const*, ...)
+      at /workspace/common/eqemu_logsys.cpp:464
+      in /workspace/build/release/bin/zone
+    RuleManager::LoadRules(Database*, std::__cxx11::basic_string<> const&, bool)
+      at /workspace/common/rulesys.cpp:323
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1140
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+3 temporary allocations of 9 allocations in total (33.33%) from:
+    EQEmuLogSys::ProcessConsoleMessage(unsigned short, std::__cxx11::basic_string<> const&, char const*, char const*, int)
+      at /workspace/common/eqemu_logsys.cpp:333
+      in /workspace/build/release/bin/zone
+    EQEmuLogSys::Out(Logs::DebugLevel, unsigned short, char const*, char const*, int, char const*, ...)
+      at /workspace/common/eqemu_logsys.cpp:464
+      in /workspace/build/release/bin/zone
+    Zone::LoadZoneCFG(char const*, unsigned short)
+      at /workspace/zone/zone.cpp:1412
+      in /workspace/build/release/bin/zone
+    Zone::Init(bool)
+      at /workspace/zone/zone.cpp:1130
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:95
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+3 temporary allocations of 9 allocations in total (33.33%) from:
+    EQEmuLogSys::ProcessConsoleMessage(unsigned short, std::__cxx11::basic_string<> const&, char const*, char const*, int)
+      at /workspace/common/eqemu_logsys.cpp:333
+      in /workspace/build/release/bin/zone
+    EQEmuLogSys::Out(Logs::DebugLevel, unsigned short, char const*, char const*, int, char const*, ...)
+      at /workspace/common/eqemu_logsys.cpp:464
+      in /workspace/build/release/bin/zone
+    RuleManager::LoadRules(Database*, std::__cxx11::basic_string<> const&, bool)
+      at /workspace/common/rulesys.cpp:323
+      in /workspace/build/release/bin/zone
+    WorldContentService::SetExpansionContext()
+      at /workspace/common/content/world_content_service.cpp:42
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:395
+      in /workspace/build/release/bin/zone
+2 temporary allocations of 6 allocations in total (33.33%) from:
+    EQEmuLogSys::ProcessConsoleMessage(unsigned short, std::__cxx11::basic_string<> const&, char const*, char const*, int)
+      at /workspace/common/eqemu_logsys.cpp:333
+      in /workspace/build/release/bin/zone
+    EQEmuLogSys::Out(Logs::DebugLevel, unsigned short, char const*, char const*, int, char const*, ...)
+      at /workspace/common/eqemu_logsys.cpp:464
+      in /workspace/build/release/bin/zone
+    Zone::Bootup(unsigned int, unsigned int, bool)
+      at /workspace/zone/zone.cpp:89
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:485
+      in /workspace/build/release/bin/zone
+  and 33B from 67 other places
+
+44 temporary allocations of 4712 allocations in total (0.93%) from
+CRYPTO_malloc
+  in /workspace/build/release/bin/zone
+27 temporary allocations of 27 allocations in total (100.00%) from:
+    OPENSSL_sk_dup
+      in /workspace/build/release/bin/zone
+    ossl_namemap_doall_names
+      in /workspace/build/release/bin/zone
+    evp_md_from_algorithm
+      in /workspace/build/release/bin/zone
+    construct_evp_method
+      in /workspace/build/release/bin/zone
+    ossl_method_construct_this
+      in /workspace/build/release/bin/zone
+    algorithm_do_this
+      in /workspace/build/release/bin/zone
+    ossl_provider_doall_activated
+      in /workspace/build/release/bin/zone
+    ossl_algorithm_do_all
+      in /workspace/build/release/bin/zone
+    ossl_method_construct
+      in /workspace/build/release/bin/zone
+    evp_generic_fetch
+      in /workspace/build/release/bin/zone
+    EVP_MD_fetch
+      in /workspace/build/release/bin/zone
+    evp_md_init_internal
+      in /workspace/build/release/bin/zone
+    ma_hash_new
+      in /workspace/build/release/bin/zone
+    ma_scramble_41
+      in /workspace/build/release/bin/zone
+    native_password_auth_client
+      in /workspace/build/release/bin/zone
+    run_plugin_auth
+      in /workspace/build/release/bin/zone
+    mthd_my_real_connect
+      in /workspace/build/release/bin/zone
+    DBcore::Open(unsigned int*, char*)
+      at /workspace/common/dbcore.cpp:259
+      in /workspace/build/release/bin/zone
+    DBcore::Open(char const*, char const*, char const*, char const*, unsigned int, unsigned int*, char*, bool, bool)
+      at /workspace/common/dbcore.cpp:218
+      in /workspace/build/release/bin/zone
+    Database::Connect(std::__cxx11::basic_string<> const&, std::__cxx11::basic_string<> const&, std::__cxx11::basic_string<> const&, std::__cxx11::basic_string<> const&, unsigned int, std::__cxx11::basic_string<>)
+      at /workspace/common/database.cpp:90
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:219
+      in /workspace/build/release/bin/zone
+7 temporary allocations of 25 allocations in total (28.00%) from:
+    BUF_MEM_grow
+      in /workspace/build/release/bin/zone
+    str_copy
+      in /workspace/build/release/bin/zone
+    def_load_bio
+      in /workspace/build/release/bin/zone
+    def_load
+      in /workspace/build/release/bin/zone
+    CONF_modules_load_file_ex
+      in /workspace/build/release/bin/zone
+    ossl_config_int
+      in /workspace/build/release/bin/zone
+    ossl_init_config_ossl_
+      in /workspace/build/release/bin/zone
+    __pthread_once_slow
+      at ./nptl/pthread_once.c:116
+      in /lib/x86_64-linux-gnu/libc.so.6
+    CRYPTO_THREAD_run_once
+      in /workspace/build/release/bin/zone
+    OPENSSL_init_crypto
+      in /workspace/build/release/bin/zone
+    OPENSSL_init_ssl
+      in /workspace/build/release/bin/zone
+    httplib::detail::SSLInit::SSLInit()
+      at /workspace/zone/../common/http/httplib.h:7314
+      in /workspace/build/release/bin/zone
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../common/http/httplib.h:7425
+    __libc_start_main_impl::call_init
+      at ../csu/libc-start.c:145
+      in /lib/x86_64-linux-gnu/libc.so.6
+    __libc_start_main_impl
+      at ./csu/../csu/libc-start.c:347
+    _start
+      in /workspace/build/release/bin/zone
+6 temporary allocations of 27 allocations in total (22.22%) from:
+    CRYPTO_strdup
+      in /workspace/build/release/bin/zone
+    ossl_namemap_add_names
+      in /workspace/build/release/bin/zone
+    construct_evp_method
+      in /workspace/build/release/bin/zone
+    ossl_method_construct_this
+      in /workspace/build/release/bin/zone
+    algorithm_do_this
+      in /workspace/build/release/bin/zone
+    ossl_provider_doall_activated
+      in /workspace/build/release/bin/zone
+    ossl_algorithm_do_all
+      in /workspace/build/release/bin/zone
+    ossl_method_construct
+      in /workspace/build/release/bin/zone
+    evp_generic_fetch
+      in /workspace/build/release/bin/zone
+    EVP_MD_fetch
+      in /workspace/build/release/bin/zone
+    evp_md_init_internal
+      in /workspace/build/release/bin/zone
+    ma_hash_new
+      in /workspace/build/release/bin/zone
+    ma_scramble_41
+      in /workspace/build/release/bin/zone
+    native_password_auth_client
+      in /workspace/build/release/bin/zone
+    run_plugin_auth
+      in /workspace/build/release/bin/zone
+    mthd_my_real_connect
+      in /workspace/build/release/bin/zone
+    DBcore::Open(unsigned int*, char*)
+      at /workspace/common/dbcore.cpp:259
+      in /workspace/build/release/bin/zone
+    DBcore::Open(char const*, char const*, char const*, char const*, unsigned int, unsigned int*, char*, bool, bool)
+      at /workspace/common/dbcore.cpp:218
+      in /workspace/build/release/bin/zone
+    Database::Connect(std::__cxx11::basic_string<> const&, std::__cxx11::basic_string<> const&, std::__cxx11::basic_string<> const&, std::__cxx11::basic_string<> const&, unsigned int, std::__cxx11::basic_string<>)
+      at /workspace/common/database.cpp:90
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:219
+      in /workspace/build/release/bin/zone
+1 temporary allocations of 1 allocations in total (100.00%) from:
+    CRYPTO_zalloc
+      in /workspace/build/release/bin/zone
+    evp_md_init_internal
+      in /workspace/build/release/bin/zone
+    ma_hash_new
+      in /workspace/build/release/bin/zone
+    ma_scramble_41
+      in /workspace/build/release/bin/zone
+    native_password_auth_client
+      in /workspace/build/release/bin/zone
+    run_plugin_auth
+      in /workspace/build/release/bin/zone
+    mthd_my_real_connect
+      in /workspace/build/release/bin/zone
+    DBcore::Open(unsigned int*, char*)
+      at /workspace/common/dbcore.cpp:259
+      in /workspace/build/release/bin/zone
+    DBcore::Open(char const*, char const*, char const*, char const*, unsigned int, unsigned int*, char*, bool, bool)
+      at /workspace/common/dbcore.cpp:218
+      in /workspace/build/release/bin/zone
+    Database::Connect(std::__cxx11::basic_string<> const&, std::__cxx11::basic_string<> const&, std::__cxx11::basic_string<> const&, std::__cxx11::basic_string<> const&, unsigned int, std::__cxx11::basic_string<>)
+      at /workspace/common/database.cpp:90
+      in /workspace/build/release/bin/zone
+    main
+      at /workspace/zone/main.cpp:219
+      in /workspace/build/release/bin/zone
+1 temporary allocations of 1 allocations in total (100.00%) from:
+    CRYPTO_zalloc
+      in /workspace/build/release/bin/zone
+    OPENSSL_sk_insert
+      in /workspace/build/release/bin/zone
+    provider_conf_params_internal
+      in /workspace/build/release/bin/zone
+    provider_conf_init
+      in /workspace/build/release/bin/zone
+    CONF_modules_load
+      in /workspace/build/release/bin/zone
+    CONF_modules_load_file_ex
+      in /workspace/build/release/bin/zone
+    ossl_config_int
+      in /workspace/build/release/bin/zone
+    ossl_init_config_ossl_
+      in /workspace/build/release/bin/zone
+    __pthread_once_slow
+      at ./nptl/pthread_once.c:116
+      in /lib/x86_64-linux-gnu/libc.so.6
+    CRYPTO_THREAD_run_once
+      in /workspace/build/release/bin/zone
+    OPENSSL_init_crypto
+      in /workspace/build/release/bin/zone
+    OPENSSL_init_ssl
+      in /workspace/build/release/bin/zone
+    httplib::detail::SSLInit::SSLInit()
+      at /workspace/zone/../common/http/httplib.h:7314
+      in /workspace/build/release/bin/zone
+    __static_initialization_and_destruction_0
+      at /workspace/zone/../common/http/httplib.h:7425
+    __libc_start_main_impl::call_init
+      at ../csu/libc-start.c:145
+      in /lib/x86_64-linux-gnu/libc.so.6
+    __libc_start_main_impl
+      at ./csu/../csu/libc-start.c:347
+    _start
+      in /workspace/build/release/bin/zone
+  and 2B from 953 other places
+
+
+total runtime: 7.49s.
+calls to allocation functions: 364356 (48619/s)
+temporary memory allocations: 17802 (2375/s)
+peak heap memory consumption: 83.29M
+peak RSS (including heaptrack overhead): 150.65M
+total memory leaked: 82.87M
+suppressed leaks: 273.93K

@@ -1,0 +1,22 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='200'>
+<style>text{font:11px sans-serif} rect:hover{stroke:#000;stroke-width:0.4}</style>
+<text x='8' y='16'>idle-qrg samples=2</text>
+<rect x='0.00' y='180' width='1200.00' height='15' fill='#87bccb'><title>_start (2 samples, 100.00%)</title></rect>
+<text x='2.00' y='192'>_start</text>
+<rect x='0.00' y='164' width='1200.00' height='15' fill='#7e396b'><title>__libc_start_main_impl (2 samples, 100.00%)</title></rect>
+<text x='2.00' y='176'>__libc_start_main_impl</text>
+<rect x='0.00' y='148' width='1200.00' height='15' fill='#f1eff0'><title>__libc_start_call_main (2 samples, 100.00%)</title></rect>
+<text x='2.00' y='160'>__libc_start_call_main</text>
+<rect x='0.00' y='132' width='1200.00' height='15' fill='#d220d7'><title>main (2 samples, 100.00%)</title></rect>
+<text x='2.00' y='144'>main</text>
+<rect x='0.00' y='116' width='1200.00' height='15' fill='#9df679'><title>uv_run (2 samples, 100.00%)</title></rect>
+<text x='2.00' y='128'>uv_run</text>
+<rect x='0.00' y='100' width='1200.00' height='15' fill='#45cd4a'><title>uv__run_timers (2 samples, 100.00%)</title></rect>
+<text x='2.00' y='112'>uv__run_timers</text>
+<rect x='0.00' y='84' width='1200.00' height='15' fill='#2f1f5d'><title>EQ::Net::ReliableStreamConnectionManager::Attach(uv_loop_s*)::{lambda(uv_timer_s*)#1}::_FUN(uv_timer_s*) (2 samples, 100.00%)</title></rect>
+<text x='2.00' y='96'>EQ::Net::ReliableStreamConnectionManager::Attach(uv_loop_s*)::{lambda(uv_timer_s*)#1}::_FUN(uv_timer_s*)</text>
+<rect x='0.00' y='68' width='1200.00' height='15' fill='#bf9b03'><title>EQ::Net::ReliableStreamConnectionManager::Process() (2 samples, 100.00%)</title></rect>
+<text x='2.00' y='80'>EQ::Net::ReliableStreamConnectionManager::Process()</text>
+<rect x='0.00' y='52' width='1200.00' height='15' fill='#bbc8ca'><title>std::chrono::_V2::steady_clock::now() (2 samples, 100.00%)</title></rect>
+<text x='2.00' y='64'>std::chrono::_V2::steady_clock::now()</text>
+</svg>

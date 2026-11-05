@@ -1,0 +1,32 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='232'>
+<style>text{font:11px sans-serif} rect:hover{stroke:#000;stroke-width:0.4}</style>
+<text x='8' y='16'>load-poknowledge samples=3</text>
+<rect x='0.00' y='212' width='1200.00' height='15' fill='#87bccb'><title>_start (3 samples, 100.00%)</title></rect>
+<text x='2.00' y='224'>_start</text>
+<rect x='0.00' y='196' width='1200.00' height='15' fill='#7e396b'><title>__libc_start_main_impl (3 samples, 100.00%)</title></rect>
+<text x='2.00' y='208'>__libc_start_main_impl</text>
+<rect x='0.00' y='180' width='1200.00' height='15' fill='#f1eff0'><title>__libc_start_call_main (3 samples, 100.00%)</title></rect>
+<text x='2.00' y='192'>__libc_start_call_main</text>
+<rect x='0.00' y='164' width='1200.00' height='15' fill='#d220d7'><title>main (3 samples, 100.00%)</title></rect>
+<text x='2.00' y='176'>main</text>
+<rect x='0.00' y='148' width='1200.00' height='15' fill='#9df679'><title>uv_run (3 samples, 100.00%)</title></rect>
+<text x='2.00' y='160'>uv_run</text>
+<rect x='0.00' y='132' width='1200.00' height='15' fill='#45cd4a'><title>uv__run_timers (3 samples, 100.00%)</title></rect>
+<text x='2.00' y='144'>uv__run_timers</text>
+<rect x='0.00' y='116' width='1200.00' height='15' fill='#5a0c08'><title>EQ::Timer::Start(unsigned long, bool)::{lambda(uv_timer_s*)#1}::_FUN(uv_timer_s*) (3 samples, 100.00%)</title></rect>
+<text x='2.00' y='128'>EQ::Timer::Start(unsigned long, bool)::{lambda(uv_timer_s*)#1}::_FUN(uv_timer_s*)</text>
+<rect x='0.00' y='100' width='1200.00' height='15' fill='#aed42a'><title>main::{lambda(EQ::Timer*)#1}::operator()(EQ::Timer*) const [clone .isra.0] (3 samples, 100.00%)</title></rect>
+<text x='2.00' y='112'>main::{lambda(EQ::Timer*)#1}::operator()(EQ::Timer*) const [clone .isra.0]</text>
+<rect x='0.00' y='84' width='400.00' height='15' fill='#e626e2'><title>EntityList::MobProcess() (1 samples, 33.33%)</title></rect>
+<text x='2.00' y='96'>EntityList::MobProcess()</text>
+<rect x='400.00' y='84' width='800.00' height='15' fill='#fe7d4f'><title>Zone::Process() (2 samples, 66.67%)</title></rect>
+<text x='402.00' y='96'>Zone::Process()</text>
+<rect x='400.00' y='68' width='400.00' height='15' fill='#602567'><title>MobMovementManager::Process() (1 samples, 33.33%)</title></rect>
+<text x='402.00' y='80'>MobMovementManager::Process()</text>
+<rect x='800.00' y='68' width='400.00' height='15' fill='#1673c9'><title>Spawn2::Process() (1 samples, 33.33%)</title></rect>
+<text x='802.00' y='80'>Spawn2::Process()</text>
+<rect x='400.00' y='52' width='400.00' height='15' fill='#951b95'><title>std::_Rb_tree_increment(std::_Rb_tree_node_base*) (1 samples, 33.33%)</title></rect>
+<text x='402.00' y='64'>std::_Rb_tree_increment(std::_Rb_tree_node_base*)</text>
+<rect x='800.00' y='52' width='400.00' height='15' fill='#c50abf'><title>SpawnGroupList::GetSpawnGroup(unsigned int) (1 samples, 33.33%)</title></rect>
+<text x='802.00' y='64'>SpawnGroupList::GetSpawnGroup(unsigned int)</text>
+</svg>

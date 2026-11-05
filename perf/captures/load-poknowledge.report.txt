@@ -1,0 +1,19 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 3  of event 'cpu-clock:u'
+# Event count (approx.): 30303030
+#
+# Overhead  Command  Shared Object        Symbol                                               
+# ........  .......  ...................  .....................................................
+#
+    33.33%  zone     libstdc++.so.6.0.33  [.] std::_Rb_tree_increment(std::_Rb_tree_node_base*)
+    33.33%  zone     zone                 [.] EntityList::MobProcess()
+    33.33%  zone     zone                 [.] SpawnGroupList::GetSpawnGroup(unsigned int)
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#
