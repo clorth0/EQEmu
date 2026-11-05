@@ -1,0 +1,17 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 2  of event 'cpu-clock:u'
+# Event count (approx.): 20202020
+#
+# Overhead  Command  Shared Object        Symbol                                   
+# ........  .......  ...................  .........................................
+#
+   100.00%  zone     libstdc++.so.6.0.33  [.] std::chrono::_V2::steady_clock::now()
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#

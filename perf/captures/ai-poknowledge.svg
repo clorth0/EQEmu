@@ -1,0 +1,60 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='264'>
+<style>text{font:11px sans-serif} rect:hover{stroke:#000;stroke-width:0.4}</style>
+<text x='8' y='16'>ai-poknowledge samples=11</text>
+<rect x='0.00' y='244' width='981.82' height='15' fill='#241e19'><title>_start (9 samples, 81.82%)</title></rect>
+<text x='2.00' y='256'>_start</text>
+<rect x='981.82' y='244' width='218.18' height='15' fill='#54b798'><title>main (2 samples, 18.18%)</title></rect>
+<text x='983.82' y='256'>main</text>
+<rect x='0.00' y='228' width='981.82' height='15' fill='#f38e05'><title>__libc_start_main_impl (9 samples, 81.82%)</title></rect>
+<text x='2.00' y='240'>__libc_start_main_impl</text>
+<rect x='981.82' y='228' width='218.18' height='15' fill='#5f7c1c'><title>uv_run (2 samples, 18.18%)</title></rect>
+<text x='983.82' y='240'>uv_run</text>
+<rect x='0.00' y='212' width='981.82' height='15' fill='#0ced12'><title>__libc_start_call_main (9 samples, 81.82%)</title></rect>
+<text x='2.00' y='224'>__libc_start_call_main</text>
+<rect x='981.82' y='212' width='218.18' height='15' fill='#4ceb5f'><title>uv__io_poll (2 samples, 18.18%)</title></rect>
+<text x='983.82' y='224'>uv__io_poll</text>
+<rect x='0.00' y='196' width='981.82' height='15' fill='#54b798'><title>main (9 samples, 81.82%)</title></rect>
+<text x='2.00' y='208'>main</text>
+<rect x='981.82' y='196' width='109.09' height='15' fill='#4143d9'><title>__GI_epoll_pwait (1 samples, 9.09%)</title></rect>
+<text x='983.82' y='208'>__GI_epoll_pwai</text>
+<rect x='0.00' y='180' width='981.82' height='15' fill='#5f7c1c'><title>uv_run (9 samples, 81.82%)</title></rect>
+<text x='2.00' y='192'>uv_run</text>
+<rect x='0.00' y='164' width='981.82' height='15' fill='#f5d496'><title>uv__run_timers (9 samples, 81.82%)</title></rect>
+<text x='2.00' y='176'>uv__run_timers</text>
+<rect x='0.00' y='148' width='872.73' height='15' fill='#5642ce'><title>EQ::Timer::Start(unsigned long, bool)::{lambda(uv_timer_s*)#1}::_FUN(uv_timer_s*) (8 samples, 72.73%)</title></rect>
+<text x='2.00' y='160'>EQ::Timer::Start(unsigned long, bool)::{lambda(uv_timer_s*)#1}::_FUN(uv_timer_s*)</text>
+<rect x='872.73' y='148' width='109.09' height='15' fill='#d43d0b'><title>uv_timer_stop (1 samples, 9.09%)</title></rect>
+<text x='874.73' y='160'>uv_timer_stop</text>
+<rect x='0.00' y='132' width='763.64' height='15' fill='#23c99a'><title>main::{lambda(EQ::Timer*)#1}::operator()(EQ::Timer*) const [clone .isra.0] (7 samples, 63.64%)</title></rect>
+<text x='2.00' y='144'>main::{lambda(EQ::Timer*)#1}::operator()(EQ::Timer*) const [clone .isra.0]</text>
+<rect x='763.64' y='132' width='109.09' height='15' fill='#735652'><title>std::_Function_handler&lt;void (EQ::Timer*), main::{lambda(EQ::Timer*)#1}&gt;::_M_invoke(std::_Any_data const&amp;, EQ::Timer*&amp;&amp;) (1 samples, 9.09%)</title></rect>
+<text x='765.64' y='144'>std::_Function_</text>
+<rect x='0.00' y='116' width='327.27' height='15' fill='#c3ae14'><title>EntityList::MobProcess() (3 samples, 27.27%)</title></rect>
+<text x='2.00' y='128'>EntityList::MobProcess()</text>
+<rect x='327.27' y='116' width='109.09' height='15' fill='#9343f5'><title>QueryServ::CheckForConnectState() (1 samples, 9.09%)</title></rect>
+<text x='329.27' y='128'>QueryServ::Chec</text>
+<rect x='436.36' y='116' width='218.18' height='15' fill='#987729'><title>Zone::Process() (2 samples, 18.18%)</title></rect>
+<text x='438.36' y='128'>Zone::Process()</text>
+<rect x='654.55' y='116' width='109.09' height='15' fill='#aac1b4'><title>ZoneEventScheduler::Process(Zone*, WorldContentService*) (1 samples, 9.09%)</title></rect>
+<text x='656.55' y='128'>ZoneEventSchedu</text>
+<rect x='0.00' y='100' width='218.18' height='15' fill='#0b37a8'><title>NPC::Process() (2 samples, 18.18%)</title></rect>
+<text x='2.00' y='112'>NPC::Process()</text>
+<rect x='436.36' y='100' width='218.18' height='15' fill='#398958'><title>MobMovementManager::Process() (2 samples, 18.18%)</title></rect>
+<text x='438.36' y='112'>MobMovementManager::Process()</text>
+<rect x='654.55' y='100' width='109.09' height='15' fill='#9e0f3e'><title>__tz_convert (1 samples, 9.09%)</title></rect>
+<text x='656.55' y='112'>__tz_convert</text>
+<rect x='0.00' y='84' width='109.09' height='15' fill='#00faa2'><title>Mob::AI_Process() (1 samples, 9.09%)</title></rect>
+<text x='2.00' y='96'>Mob::AI_Process</text>
+<rect x='109.09' y='84' width='109.09' height='15' fill='#3b6f4a'><title>Mob::BuffProcess() (1 samples, 9.09%)</title></rect>
+<text x='111.09' y='96'>Mob::BuffProces</text>
+<rect x='436.36' y='84' width='218.18' height='15' fill='#129d34'><title>std::_Rb_tree_increment(std::_Rb_tree_node_base*) (2 samples, 18.18%)</title></rect>
+<text x='438.36' y='96'>std::_Rb_tree_increment(std::_R</text>
+<rect x='654.55' y='84' width='109.09' height='15' fill='#b3d263'><title>tzset_internal (1 samples, 9.09%)</title></rect>
+<text x='656.55' y='96'>tzset_internal</text>
+<rect x='0.00' y='68' width='109.09' height='15' fill='#ccabbb'><title>Mob::IsPet() (1 samples, 9.09%)</title></rect>
+<text x='2.00' y='80'>Mob::IsPet()</text>
+<rect x='654.55' y='68' width='109.09' height='15' fill='#f7356e'><title>__GI___strdup (1 samples, 9.09%)</title></rect>
+<text x='656.55' y='80'>__GI___strdup</text>
+<rect x='0.00' y='52' width='109.09' height='15' fill='#0df4b6'><title>Mob::HasOwner() (1 samples, 9.09%)</title></rect>
+<text x='2.00' y='64'>Mob::HasOwner()</text>
+</svg>

@@ -66,6 +66,15 @@ compile_flags.txt
 !utils/scripts/build/should-release/should-release
 !utils/scripts/build/should-release/should-release.exe
 
+# Performance harness local state (scripts and BASELINE.md stay tracked)
+perf/out/
+perf/var/
+perf/cache/
+perf/__pycache__/
+perf/captures/*.data
+perf/captures/*.data.old
+perf/captures/*.gz
+
 # CMake Files
 cmake-build-relwithdebinfo/*
 skill-caps.diff

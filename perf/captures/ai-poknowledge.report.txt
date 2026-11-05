@@ -1,0 +1,26 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 11  of event 'cpu-clock:u'
+# Event count (approx.): 111111110
+#
+# Overhead  Command  Shared Object        Symbol                                                                                                                     
+# ........  .......  ...................  ...........................................................................................................................
+#
+    18.18%  zone     libstdc++.so.6.0.33  [.] std::_Rb_tree_increment(std::_Rb_tree_node_base*)
+     9.09%  zone     libc.so.6            [.] __strdup
+     9.09%  zone     libc.so.6            [.] epoll_pwait
+     9.09%  zone     zone                 [.] EntityList::MobProcess()
+     9.09%  zone     zone                 [.] Mob::BuffProcess()
+     9.09%  zone     zone                 [.] Mob::HasOwner()
+     9.09%  zone     zone                 [.] QueryServ::CheckForConnectState()
+     9.09%  zone     zone                 [.] std::_Function_handler<void (EQ::Timer*), main::{lambda(EQ::Timer*)#1}>::_M_invoke(std::_Any_data const&, EQ::Timer*&&)
+     9.09%  zone     zone                 [.] uv__io_poll
+     9.09%  zone     zone                 [.] uv_timer_stop
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#
