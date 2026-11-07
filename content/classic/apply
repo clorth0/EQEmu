@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Apply content/classic/classic_lock.sql. Safe to run more than once.
+#
+# Usage:
+#   ./content/classic/apply [mysql options] DATABASE
+#
+# Example, after importing a PEQ archive the same way perf/harness.py does:
+#   ./content/classic/apply --socket=/tmp/mysql.sock -uroot peq
+#
+# The mysql client is required because the script uses DELIMITER.
+set -euo pipefail
+
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if [[ $# -lt 1 ]]; then
+  echo "usage: $0 [mysql options] DATABASE" >&2
+  echo "example: $0 --socket=/tmp/mysql.sock -uroot peq" >&2
+  exit 2
+fi
+
+set +e
+mysql "$@" < "${here}/classic_lock.sql"
+status=$?
+set -e
+
+# CALL raises before the script's own DROP when the default ruleset is missing.
+mysql "$@" -e "DROP PROCEDURE IF EXISTS eqemu_classic_lock_apply;" >/dev/null 2>&1 || true
+exit "${status}"
