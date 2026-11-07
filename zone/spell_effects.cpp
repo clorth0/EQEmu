@@ -7324,7 +7324,7 @@ float Mob::GetSympatheticProcChances(uint16 spell_id, int16 ProcRateMod, int32 I
 	 else
 		 cast_time_mod = static_cast<float>(total_cast_time) / 7000.0f;
 
-	ProcChance = (RuleR(Casting, AvgSpellProcsPerMinute)/100.0f) * (static_cast<float>(100.0f + ProcRateMod) / 10.0f)
+	ProcChance = (RuleR(Spells, AvgSpellProcsPerMinute)/100.0f) * (static_cast<float>(100.0f + ProcRateMod) / 10.0f)
 		* cast_time_mod * (static_cast<float>(100.0f + ItemProcRate)/100.0f);
 
  	return ProcChance;

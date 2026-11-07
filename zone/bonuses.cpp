@@ -260,7 +260,7 @@ void Mob::AddItemBonuses(const EQ::ItemInstance* inst, StatBonuses* b, bool is_a
 		return;
 	}
 
-	if (IsClient() && !is_tribute && !inst->IsEquipable(GetBaseRace(), GetClass())) {
+	if (IsClient() && !is_tribute && !inst->IsEquipableByClassBitmask(GetBaseRace(), CastToClient()->GetClassBitmask())) {
 		if (item->ItemType != EQ::item::ItemTypeFood && item->ItemType != EQ::item::ItemTypeDrink) {
 			return;
 		}
@@ -520,7 +520,12 @@ void Mob::AdditiveWornBonuses(const EQ::ItemInstance* inst, StatBonuses* b, bool
 
 	const auto* item = inst->GetItem();
 
-	if (!inst->IsEquipable(GetBaseRace(), GetClass())) {
+	if (IsClient()) {
+		if (!inst->IsEquipableByClassBitmask(GetBaseRace(), CastToClient()->GetClassBitmask())) {
+			return;
+		}
+	}
+	else if (!inst->IsEquipable(GetBaseRace(), GetClass())) {
 		return;
 	}
 

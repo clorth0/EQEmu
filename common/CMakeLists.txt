@@ -62,6 +62,7 @@ set(common_sources
     memory_buffer.cpp
     memory_mapped_file.cpp
     memory/ksm.cpp
+    multiclass.cpp
     misc_functions.cpp
     misc.cpp
     mysql_request_result.cpp

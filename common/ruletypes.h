@@ -240,6 +240,11 @@ RULE_INT(Character, SecondsBeforeAFKCombatZone, 1800, "Seconds before a player i
 RULE_INT(Character, SecondsBeforeAFKNonCombatZone, 600, "Seconds before a player is considered AFK in non-combat zones (600 = 10 minutes)")
 RULE_CATEGORY_END()
 
+RULE_CATEGORY(MultiClass)
+RULE_BOOL(MultiClass, Enabled, false, "Allow a character to be more than one player class at their current level. Default false keeps single-class gameplay.")
+RULE_INT(MultiClass, MaxClasses, 3, "Maximum player classes a character may hold, including their primary class.")
+RULE_CATEGORY_END()
+
 RULE_CATEGORY(Mercs)
 RULE_INT(Mercs, SuspendIntervalMS, 10000, "Time interval for merc suspend (milliseconds)")
 RULE_INT(Mercs, UpkeepIntervalMS, 180000, "Time interval for merc upkeep (milliseconds)")

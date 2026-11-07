@@ -538,6 +538,8 @@ namespace EQ
 
 		bool IsEquipable(uint16 Race, uint16 Class) const;
 		bool IsClassEquipable(uint16 Class) const;
+		bool IsEquipableByClassBitmask(uint16 race_id, uint16 class_bitmask) const;
+		bool IsClassEquipableByBitmask(uint16 class_bitmask) const;
 		bool IsRaceEquipable(uint16 Race) const;
 		bool IsClassCommon() const;
 		bool IsClassBag() const;

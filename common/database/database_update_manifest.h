@@ -7207,6 +7207,32 @@ ALTER TABLE `character_parcels_containers`
 )",
 		.content_schema_update = false
 	},
+	ManifestEntry{
+		.version = 9329,
+		.description = "2026_11_07_character_class_bitmask.sql",
+		.check = "SHOW COLUMNS FROM `character_data` LIKE 'class_bitmask'",
+		.condition = "empty",
+		.match = "",
+		.sql = R"(
+ALTER TABLE `character_data`
+	ADD COLUMN `class_bitmask` smallint(5) UNSIGNED NOT NULL DEFAULT 0 AFTER `class`;
+
+INSERT INTO `rule_values` (`ruleset_id`, `rule_name`, `rule_value`, `notes`)
+SELECT 1, 'MultiClass:Enabled', 'false', 'Allow a character to be more than one player class at their current level. Default false keeps single-class gameplay.'
+FROM DUAL
+WHERE NOT EXISTS (
+	SELECT 1 FROM `rule_values` WHERE `ruleset_id` = 1 AND `rule_name` = 'MultiClass:Enabled'
+);
+
+INSERT INTO `rule_values` (`ruleset_id`, `rule_name`, `rule_value`, `notes`)
+SELECT 1, 'MultiClass:MaxClasses', '3', 'Maximum player classes a character may hold, including their primary class.'
+FROM DUAL
+WHERE NOT EXISTS (
+	SELECT 1 FROM `rule_values` WHERE `ruleset_id` = 1 AND `rule_name` = 'MultiClass:MaxClasses'
+);
+)",
+		.content_schema_update = false
+	},
 // -- template; copy/paste this when you need to create a new entry
 //	ManifestEntry{
 //		.version = 9228,

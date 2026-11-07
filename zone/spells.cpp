@@ -75,6 +75,7 @@
 #include "common/events/player_event_logs.h"
 #include "common/item_instance.h"
 #include "common/misc_functions.h"
+#include "common/multiclass.h"
 #include "common/repositories/character_corpses_repository.h"
 #include "common/repositories/spell_buckets_repository.h"
 #include "common/rulesys.h"
@@ -1058,7 +1059,13 @@ bool Client::CheckFizzle(uint16 spell_id)
 	//Live AA - Spell Casting Expertise, Mastery of the Past
 	no_fizzle_level = aabonuses.MasteryofPast + itembonuses.MasteryofPast + spellbonuses.MasteryofPast;
 
-	if (spells[spell_id].classes[GetClass()-1] < no_fizzle_level) {
+	const bool multiclass = MultiClass::ClassCount(GetClassBitmask()) > 1;
+	const uint8 spell_class_level = multiclass
+		? GetSpellClassLevel(spell_id)
+		: spells[spell_id].classes[GetClass() - 1];
+	const uint8 casting_class = multiclass ? GetSpellCastingClass(spell_id) : GetClass();
+
+	if (spell_class_level < no_fizzle_level) {
 		return true;
 	}
 
@@ -1102,14 +1109,14 @@ bool Client::CheckFizzle(uint16 spell_id)
 		// CALCULATE EFFECTIVE CASTING STAT VALUE
 		float prime_stat_reduction = 0.0f;
 
-		if (IsIntelligenceCasterClass()) {
+		if (multiclass ? MultiClass::IsIntelligenceManaClass(casting_class) : IsIntelligenceCasterClass()) {
 			prime_stat_reduction = (GetINT() - 75) / 10.0;
-		} else if (IsWisdomCasterClass()) {
+		} else if (multiclass ? MultiClass::IsWisdomManaClass(casting_class) : IsWisdomCasterClass()) {
 			prime_stat_reduction = (GetWIS() - 75) / 10.0;
 		}
 
 		// BARDS ARE SPECIAL - they add both CHA and DEX mods to get casting rates similar to full casters without spec skill
-		if (GetClass() == Class::Bard) {
+		if (casting_class == Class::Bard) {
 			prime_stat_reduction = (GetCHA() - 75 + GetDEX() - 75) / 10.0;
 		}
 
@@ -1138,12 +1145,12 @@ bool Client::CheckFizzle(uint16 spell_id)
 	int par_skill;
 	int act_skill;
 
-	par_skill = spells[spell_id].classes[GetClass()-1] * 5 - 10;//IIRC even if you are lagging behind the skill levels you don't fizzle much
+	par_skill = spell_class_level * 5 - 10;//IIRC even if you are lagging behind the skill levels you don't fizzle much
 	if (par_skill > 235) {
 		par_skill = 235;
 	}
 
-	par_skill += spells[spell_id].classes[GetClass()-1]; // maximum of 270 for level 65 spell
+	par_skill += spell_class_level; // maximum of 270 for level 65 spell
 
 	act_skill = GetSkill(spells[spell_id].skill);
 	act_skill += GetLevel(); // maximum of whatever the client can cheat
@@ -1178,11 +1185,11 @@ bool Client::CheckFizzle(uint16 spell_id)
 	float diff = par_skill + static_cast<float>(spells[spell_id].base_difficulty) - act_skill;
 
 	// if you have high int/wis you fizzle less, you fizzle more if you are stupid
-	if (GetClass() == Class::Bard) {
+	if (casting_class == Class::Bard) {
 		diff -= (GetCHA() - 110) / 20.0;
-	} else if (IsIntelligenceCasterClass()) {
+	} else if (multiclass ? MultiClass::IsIntelligenceManaClass(casting_class) : IsIntelligenceCasterClass()) {
 		diff -= (GetINT() - 125) / 20.0;
-	} else if (IsWisdomCasterClass()) {
+	} else if (multiclass ? MultiClass::IsWisdomManaClass(casting_class) : IsWisdomCasterClass()) {
 		diff -= (GetWIS() - 125) / 20.0;
 	}
 
@@ -1799,7 +1806,7 @@ void Mob::CastedSpellFinished(uint16 spell_id, uint32 target_id, CastingSlot slo
 			if (spells[spell_id].timer_id > 0 && slot < CastingSlot::MaxGems) {
 				c->SetLinkedSpellReuseTimer(spells[spell_id].timer_id, (spells[spell_id].recast_time / 1000) - (casting_spell_recast_adjust / 1000));
 			}
-			if (RuleB(Spells, EnableBardMelody)) {
+			if (RuleB(Character, EnableBardMelody)) {
 				c->MemorizeSpell(static_cast<uint32>(slot), spell_id, memSpellSpellbar, casting_spell_recast_adjust);
 			}
 
@@ -5399,9 +5406,9 @@ float Mob::ResistSpell(uint8 resist_type, uint16 spell_id, Mob *caster, bool use
 
 	else {
 
-		if(IsNPC() && level >= RuleI(Casting,ResistFalloff))
+		if(IsNPC() && level >= RuleI(Spells,ResistFalloff))
 		{
-			int a = (RuleI(Casting,ResistFalloff)-1) - caster_level;
+			int a = (RuleI(Spells,ResistFalloff)-1) - caster_level;
 			if(a > 0)
 			{
 				temp_level_diff = a;
@@ -5437,9 +5444,9 @@ float Mob::ResistSpell(uint8 resist_type, uint16 spell_id, Mob *caster, bool use
 		if(IsNPC() && IsDamageSpell(spell_id) && level >= 17)
 		{
 			int level_diff;
-			if(level >= RuleI(Casting,ResistFalloff))
+			if(level >= RuleI(Spells,ResistFalloff))
 			{
-				level_diff = (RuleI(Casting,ResistFalloff)-1) - caster_level;
+				level_diff = (RuleI(Spells,ResistFalloff)-1) - caster_level;
 				if(level_diff < 0)
 				{
 					level_diff = 0;

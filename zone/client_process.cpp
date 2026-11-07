@@ -23,6 +23,8 @@
 
 #include "client.h"
 
+#include "common/multiclass.h"
+
 #include "common/data_verification.h"
 #include "common/eqemu_logsys.h"
 #include "common/events/player_event_logs.h"
@@ -1167,17 +1169,20 @@ void Client::OPMemorizeSpell(const EQApplicationPacket* app)
 		return;
 	}
 
+	const uint8 spell_class_level = MultiClass::ClassCount(GetClassBitmask()) > 1
+		? GetSpellClassLevel(m->spell_id)
+		: spells[m->spell_id].classes[GetClass() - 1];
 	if (
 		m->scribing != memSpellForget &&
 		(
 			!IsPlayerClass(GetClass()) ||
-			GetLevel() < spells[m->spell_id].classes[GetClass() - 1]
+			GetLevel() < spell_class_level
 		)
 	) {
 		MessageString(
 			Chat::Red,
 			SPELL_LEVEL_TO_LOW,
-			std::to_string(spells[m->spell_id].classes[GetClass() - 1]).c_str(),
+			std::to_string(spell_class_level).c_str(),
 			spells[m->spell_id].name
 		);
 		return;
@@ -1193,7 +1198,7 @@ void Client::OPMemorizeSpell(const EQApplicationPacket* app)
 				if (
 					item &&
 					RuleB(Character, RestrictSpellScribing) &&
-					!item->IsEquipable(GetRace(), GetClass())
+					!item->IsEquipableByClassBitmask(GetRace(), GetClassBitmask())
 				) {
 					MessageString(Chat::Red, CANNOT_USE_ITEM);
 					break;

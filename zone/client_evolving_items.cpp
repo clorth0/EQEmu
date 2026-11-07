@@ -348,7 +348,7 @@ bool Client::DoEvolveCheckProgression(EQ::ItemInstance &inst)
 		return false;
 	}
 
-	if (RuleB(EvolvingItems, EnableParcelMerchants) &&
+	if (RuleB(Parcel, EnableParcelMerchants) &&
 		!RuleB(EvolvingItems, DestroyAugmentsOnEvolve) &&
 		inst.IsAugmented()
 		) {

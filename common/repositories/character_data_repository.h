@@ -63,6 +63,49 @@ public:
      */
 
 	// Custom extended repository methods here
+
+	// class_bitmask is not part of the generated column list. REPLACE INTO character_data
+	// rewrites the row without it, so callers persist the mask with these two statements.
+	// Both bind only integer ids. Class names never reach SQL.
+	static uint16 GetClassBitmask(Database& db, uint32 character_id)
+	{
+		if (!character_id) {
+			return 0;
+		}
+
+		auto results = db.QueryDatabase(
+			fmt::format(
+				"SELECT `class_bitmask` FROM `{}` WHERE `id` = {} LIMIT 1",
+				TableName(),
+				character_id
+			)
+		);
+
+		if (!results.Success() || !results.RowCount()) {
+			return 0;
+		}
+
+		return static_cast<uint16>(Strings::ToUnsignedInt(results.begin()[0]) & 0xFFFF);
+	}
+
+	static bool SetClassBitmask(Database& db, uint32 character_id, uint16 class_bitmask)
+	{
+		if (!character_id) {
+			return false;
+		}
+
+		auto results = db.QueryDatabase(
+			fmt::format(
+				"UPDATE `{}` SET `class_bitmask` = {} WHERE `id` = {}",
+				TableName(),
+				class_bitmask,
+				character_id
+			)
+		);
+
+		return results.Success();
+	}
+
 	static uint32 GetSecondsSinceLastLogin(Database &db, const std::string& name)
 	{
 		auto results = db.QueryDatabase(

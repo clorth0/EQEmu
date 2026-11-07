@@ -39,7 +39,7 @@ void WorldserverCLI::MercsEnable(int argc, char **argv, argh::parser &cmd, std::
 		LogInfo("Merc tables already exist, skipping bootstrap");
 	}
 
-	uint32 expansions_setting        = RuleManager::Instance()->GetIntRule(RuleManager::Int__ExpansionSettings);
+	uint32 expansions_setting        = RuleManager::Instance()->GetIntRule(RuleManager::Int__World_ExpansionSettings);
 	uint32 expansions_setting_before = expansions_setting;
 	bool   update_expansions         = false;
 

@@ -1183,6 +1183,10 @@ bool ZoneDatabase::SaveCharacterData(
 		return false;
 	}
 
+	// REPLACE INTO rewrites the row from the generated column list and would
+	// reset class_bitmask to 0. Write it back from the integer already on the client.
+	CharacterDataRepository::SetClassBitmask(database, c->CharacterID(), c->GetStoredClassBitmask());
+
 	LogDebug(
 		"ZoneDatabase::SaveCharacterData [{}], done Took [{}] seconds",
 		c->CharacterID(),

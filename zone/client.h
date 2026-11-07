@@ -74,6 +74,7 @@ namespace EQ
 #include "common/timer.h"
 #include "common/zone_store.h"
 
+#include <array>
 #include <cfloat>
 #include <set>
 #include <algorithm>
@@ -559,6 +560,7 @@ public:
 	inline uint32 GetBindInstanceID(uint32 index = 0) const { return m_pp.binds[index].instance_id; }
 	int64 CalcMaxMana();
 	int64 CalcBaseMana();
+	int64 CalcBaseManaForClass(uint8 class_id);
 	const int64& SetMana(int64 amount);
 	int64 CalcManaRegenCap() final;
 
@@ -938,6 +940,22 @@ public:
 
 	uint16 MaxSkill(EQ::skills::SkillType skill_id, uint8 class_id, uint8 level) const;
 	inline uint16 MaxSkill(EQ::skills::SkillType skill_id) const { return MaxSkill(skill_id, GetClass(), GetLevel()); }
+
+	// Display class stays GetClass(). This is the owned-class bitmask.
+	uint16 GetClassBitmask() const;
+	uint16 GetStoredClassBitmask() const;
+	void LoadClassBitmask();
+	void RebuildMultiClassCache();
+	void CommitClassBitmask(uint16 mask);
+	uint8 GetSpellClassLevel(uint16 spell_id) const;
+	uint8 GetSpellCastingClass(uint16 spell_id) const;
+	bool MultiClassCacheReady() const { return m_multiclass_cache_ready; }
+	uint32 CachedClassLevelFactor() const { return m_cached_class_level_factor; }
+	int CachedACSoftcap() const { return m_cached_ac_softcap; }
+	double CachedACSoftcapReturns() const { return m_cached_ac_returns; }
+	bool CachedClassicTripleAttack() const { return m_cached_classic_triple; }
+	bool CachedMonkRearDodge() const { return m_cached_monk_rear_dodge; }
+	bool CachedDualWieldFists() const { return m_cached_dual_wield_fists; }
 	uint8 GetSkillTrainLevel(EQ::skills::SkillType skill_id, uint8 class_id);
 	void MaxSkills();
 
@@ -2413,6 +2431,17 @@ private:
 	// full and partial mail key cache
 	std::string m_mail_key_full;
 	std::string m_mail_key;
+
+	uint16 m_class_bitmask = 0;
+	bool m_multiclass_cache_ready = false;
+	std::array<uint16, EQ::skills::SkillCount> m_skill_cap_cache{};
+	std::array<uint8, EQ::skills::SkillCount> m_can_have_skill{};
+	uint32 m_cached_class_level_factor = 0;
+	int m_cached_ac_softcap = 0;
+	double m_cached_ac_returns = 0.3;
+	bool m_cached_classic_triple = false;
+	bool m_cached_monk_rear_dodge = false;
+	bool m_cached_dual_wield_fists = false;
 public:
 	const std::string &GetMailKeyFull() const;
 	const std::string &GetMailKey() const;

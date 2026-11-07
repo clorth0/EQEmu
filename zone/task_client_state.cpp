@@ -428,7 +428,7 @@ void ClientTaskState::RecordCompletedTask(uint32_t character_id, const TaskInfor
 {
 	// If we are only keeping one completed record per task, and the player has done
 	// the same task again, erase the previous completed entry for this task.
-	if (RuleB(TasksSystem, KeepOneRecordPerCompletedTask))
+	if (RuleB(TaskSystem, KeepOneRecordPerCompletedTask))
 	{
 		size_t before = m_completed_tasks.size();
 

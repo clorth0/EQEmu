@@ -19,6 +19,7 @@
 
 #include "common/data_bucket.h"
 #include "common/data_verification.h"
+#include "common/multiclass.h"
 #include "common/misc_functions.h"
 #include "common/repositories/bot_data_repository.h"
 #include "common/repositories/character_data_repository.h"
@@ -4650,9 +4651,13 @@ bool Mob::CanThisClassDualWield(void) const {
 			return false;
 
 		// Dual-Wielding Empty Fists
-		if(!pinst && !sinst)
-			if(class_ != Class::Monk && class_ != Class::MonkGM && class_ != Class::Beastlord && class_ != Class::BeastlordGM)
+		if(!pinst && !sinst) {
+			const bool fists = class_ == Class::Monk || class_ == Class::MonkGM || class_ == Class::Beastlord || class_ == Class::BeastlordGM;
+			const bool multiclass_fists = IsClient() && CastToClient()->MultiClassCacheReady() && CastToClient()->CachedDualWieldFists();
+			if (!fists && !multiclass_fists) {
 				return false;
+			}
+		}
 
 		return true;
 	}
@@ -4678,6 +4683,9 @@ bool Mob::CanThisClassTripleAttack() const {
 	}
 
 	if (RuleB(Combat, ClassicTripleAttack)) {
+		if (IsClient() && CastToClient()->MultiClassCacheReady() && MultiClass::ClassCount(CastToClient()->GetClassBitmask()) > 1) {
+			return GetLevel() >= 60 && CastToClient()->CachedClassicTripleAttack();
+		}
 		return GetLevel() >= 60 && (
 			GetClass() == Class::Warrior ||
 			GetClass() == Class::Ranger ||

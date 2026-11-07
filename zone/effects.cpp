@@ -19,6 +19,7 @@
 
 #include "common/eqemu_logsys.h"
 #include "common/misc_functions.h"
+#include "common/multiclass.h"
 #include "common/spdat.h"
 #include "zone/client.h"
 #include "zone/entity.h"
@@ -673,7 +674,17 @@ bool Client::TrainDiscipline(uint32 itemid) {
 	}
 
 	const auto player_class = GetClass();
-	if (player_class == Class::Wizard || player_class == Class::Enchanter || player_class == Class::Magician || player_class == Class::Necromancer) {
+	const bool multiclass = MultiClass::ClassCount(GetClassBitmask()) > 1;
+	bool pure_caster_only = player_class == Class::Wizard || player_class == Class::Enchanter || player_class == Class::Magician || player_class == Class::Necromancer;
+	if (multiclass) {
+		pure_caster_only = true;
+		MultiClass::ForEachPlayerClass(GetClassBitmask(), [&](uint8 class_id) {
+			if (class_id != Class::Wizard && class_id != Class::Enchanter && class_id != Class::Magician && class_id != Class::Necromancer) {
+				pure_caster_only = false;
+			}
+		});
+	}
+	if (pure_caster_only) {
 		Message(Chat::Red, "Your class cannot learn from this tome.");
 		//summon them the item back...
 		SummonItem(itemid);
@@ -682,7 +693,9 @@ bool Client::TrainDiscipline(uint32 itemid) {
 
 	//make sure we can train this...
 	//can we use the item?
-	const auto class_bit = static_cast<uint32>(1 << (player_class - 1));
+	const auto class_bit = multiclass
+		? static_cast<uint32>(GetClassBitmask())
+		: static_cast<uint32>(1 << (player_class - 1));
 	if (!(item->Classes & class_bit)) {
 		Message(Chat::Red, "Your class cannot learn from this tome.");
 		//summon them the item back...
@@ -698,7 +711,7 @@ bool Client::TrainDiscipline(uint32 itemid) {
 
 	//can we use the spell?
 	const auto& spell = spells[spell_id];
-	const auto level_to_use = spell.classes[player_class - 1];
+	const auto level_to_use = multiclass ? GetSpellClassLevel(static_cast<uint16>(spell_id)) : spell.classes[player_class - 1];
 	if (level_to_use == 255) {
 		Message(Chat::Red, "Your class cannot learn from this tome.");
 		//summon them the item back...
@@ -758,7 +771,10 @@ bool Client::MemorizeSpellFromItem(uint32 item_id) {
 		return false;
 	}
 
-	const auto class_bit = static_cast<uint32>(1 << (GetClass() - 1));
+	const bool multiclass = MultiClass::ClassCount(GetClassBitmask()) > 1;
+	const auto class_bit = multiclass
+		? static_cast<uint32>(GetClassBitmask())
+		: static_cast<uint32>(1 << (GetClass() - 1));
 
 	if (!(item->Classes & class_bit)) {
 		Message(Chat::Red, "Your class cannot learn from this scroll.");
@@ -773,7 +789,7 @@ bool Client::MemorizeSpellFromItem(uint32 item_id) {
 	}
 
 	const auto& spell = spells[spell_id];
-	const auto level_to_use = spell.classes[GetClass() - 1];
+	const auto level_to_use = multiclass ? GetSpellClassLevel(spell_id) : spell.classes[GetClass() - 1];
 	if (level_to_use == 255) {
 		Message(Chat::Red, "Your class cannot learn from this scroll.");
 		SummonItem(item_id);
@@ -884,7 +900,8 @@ bool Client::UseDiscipline(uint32 spell_id, uint32 target) {
 
 	//can we use the spell?
 	const SPDat_Spell_Struct &spell = spells[spell_id];
-	uint8 level_to_use = spell.classes[GetClass() - 1];
+	const bool multiclass = MultiClass::ClassCount(GetClassBitmask()) > 1;
+	uint8 level_to_use = multiclass ? GetSpellClassLevel(static_cast<uint16>(spell_id)) : spell.classes[GetClass() - 1];
 	if(level_to_use == 255) {
 		Message(Chat::Red, "Your class cannot learn from this tome.");
 		//should summon them a new one...

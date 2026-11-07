@@ -35,14 +35,15 @@
 //note, these macros assume there is always a RuleManager *rules in scope,
 //which makes it a global for now, but with instancing we will do exactly
 //what we do with the zone global and just make it a member of core classes
+// Enum identifiers include the category so repeated rule names stay distinct.
 #define RuleI(category_name, rule_name) \
-    RuleManager::Instance()->GetIntRule( RuleManager::Int__##rule_name )
+    RuleManager::Instance()->GetIntRule( RuleManager::Int__##category_name##_##rule_name )
 #define RuleR(category_name, rule_name) \
-    RuleManager::Instance()->GetRealRule( RuleManager::Real__##rule_name )
+    RuleManager::Instance()->GetRealRule( RuleManager::Real__##category_name##_##rule_name )
 #define RuleB(category_name, rule_name) \
-    RuleManager::Instance()->GetBoolRule( RuleManager::Bool__##rule_name )
+    RuleManager::Instance()->GetBoolRule( RuleManager::Bool__##category_name##_##rule_name )
 #define RuleS(category_name, rule_name) \
-    RuleManager::Instance()->GetStringRule( RuleManager::String__##rule_name )
+    RuleManager::Instance()->GetStringRule( RuleManager::String__##category_name##_##rule_name )
 
 
 class Database;
@@ -52,7 +53,7 @@ public:
 	//generate our rule enums:
 	typedef enum {
 #define RULE_INT(category_name, rule_name, default_value, notes) \
-        Int__##rule_name,
+        Int__##category_name##_##rule_name,
 
 #include "ruletypes.h"
 
@@ -63,7 +64,7 @@ public:
 
 	typedef enum {
 #define RULE_REAL(category_name, rule_name, default_value, notes) \
-        Real__##rule_name,
+        Real__##category_name##_##rule_name,
 
 #include "ruletypes.h"
 
@@ -74,7 +75,7 @@ public:
 
 	typedef enum {
 #define RULE_BOOL(category_name, rule_name, default_value, notes) \
-        Bool__##rule_name,
+        Bool__##category_name##_##rule_name,
 
 #include "ruletypes.h"
 
@@ -85,7 +86,7 @@ public:
 
 	typedef enum {
 #define RULE_STRING(category_name, rule_name, default_value, notes) \
-        String__##rule_name,
+        String__##category_name##_##rule_name,
 
 #include "ruletypes.h"
 
