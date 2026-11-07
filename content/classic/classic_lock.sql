@@ -19,12 +19,22 @@
 -- Supplemental hub tags use the same expansion ids. Only rows that would
 -- still pass ContentFilterCriteria at Classic are raised, and only for
 -- these short names:
---   nexus, bazaar     The Shadows of Luclin     3
---   poknowledge       The Planes of Power       4
---   tutorialb         The Serpent's Spine      12
+--   nexus, bazaar                  The Shadows of Luclin      3
+--   poknowledge                    The Planes of Power        4
+--   nedaria                        Lost Dungeons of Norrath   6
+--   guildlobby, guildhall          Dragons of Norrath         9
+--   tutoriala, tutorialb           The Serpent's Spine       12
 -- A row whose min_expansion is already above Classic is not rewritten.
--- POKTELE doors are raised to Planes of Power (4) only when still untagged
--- (min_expansion <= 0). Doors PEQ already tagged are left as they are.
+-- About 530 later zones whose expansion column is already above 0 are
+-- left alone: Handle_OP_ZoneChange already refuses non-GMs those.
+--
+-- tutoriala and tutorialb also have expansion set to 12 when it is still
+-- 0, because that column is what the zone-in check compares. nedaria's
+-- expansion is set to 6 when it is still 0 for the same reason.
+-- guildlobby and guildhall keep their existing expansion (9 on current
+-- PEQ) but lose bypass_expansion_check, which otherwise lets any expansion
+-- in. POKTELE doors are raised to Planes of Power (4) only when still
+-- untagged (min_expansion <= 0). Doors PEQ already tagged are left as they are.
 --
 -- Re-running this script leaves the same rule values and the same hub
 -- floors. The procedure below is created, called, and dropped.
@@ -109,9 +119,37 @@ BEGIN
 
   UPDATE zone
   SET min_expansion = 12
-  WHERE short_name = 'tutorialb'
+  WHERE short_name IN ('tutoriala', 'tutorialb')
     AND min_expansion <= 0
     AND (max_expansion = -1 OR max_expansion >= 12);
+
+  -- Zone-in uses zone.expansion, not min_expansion. PEQ leaves both
+  -- Gloomingdeep mines at expansion 0, so a non-GM would still enter.
+  UPDATE zone
+  SET expansion = 12
+  WHERE short_name IN ('tutoriala', 'tutorialb')
+    AND expansion = 0;
+
+  UPDATE zone
+  SET min_expansion = 6
+  WHERE short_name = 'nedaria'
+    AND min_expansion <= 0
+    AND (max_expansion = -1 OR max_expansion >= 6);
+
+  UPDATE zone
+  SET expansion = 6
+  WHERE short_name = 'nedaria'
+    AND expansion = 0;
+
+  -- Raise the floor to the row's own expansion id (Dragons of Norrath, 9,
+  -- on current PEQ) and clear the bypass that skips the zone-in check.
+  UPDATE zone
+  SET bypass_expansion_check = 0,
+      min_expansion = expansion
+  WHERE short_name IN ('guildlobby', 'guildhall')
+    AND expansion > 0
+    AND (bypass_expansion_check <> 0 OR min_expansion < expansion)
+    AND (max_expansion = -1 OR max_expansion >= expansion);
 
   UPDATE doors
   SET min_expansion = 4

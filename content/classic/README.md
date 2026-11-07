@@ -43,9 +43,17 @@ The lock raises `min_expansion` only for these short names, and only when the ro
 | `poknowledge` | 4 | The Planes of Power |
 | `nexus` | 3 | The Shadows of Luclin |
 | `bazaar` | 3 | The Shadows of Luclin, only if a version is still untagged |
-| `tutorialb` | 12 | The Serpent's Spine (Mines of Gloomingdeep) |
+| `nedaria` | 6 | Lost Dungeons of Norrath |
+| `guildlobby`, `guildhall` | the row's own `expansion` | Dragons of Norrath is 9 on current PEQ |
+| `tutoriala`, `tutorialb` | 12 | The Serpent's Spine (Mines of Gloomingdeep) |
 
-Doors whose name starts with `POKTELE` are raised to 4 only when `min_expansion` is still `-1` or `0`.
+`Client::Handle_OP_ZoneChange` allows a non-GM in when `zone.expansion <= CurrentExpansion` or `bypass_expansion_check` is set. A GM skips that check. The content-filter column does not feed it, so these rows also get a zone-in tag:
+
+- `tutoriala` and `tutorialb`: `expansion` is set to 12 when it is still 0.
+- `nedaria`: `expansion` is set to 6 when it is still 0.
+- `guildlobby` and `guildhall`: `bypass_expansion_check` is cleared to 0. `min_expansion` is raised to the row's existing `expansion` (9 on current PEQ). That `expansion` value is not rewritten.
+
+Rows that already have those values are left alone, so a second apply does not change them. Later zones whose `expansion` is already above 0, including the Kunark boat zones, are not rewritten. Doors whose name starts with `POKTELE` are raised to 4 only when `min_expansion` is still `-1` or `0`.
 
 `ZoneStore::LoadZones` reads every zone row and does not apply this filter. The filter is what doors, objects, and the other content queries use, and it is what `DoesZonePassContentFiltering` uses when routing a versioned zone. The separate `zone.expansion` column is what `Client::Handle_OP_ZoneChange` compares to `CurrentExpansion`. A GM skips that check.
 
@@ -97,11 +105,14 @@ SELECT short_name, version, min_expansion, max_expansion, expansion,
          ELSE 'filtered'
        END AS at_expansion_0
 FROM zone
-WHERE short_name IN ('poknowledge', 'nexus', 'bazaar', 'tutorialb')
+WHERE short_name IN (
+  'poknowledge', 'nexus', 'bazaar', 'tutoriala', 'tutorialb',
+  'nedaria', 'guildlobby', 'guildhall'
+)
 ORDER BY short_name, version;
 ```
 
-After the lock, every one of those rows is `filtered`.
+After the lock, every one of those rows is `filtered`. `tutoriala`, `tutorialb`, `nedaria`, `guildlobby`, and `guildhall` also have `expansion` above 0 and `bypass_expansion_check` 0, so the zone-in check refuses a non-GM at Classic.
 
 ## Revert
 
@@ -123,13 +134,22 @@ Opening every expansion again is `Expansion:CurrentExpansion = -1`. That alone d
 
 There was no `variables.Expansions` row. The C++ default for `Expansion:CurrentExpansion` is `-1` (all); that PEQ dump had already overridden it to `9` (Dragons of Norrath).
 
-Hub floors this script may have raised, and the previous values on that same dump:
+Hub tags this script may have changed, and the previous values on that same dump:
 
 ```sql
-UPDATE zone SET min_expansion = -1 WHERE short_name IN ('poknowledge', 'nexus', 'tutorialb');
+UPDATE zone SET min_expansion = -1
+WHERE short_name IN (
+  'poknowledge', 'nexus', 'tutoriala', 'tutorialb', 'nedaria', 'guildlobby', 'guildhall'
+);
+
+UPDATE zone SET expansion = 0
+WHERE short_name IN ('tutoriala', 'tutorialb', 'nedaria');
+
+UPDATE zone SET bypass_expansion_check = 1
+WHERE short_name IN ('guildlobby', 'guildhall');
 ```
 
-`bazaar` was already tagged (`version` 0 is Luclin through Omens of War, `min_expansion` 3 / `max_expansion` 8; `version` 1 is Dragons of Norrath, 9 / 99), so the lock does not change it. `POKTELE` doors were already at `min_expansion` 4 or higher, so the door statement changes no rows on that dump.
+`guildlobby` and `guildhall` keep `expansion` 9; the lock does not change that column. `bazaar` was already tagged (`version` 0 is Luclin through Omens of War, `min_expansion` 3 / `max_expansion` 8; `version` 1 is Dragons of Norrath, 9 / 99), so the lock does not change it. `POKTELE` doors were already at `min_expansion` 4 or higher, so the door statement changes no rows on that dump.
 
 Restart world and zone after either apply or revert. Rules are read at boot, and a runtime rules reload ignores `World:ExpansionSettings` and `World:UseClientBasedExpansionSettings` (`RuleManager::SetRule` returns without applying those two when `reload` is set).
 
@@ -139,11 +159,14 @@ Restart world and zone after either apply or revert. Rules are read at boot, and
 
 ## What a current PEQ dump still leaves open
 
-Checked against `peq-1794013215` after importing `create_tables_*.sql` the way `perf/harness.py` does. About 530 zone rows have `expansion > 0` and `min_expansion <= 0`. They were not rewritten. The zone-in check uses `zone.expansion`, so a non-GM still cannot enter a zone whose `expansion` is above 0. These are the leaks that check does not cover, or that are easy to mistake for Classic:
+Checked against `peq-1794013215` after importing `create_tables_*.sql` the way `perf/harness.py` does. About 530 zone rows have `expansion > 0` and `min_expansion <= 0`. They were not rewritten. The zone-in check uses `zone.expansion`, so a non-GM still cannot enter a zone whose `expansion` is above 0 and whose `bypass_expansion_check` is 0.
 
-- `tutorialb` (`zoneidnumber` 189, Mines of Gloomingdeep) had `min_expansion` -1 and `expansion` 0. The lock raises `min_expansion` to 12. The `expansion` column stays 0, so the zone-in check still treats it as Classic. `World:EnableTutorialButton = false` removes the button. `tutoriala` (188) is the same mines and is the same shape (`min_expansion` -1, `expansion` 0) and is not modified.
-- `nedaria` (Nedaria's Landing, LDoN) is `expansion` 0 and `min_expansion` -1, so the zone-in check does not treat it as later content.
-- `guildlobby` and `guildhall` are `expansion` 9 with `bypass_expansion_check` 1 and `min_expansion` -1, so the zone-in check allows them at any expansion.
-- Kunark boat zones `timorous`, `firiona`, and `overthere` are `expansion` 1 and `min_expansion` -1. Non-GMs cannot enter them at Classic because of `expansion`, and their content rows are still untagged. Classic boats `oot`, `erudsxing`, and `butcher` are `expansion` 0 and stay available.
+These player-reachable holes are closed by the statements above:
+
+- `tutoriala` (188) and `tutorialb` (189), both Mines of Gloomingdeep, shipped as `min_expansion` -1 and `expansion` 0. The lock sets `min_expansion` and `expansion` to 12. `World:EnableTutorialButton` is false, and `World:TutorialZoneID` is left at 189.
+- `nedaria` (182, Nedaria's Landing) shipped as `min_expansion` -1 and `expansion` 0. The lock sets both to 6.
+- `guildlobby` (344) and `guildhall` (345) shipped as `expansion` 9, `bypass_expansion_check` 1, and `min_expansion` -1. The lock clears the bypass and sets `min_expansion` to 9.
+
+Kunark boat zones `timorous`, `firiona`, and `overthere` stay `expansion` 1 and `min_expansion` -1. Non-GMs cannot enter them at Classic because of `expansion`, and their content rows are still untagged. Classic boats `oot`, `erudsxing`, and `butcher` are `expansion` 0 and stay available.
 
 `poknowledge` (`expansion` 4) and `nexus` (`expansion` 3) were untagged on `min_expansion` only. After the lock their zone rows fail the content filter at Classic, and the existing `expansion` values already stop a non-GM from zoning in.
