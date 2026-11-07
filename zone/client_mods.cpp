@@ -18,6 +18,7 @@
 #include "client.h"
 
 #include "common/eqemu_logsys.h"
+#include "common/multiclass.h"
 #include "common/rulesys.h"
 #include "common/spdat.h"
 #include "zone/bot.h"
@@ -340,139 +341,14 @@ int64 Client::CalcMaxHP()
 
 uint32 Mob::GetClassLevelFactor()
 {
-	uint32 multiplier = 0;
-	uint8  mlevel     = GetLevel();
-	switch (GetClass()) {
-		case Class::Warrior: {
-			if (mlevel < 20) {
-				multiplier = 220;
-			}
-			else if (mlevel < 30) {
-				multiplier = 230;
-			}
-			else if (mlevel < 40) {
-				multiplier = 250;
-			}
-			else if (mlevel < 53) {
-				multiplier = 270;
-			}
-			else if (mlevel < 57) {
-				multiplier = 280;
-			}
-			else if (mlevel < 60) {
-				multiplier = 290;
-			}
-			else if (mlevel < 70) {
-				multiplier = 300;
-			}
-			else {
-				multiplier = 311;
-			}
-			break;
-		}
-		case Class::Druid:
-		case Class::Cleric:
-		case Class::Shaman: {
-			if (mlevel < 70) {
-				multiplier = 150;
-			}
-			else {
-				multiplier = 157;
-			}
-			break;
-		}
-		case Class::Berserker:
-		case Class::Paladin:
-		case Class::ShadowKnight: {
-			if (mlevel < 35) {
-				multiplier = 210;
-			}
-			else if (mlevel < 45) {
-				multiplier = 220;
-			}
-			else if (mlevel < 51) {
-				multiplier = 230;
-			}
-			else if (mlevel < 56) {
-				multiplier = 240;
-			}
-			else if (mlevel < 60) {
-				multiplier = 250;
-			}
-			else if (mlevel < 68) {
-				multiplier = 260;
-			}
-			else {
-				multiplier = 270;
-			}
-			break;
-		}
-		case Class::Monk:
-		case Class::Bard:
-		case Class::Rogue:
-		case Class::Beastlord: {
-			if (mlevel < 51) {
-				multiplier = 180;
-			}
-			else if (mlevel < 58) {
-				multiplier = 190;
-			}
-			else if (mlevel < 70) {
-				multiplier = 200;
-			}
-			else {
-				multiplier = 210;
-			}
-			break;
-		}
-		case Class::Ranger: {
-			if (mlevel < 58) {
-				multiplier = 200;
-			}
-			else if (mlevel < 70) {
-				multiplier = 210;
-			}
-			else {
-				multiplier = 220;
-			}
-			break;
-		}
-		case Class::Magician:
-		case Class::Wizard:
-		case Class::Necromancer:
-		case Class::Enchanter: {
-			if (mlevel < 70) {
-				multiplier = 120;
-			}
-			else {
-				multiplier = 127;
-			}
-			break;
-		}
-		default: {
-			if (mlevel < 35) {
-				multiplier = 210;
-			}
-			else if (mlevel < 45) {
-				multiplier = 220;
-			}
-			else if (mlevel < 51) {
-				multiplier = 230;
-			}
-			else if (mlevel < 56) {
-				multiplier = 240;
-			}
-			else if (mlevel < 60) {
-				multiplier = 250;
-			}
-			else {
-				multiplier = 260;
-			}
-			break;
+	if (IsClient()) {
+		auto* client = CastToClient();
+		if (client->MultiClassCacheReady() && MultiClass::ClassCount(client->GetClassBitmask()) > 1) {
+			return client->CachedClassLevelFactor();
 		}
 	}
 
-	return multiplier;
+	return MultiClass::ClassLevelFactor(GetClass(), GetLevel());
 }
 
 int64 Client::CalcBaseHP()
@@ -518,9 +394,58 @@ int32 Client::GetRawItemAC()
 	return Total;
 }
 
+int64 Client::CalcBaseManaForClass(uint8 class_id)
+{
+	const bool intelligence = MultiClass::IsIntelligenceManaClass(class_id);
+	const bool wisdom = MultiClass::IsWisdomManaClass(class_id);
+	if (!intelligence && !wisdom) {
+		return 0;
+	}
+
+	const int wis_int = intelligence ? GetINT() : GetWIS();
+	if (ClientVersion() >= EQ::versions::ClientVersion::SoF && RuleB(Character, SoDClientUseSoDHPManaEnd)) {
+		int converted = wis_int;
+		int over200 = wis_int;
+		if (wis_int > 100) {
+			if (wis_int > 200) {
+				over200 = (wis_int - 200) / -2 + wis_int;
+			}
+			converted = (3 * over200 - 300) / 2 + over200;
+		}
+
+		auto base_data = zone->GetBaseData(GetLevel(), class_id);
+		if (base_data.level == GetLevel()) {
+			return base_data.mana + (converted * base_data.mana_fac) + itembonuses.heroic_max_mana;
+		}
+		return 0;
+	}
+
+	return MultiClass::ClassicBaseMana(wis_int, GetLevel());
+}
+
+int64 Client::CalcBaseMana()
+{
+	if (MultiClass::ClassCount(GetClassBitmask()) <= 1) {
+		return CalcBaseManaForClass(GetClass());
+	}
+
+	int64 best = 0;
+	MultiClass::ForEachPlayerClass(GetClassBitmask(), [&](uint8 class_id) {
+		if (!MultiClass::ClassUsesMana(class_id)) {
+			return;
+		}
+		best = std::max(best, CalcBaseManaForClass(class_id));
+	});
+	return best;
+}
+
 int64 Client::CalcMaxMana()
 {
-	if (IsIntelligenceCasterClass() || IsWisdomCasterClass()) {
+	const bool has_mana = MultiClass::ClassCount(GetClassBitmask()) > 1
+		? MultiClass::MaskUsesMana(GetClassBitmask())
+		: (IsIntelligenceCasterClass() || IsWisdomCasterClass());
+
+	if (has_mana) {
 		max_mana = (
 			CalcBaseMana() +
 			itembonuses.Mana +
@@ -550,88 +475,6 @@ int64 Client::CalcMaxMana()
 
 	LogSpells("for [{}] returning [{}]", GetName(), max_mana);
 	return max_mana;
-}
-
-int64 Client::CalcBaseMana()
-{
-	int   ConvertedWisInt = 0;
-	int   MindLesserFactor, MindFactor;
-	int   WisInt          = 0;
-	int64 base_mana       = 0;
-	int   wisint_mana     = 0;
-	int64 max_m           = 0;
-
-	if (IsIntelligenceCasterClass()) {
-		WisInt = GetINT();
-
-		if (ClientVersion() >= EQ::versions::ClientVersion::SoF && RuleB(Character, SoDClientUseSoDHPManaEnd)) {
-			ConvertedWisInt = WisInt;
-
-			int over200 = WisInt;
-			if (WisInt > 100) {
-				if (WisInt > 200) {
-					over200 = (WisInt - 200) / -2 + WisInt;
-				}
-				ConvertedWisInt = (3 * over200 - 300) / 2 + over200;
-			}
-
-			auto base_data = zone->GetBaseData(GetLevel(), GetClass());
-			if (base_data.level == GetLevel()) {
-				max_m = base_data.mana + (ConvertedWisInt * base_data.mana_fac) + itembonuses.heroic_max_mana;
-			}
-		} else {
-			if (((WisInt - 199) / 2) > 0) {
-				MindLesserFactor = (WisInt - 199) / 2;
-			} else {
-				MindLesserFactor = 0;
-			}
-
-			MindFactor = WisInt - MindLesserFactor;
-
-			if (WisInt > 100) {
-				max_m = (((5 * (MindFactor + 20)) / 2) * 3 * GetLevel() / 40);
-			} else {
-				max_m = (((5 * (MindFactor + 200)) / 2) * 3 * GetLevel() / 100);
-			}
-		}
-	} else if (IsWisdomCasterClass()) {
-		WisInt = GetWIS();
-
-		if (ClientVersion() >= EQ::versions::ClientVersion::SoF && RuleB(Character, SoDClientUseSoDHPManaEnd)) {
-			ConvertedWisInt = WisInt;
-
-			int over200 = WisInt;
-			if (WisInt > 100) {
-				if (WisInt > 200) {
-					over200 = (WisInt - 200) / -2 + WisInt;
-				}
-				ConvertedWisInt = (3 * over200 - 300) / 2 + over200;
-			}
-
-			auto base_data = zone->GetBaseData(GetLevel(), GetClass());
-			if (base_data.level == GetLevel()) {
-				max_m = base_data.mana + (ConvertedWisInt * base_data.mana_fac) + itembonuses.heroic_max_mana;
-			}
-		} else {
-			if (((WisInt - 199) / 2) > 0) {
-				MindLesserFactor = (WisInt - 199) / 2;
-			} else {
-				MindLesserFactor = 0;
-			}
-
-			MindFactor = WisInt - MindLesserFactor;
-
-			if (WisInt > 100) {
-				max_m = (((5 * (MindFactor + 20)) / 2) * 3 * GetLevel() / 40);
-			} else {
-				max_m = (((5 * (MindFactor + 200)) / 2) * 3 * GetLevel() / 100);
-			}
-		}
-	} else {
-		max_m = 0;
-	}
-
-	return max_m;
 }
 
 int64 Client::CalcBaseManaRegen()

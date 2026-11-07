@@ -4631,7 +4631,7 @@ void WorldServer::ProcessReload(const ServerReload::Request& request)
 			break;
 
 		case ServerReload::Type::Tasks:
-			if (RuleB(Tasks, EnableTaskSystem)) {
+			if (RuleB(TaskSystem, EnableTaskSystem)) {
 				entity_list.SaveAllClientsTaskState();
 				TaskManager::Instance()->LoadTasks();
 				entity_list.ReloadAllClientsTaskState();

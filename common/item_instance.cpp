@@ -242,6 +242,24 @@ bool EQ::ItemInstance::IsClassEquipable(uint16 class_) const
 	return m_item->IsClassEquipable(class_);
 }
 
+bool EQ::ItemInstance::IsEquipableByClassBitmask(uint16 race, uint16 class_bitmask) const
+{
+	if (!m_item || !m_item->Slots) {
+		return false;
+	}
+
+	return m_item->IsEquipableByClassBitmask(race, class_bitmask);
+}
+
+bool EQ::ItemInstance::IsClassEquipableByBitmask(uint16 class_bitmask) const
+{
+	if (!m_item || !m_item->Slots) {
+		return false;
+	}
+
+	return m_item->IsClassEquipableByBitmask(class_bitmask);
+}
+
 // Can item be equipped by Race?
 bool EQ::ItemInstance::IsRaceEquipable(uint16 race) const
 {

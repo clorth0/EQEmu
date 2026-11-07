@@ -966,6 +966,7 @@ void Client::SetLevel(uint8 set_level, bool command)
 
 	LogInfo("Setting Level for [{}] to [{}]", GetName(), set_level);
 
+	RebuildMultiClassCache();
 	CalcBonuses();
 
 	if (!RuleB(Character, HealOnLevel)) {

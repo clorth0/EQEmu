@@ -37,16 +37,16 @@ const char *RuleManager::s_categoryNames[_CatCount + 1] = {
 const RuleManager::RuleInfo RuleManager::s_RuleInfo[IntRuleCount + RealRuleCount + BoolRuleCount + StringRuleCount + 1] = {
 	/* this is done in three steps, so we can reliably get to them by index*/
 	#define RULE_INT(category_name, rule_name, default_value, notes) \
-		{ #category_name ":" #rule_name, Category__##category_name, IntRule, Int__##rule_name, notes },
+		{ #category_name ":" #rule_name, Category__##category_name, IntRule, Int__##category_name##_##rule_name, notes },
 	#include "ruletypes.h"
 	#define RULE_REAL(category_name, rule_name, default_value, notes) \
-		{ #category_name ":" #rule_name, Category__##category_name, RealRule, Real__##rule_name, notes },
+		{ #category_name ":" #rule_name, Category__##category_name, RealRule, Real__##category_name##_##rule_name, notes },
 	#include "ruletypes.h"
 	#define RULE_BOOL(category_name, rule_name, default_value, notes) \
-		{ #category_name ":" #rule_name, Category__##category_name, BoolRule, Bool__##rule_name, notes },
+		{ #category_name ":" #rule_name, Category__##category_name, BoolRule, Bool__##category_name##_##rule_name, notes },
 	#include "ruletypes.h"
 	#define RULE_STRING(category_name, rule_name, default_value, notes) \
-		{ #category_name ":" #rule_name, Category__##category_name, StringRule, String__##rule_name, notes },
+		{ #category_name ":" #rule_name, Category__##category_name, StringRule, String__##category_name##_##rule_name, notes },
 	#include "ruletypes.h"
 	{ "Invalid Rule", _CatCount, IntRule }
 };
@@ -184,13 +184,13 @@ void RuleManager::ResetRules(bool reload) {
 	LogRulesDetail("Resetting running rules to default values.");
 
 	#define RULE_INT(category_name, rule_name, default_value, notes) \
-		m_RuleIntValues[ Int__##rule_name ] = default_value;
+		m_RuleIntValues[ Int__##category_name##_##rule_name ] = default_value;
 	#define RULE_REAL(category_name, rule_name, default_value, notes) \
-		m_RuleRealValues[ Real__##rule_name ] = default_value;
+		m_RuleRealValues[ Real__##category_name##_##rule_name ] = default_value;
 	#define RULE_BOOL(category_name, rule_name, default_value, notes) \
-		m_RuleBoolValues[ Bool__##rule_name ] = default_value;
+		m_RuleBoolValues[ Bool__##category_name##_##rule_name ] = default_value;
 	#define RULE_STRING(category_name, rule_name, default_value, notes) \
-		m_RuleStringValues[ String__##rule_name ] = default_value;
+		m_RuleStringValues[ String__##category_name##_##rule_name ] = default_value;
 	#include "ruletypes.h"
 
 	// restore these rules to their pre-reset values

@@ -1442,6 +1442,7 @@ void Client::Handle_Connect_OP_ZoneEntry(const EQApplicationPacket *app)
 	/* Set Mob variables for spawn */
 	class_ = m_pp.class_;
 	level = m_pp.level;
+	LoadClassBitmask();
 	m_Position.x = m_pp.x;
 	m_Position.y = m_pp.y;
 	m_Position.z = m_pp.z;
@@ -1721,7 +1722,7 @@ void Client::Handle_Connect_OP_ZoneEntry(const EQApplicationPacket *app)
 		rest_timer.Start(m_pp.RestTimer * 1000);
 	}
 
-	if (RuleB(NPC, PetZoneWithOwner)) {
+	if (RuleB(Character, PetZoneWithOwner)) {
 		/* Load Pet */
 		database.LoadPetInfo(this);
 		if (m_petinfo.SpellID > 1 && !GetPet() && m_petinfo.SpellID <= SPDAT_RECORDS) {
@@ -9735,7 +9736,7 @@ void Client::Handle_OP_ItemVerifyRequest(const EQApplicationPacket *app)
 			}
 			else
 			{
-				if (ClientVersion() >= EQ::versions::ClientVersion::SoD && !inst->IsEquipable(GetBaseRace(), GetClass()))
+				if (ClientVersion() >= EQ::versions::ClientVersion::SoD && !inst->IsEquipableByClassBitmask(GetBaseRace(), GetClassBitmask()))
 				{
 					if (item->ItemType != EQ::item::ItemTypeFood && item->ItemType != EQ::item::ItemTypeDrink && item->ItemType != EQ::item::ItemTypeAlcohol)
 					{

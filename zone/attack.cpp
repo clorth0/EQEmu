@@ -16,6 +16,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #include "common/data_verification.h"
+#include "common/multiclass.h"
 #include "common/eq_constants.h"
 #include "common/eq_packet_structs.h"
 #include "common/events/player_event_logs.h"
@@ -588,7 +589,10 @@ bool Mob::AvoidDamage(Mob *other, DamageHitInfo &hit)
 	}
 
 	// dodge
-	if (CanThisClassDodge() && (InFront || GetClass() == Class::Monk)) {
+	const bool monk_rear_dodge = IsClient() && CastToClient()->MultiClassCacheReady()
+		? CastToClient()->CachedMonkRearDodge()
+		: GetClass() == Class::Monk;
+	if (CanThisClassDodge() && (InFront || monk_rear_dodge)) {
 		if (IsClient())
 			CastToClient()->CheckIncreaseSkill(EQ::skills::SkillDodge, other, -10);
 		// check auto discs ... I guess aa/items too :P
@@ -642,7 +646,7 @@ bool Mob::AvoidDamage(Mob *other, DamageHitInfo &hit)
 	return false;
 }
 
-int Mob::GetACSoftcap()
+int ACSoftcapForClass(uint8 class_id, uint8 level_in)
 {
 	// from test server Resources/ACMitigation.txt
 	static int war_softcaps[] = {
@@ -701,9 +705,9 @@ int Mob::GetACSoftcap()
 		384, 384, 386, 388, 390, 392, 392, 394, 396, 398, 400, 400, 402, 404, 406, 408, 408, 410, 412, 414, 416
 	};
 
-	int level = std::min(105, static_cast<int>(GetLevel())) - 1;
+	int level = std::min(105, static_cast<int>(level_in)) - 1;
 
-	switch (GetClass()) {
+	switch (class_id) {
 	case Class::Warrior:
 		return war_softcaps[level];
 	case Class::Cleric:
@@ -732,11 +736,23 @@ int Mob::GetACSoftcap()
 	}
 }
 
-double Mob::GetSoftcapReturns()
+int Mob::GetACSoftcap()
+{
+	if (IsClient()) {
+		auto* client = CastToClient();
+		if (client->MultiClassCacheReady() && MultiClass::ClassCount(client->GetClassBitmask()) > 1) {
+			return client->CachedACSoftcap();
+		}
+	}
+
+	return ACSoftcapForClass(GetClass(), GetLevel());
+}
+
+double ACSoftcapReturnsForClass(uint8 class_id)
 {
 	// These are based on the dev post, they seem to be correct for every level
 	// AKA no more hard caps
-	switch (GetClass()) {
+	switch (class_id) {
 	case Class::Warrior:
 		return 0.35;
 	case Class::Cleric:
@@ -763,6 +779,18 @@ double Mob::GetSoftcapReturns()
 	default:
 		return 0.3;
 	}
+}
+
+double Mob::GetSoftcapReturns()
+{
+	if (IsClient()) {
+		auto* client = CastToClient();
+		if (client->MultiClassCacheReady() && MultiClass::ClassCount(client->GetClassBitmask()) > 1) {
+			return client->CachedACSoftcapReturns();
+		}
+	}
+
+	return ACSoftcapReturnsForClass(GetClass());
 }
 
 int Mob::GetClassRaceACBonus()
@@ -1236,7 +1264,10 @@ int64 Mob::GetWeaponDamage(Mob *against, const EQ::ItemInstance *weapon_item, in
 			return 0;
 		}
 
-		if (!weapon_item->IsClassEquipable(GetClass()) &&
+		const bool class_can_equip = IsClient()
+			? weapon_item->IsClassEquipableByBitmask(CastToClient()->GetClassBitmask())
+			: weapon_item->IsClassEquipable(GetClass());
+		if (!class_can_equip &&
 			(
 				!IsBot() ||
 				(IsBot() && !RuleB(Bots, AllowBotEquipAnyClassGear))

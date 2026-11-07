@@ -264,7 +264,8 @@ bool EQ::InventoryProfile::SwapItem(
 	uint16 race_id,
 	uint8 class_id,
 	uint32 deity_id,
-	uint8 level
+	uint8 level,
+	uint16 class_bitmask
 ) {
 	fail_state = swapInvalid;
 
@@ -335,7 +336,13 @@ bool EQ::InventoryProfile::SwapItem(
 				return false;
 			}
 
-			if (race_id && class_id && !source_item->IsEquipable(race_id, class_id)) {
+			if (race_id && class_bitmask) {
+				if (!source_item->IsEquipableByClassBitmask(race_id, class_bitmask)) {
+					fail_state = swapRaceClass;
+					return false;
+				}
+			}
+			else if (race_id && class_id && !source_item->IsEquipable(race_id, class_id)) {
 				fail_state = swapRaceClass;
 				return false;
 			}
@@ -369,7 +376,13 @@ bool EQ::InventoryProfile::SwapItem(
 				return false;
 			}
 
-			if (race_id && class_id && !destination_item->IsEquipable(race_id, class_id)) {
+			if (race_id && class_bitmask) {
+				if (!destination_item->IsEquipableByClassBitmask(race_id, class_bitmask)) {
+					fail_state = swapRaceClass;
+					return false;
+				}
+			}
+			else if (race_id && class_id && !destination_item->IsEquipable(race_id, class_id)) {
 				fail_state = swapRaceClass;
 				return false;
 			}

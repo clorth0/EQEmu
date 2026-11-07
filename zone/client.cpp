@@ -24,6 +24,7 @@
 #include "common/events/player_events.h"
 #include "common/features.h"
 #include "common/guilds.h"
+#include "common/multiclass.h"
 #include "common/profanity_manager.h"
 #include "common/repositories/account_flags_repository.h"
 #include "common/repositories/bug_reports_repository.h"
@@ -1743,7 +1744,7 @@ void Client::ChannelMessageSend(
 
 	QueuePacket(&app);
 
-	const bool can_train_self = RuleB(Client, SelfLanguageLearning);
+	const bool can_train_self = RuleB(Skills, SelfLanguageLearning);
 	const bool is_not_sender  = strcmp(GetCleanName(), cm->sender);
 
 	if (can_train_self || is_not_sender) {
@@ -3183,6 +3184,15 @@ bool Client::CanHaveSkill(EQ::skills::SkillType skill_id) const
 		skill_id = EQ::skills::Skill2HPiercing;
 	}
 
+	if (
+		m_multiclass_cache_ready &&
+		MultiClass::ClassCount(GetClassBitmask()) > 1 &&
+		skill_id >= 0 &&
+		skill_id < EQ::skills::SkillCount
+	) {
+		return m_can_have_skill[skill_id] != 0;
+	}
+
 	return SkillCaps::Instance()->GetSkillCap(GetClass(), skill_id, RuleI(Character, MaxLevel)).cap > 0;
 }
 
@@ -3196,7 +3206,151 @@ uint16 Client::MaxSkill(EQ::skills::SkillType skill_id, uint8 class_id, uint8 le
 		skill_id = EQ::skills::Skill2HPiercing;
 	}
 
+	if (
+		m_multiclass_cache_ready &&
+		MultiClass::ClassCount(GetClassBitmask()) > 1 &&
+		class_id == GetClass() &&
+		level == GetLevel() &&
+		skill_id >= 0 &&
+		skill_id < EQ::skills::SkillCount
+	) {
+		return m_skill_cap_cache[skill_id];
+	}
+
 	return SkillCaps::Instance()->GetSkillCap(class_id, skill_id, level).cap;
+}
+
+uint16 Client::GetStoredClassBitmask() const
+{
+	if (m_class_bitmask != 0) {
+		return m_class_bitmask;
+	}
+
+	return GetPlayerClassBit(GetClass());
+}
+
+uint16 Client::GetClassBitmask() const
+{
+	if (!RuleB(MultiClass, Enabled)) {
+		return GetPlayerClassBit(GetClass());
+	}
+
+	return GetStoredClassBitmask();
+}
+
+void Client::LoadClassBitmask()
+{
+	const uint32 character_id = CharacterID();
+	uint16 stored = 0;
+	if (character_id) {
+		stored = CharacterDataRepository::GetClassBitmask(database, character_id);
+	}
+
+	const uint16 normalized = MultiClass::NormalizeClassBitmask(GetClass(), stored);
+	m_class_bitmask = normalized;
+	if (character_id && normalized != stored) {
+		CharacterDataRepository::SetClassBitmask(database, character_id, normalized);
+	}
+
+	RebuildMultiClassCache();
+}
+
+void Client::RebuildMultiClassCache()
+{
+	const uint16 mask = GetClassBitmask();
+	const uint8 level = GetLevel();
+	const int rule_max = RuleI(Character, MaxLevel);
+	const uint8 max_level = static_cast<uint8>(rule_max < 0 ? 0 : (rule_max > 255 ? 255 : rule_max));
+
+	m_skill_cap_cache.fill(0);
+	m_can_have_skill.fill(0);
+
+	MultiClass::ForEachPlayerClass(mask, [&](uint8 class_id) {
+		for (int skill = 0; skill < EQ::skills::SkillCount; ++skill) {
+			const auto skill_id = static_cast<EQ::skills::SkillType>(skill);
+			const uint16 at_level = SkillCaps::Instance()->GetSkillCap(class_id, skill_id, level).cap;
+			const uint16 at_max = SkillCaps::Instance()->GetSkillCap(class_id, skill_id, max_level).cap;
+			if (at_level > m_skill_cap_cache[skill]) {
+				m_skill_cap_cache[skill] = at_level;
+			}
+			if (at_max > 0) {
+				m_can_have_skill[skill] = 1;
+			}
+		}
+	});
+
+	m_cached_class_level_factor = MultiClass::BestClassLevelFactor(mask, level);
+	m_cached_classic_triple = MultiClass::HasAnyClass(
+		mask,
+		static_cast<uint16>(
+			GetPlayerClassBit(Class::Warrior) |
+			GetPlayerClassBit(Class::Ranger) |
+			GetPlayerClassBit(Class::Monk) |
+			GetPlayerClassBit(Class::Berserker)
+		)
+	);
+	m_cached_monk_rear_dodge = MultiClass::HasClass(mask, Class::Monk);
+	m_cached_dual_wield_fists = MultiClass::HasClass(mask, Class::Monk) || MultiClass::HasClass(mask, Class::Beastlord);
+
+	int best_cap = -1;
+	double best_returns = 0.0;
+	MultiClass::ForEachPlayerClass(mask, [&](uint8 class_id) {
+		const int cap = ACSoftcapForClass(class_id, level);
+		const double returns = ACSoftcapReturnsForClass(class_id);
+		if (cap > best_cap || (cap == best_cap && returns > best_returns)) {
+			best_cap = cap;
+			best_returns = returns;
+		}
+	});
+	if (best_cap < 0) {
+		best_cap = ACSoftcapForClass(GetClass(), level);
+		best_returns = ACSoftcapReturnsForClass(GetClass());
+	}
+	m_cached_ac_softcap = best_cap;
+	m_cached_ac_returns = best_returns;
+	m_multiclass_cache_ready = true;
+}
+
+void Client::CommitClassBitmask(uint16 mask)
+{
+	m_class_bitmask = MultiClass::NormalizeClassBitmask(GetClass(), mask);
+	RebuildMultiClassCache();
+	CalcBonuses();
+	SetMana(CalcMaxMana());
+	SendHPUpdate();
+	Save();
+}
+
+uint8 Client::GetSpellClassLevel(uint16 spell_id) const
+{
+	if (!IsValidSpell(spell_id)) {
+		return UINT8_MAX;
+	}
+
+	const auto use = MultiClass::SpellLevelForMask(spells[spell_id].classes, GetClassBitmask());
+	if (use.class_id != 0) {
+		return use.level;
+	}
+
+	if (GetClass() >= Class::Warrior && GetClass() <= Class::PLAYER_CLASS_COUNT) {
+		return spells[spell_id].classes[GetClass() - 1];
+	}
+
+	return UINT8_MAX;
+}
+
+uint8 Client::GetSpellCastingClass(uint16 spell_id) const
+{
+	if (!IsValidSpell(spell_id)) {
+		return GetClass();
+	}
+
+	const auto use = MultiClass::SpellLevelForMask(spells[spell_id].classes, GetClassBitmask());
+	if (use.class_id != 0) {
+		return use.class_id;
+	}
+
+	return GetClass();
 }
 
 uint8 Client::GetSkillTrainLevel(EQ::skills::SkillType skill_id, uint8 class_id)
@@ -10749,11 +10903,15 @@ std::vector<int> Client::GetLearnableDisciplines(uint8 min_level, uint8 max_leve
 			continue;
 		}
 
-		if (max_level && spells[spell_id].classes[m_pp.class_ - 1] > max_level) {
+		const uint8 spell_level = MultiClass::ClassCount(GetClassBitmask()) > 1
+			? GetSpellClassLevel(spell_id)
+			: spells[spell_id].classes[m_pp.class_ - 1];
+
+		if (max_level && spell_level > max_level) {
 			continue;
 		}
 
-		if (min_level > 1 && spells[spell_id].classes[m_pp.class_ - 1] < min_level) {
+		if (min_level > 1 && spell_level < min_level) {
 			continue;
 		}
 
@@ -10820,11 +10978,15 @@ std::vector<int> Client::GetScribeableSpells(uint8 min_level, uint8 max_level) {
 			continue;
 		}
 
-		if (max_level && spells[spell_id].classes[m_pp.class_ - 1] > max_level) {
+		const uint8 spell_level = MultiClass::ClassCount(GetClassBitmask()) > 1
+			? GetSpellClassLevel(spell_id)
+			: spells[spell_id].classes[m_pp.class_ - 1];
+
+		if (max_level && spell_level > max_level) {
 			continue;
 		}
 
-		if (min_level > 1 && spells[spell_id].classes[m_pp.class_ - 1] < min_level) {
+		if (min_level > 1 && spell_level < min_level) {
 			continue;
 		}
 
@@ -10857,7 +11019,13 @@ std::vector<int> Client::GetScribeableSpells(uint8 min_level, uint8 max_level) {
 			if (g != spell_group_cache.end()) {
 				for (const auto& s : g->second) {
 					if (
-						EQ::ValueWithin(spells[s].classes[m_pp.class_ - 1], min_level, max_level) &&
+						EQ::ValueWithin(
+							MultiClass::ClassCount(GetClassBitmask()) > 1
+								? GetSpellClassLevel(s)
+								: spells[s].classes[m_pp.class_ - 1],
+							min_level,
+							max_level
+						) &&
 						s == spell_id &&
 						scribeable
 					) {

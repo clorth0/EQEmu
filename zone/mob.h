@@ -91,6 +91,9 @@ struct AppearanceStruct {
 };
 
 class DataBucketKey;
+int ACSoftcapForClass(uint8 class_id, uint8 level);
+double ACSoftcapReturnsForClass(uint8 class_id);
+
 class Mob : public Entity {
 public:
 	enum CLIENT_CONN_STATUS { CLIENT_CONNECTING, CLIENT_CONNECTED, CLIENT_LINKDEAD,

@@ -1175,6 +1175,7 @@ bool ZoneDatabase::SaveCharacterData(
 	e.e_last_invsnapshot      = m_epp->last_invsnapshot_time;
 	e.mailkey                 = c->GetMailKeyFull();
 	e.illusion_block          = c->GetIllusionBlock();
+	e.class_bitmask           = c->GetStoredClassBitmask();
 
 	const int replaced = CharacterDataRepository::ReplaceOne(database, e);
 

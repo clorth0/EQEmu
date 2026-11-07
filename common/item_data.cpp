@@ -188,6 +188,24 @@ bool EQ::ItemData::IsClassEquipable(uint16 class_id) const
 	return true;
 }
 
+bool EQ::ItemData::IsEquipableByClassBitmask(uint16 race_id, uint16 class_bitmask) const
+{
+	if (!(Races & GetPlayerRaceBit(race_id))) {
+		return false;
+	}
+
+	if (!(Classes & class_bitmask)) {
+		return false;
+	}
+
+	return true;
+}
+
+bool EQ::ItemData::IsClassEquipableByBitmask(uint16 class_bitmask) const
+{
+	return (Classes & class_bitmask) != 0;
+}
+
 bool EQ::ItemData::IsRaceEquipable(uint16 race_id) const
 {
 
