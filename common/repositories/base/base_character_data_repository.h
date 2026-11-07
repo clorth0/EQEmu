@@ -142,6 +142,9 @@ public:
 		uint32_t    e_last_invsnapshot;
 		time_t      deleted_at;
 		uint8_t     illusion_block;
+		// Not part of the generated column list. Written by ReplaceSql so REPLACE
+		// cannot reset it to the column default.
+		uint16_t    class_bitmask = 0;
 	};
 
 	static std::string PrimaryKey()
@@ -516,6 +519,7 @@ public:
 		e.e_last_invsnapshot      = 0;
 		e.deleted_at              = 0;
 		e.illusion_block          = 0;
+		e.class_bitmask           = 0;
 
 		return e;
 	}
@@ -1394,6 +1398,29 @@ public:
 		);
 	}
 
+	// One statement. class_bitmask is an integer column value, never a class name.
+	// A REPLACE that omits the column deletes the row and inserts DEFAULT 0.
+	static std::string ReplaceSql(const std::string& values_csv, uint16 class_bitmask)
+	{
+		return fmt::format(
+			"REPLACE INTO {} ({}, `class_bitmask`) VALUES ({},{})",
+			TableName(),
+			ColumnsRaw(),
+			values_csv,
+			class_bitmask
+		);
+	}
+
+	static std::string ReplaceManySql(const std::string& values_tuples)
+	{
+		return fmt::format(
+			"REPLACE INTO {} ({}, `class_bitmask`) VALUES {}",
+			TableName(),
+			ColumnsRaw(),
+			values_tuples
+		);
+	}
+
 	static int ReplaceOne(
 		Database& db,
 		const CharacterData &e
@@ -1508,13 +1535,7 @@ public:
 		v.push_back("FROM_UNIXTIME(" + (e.deleted_at > 0 ? std::to_string(e.deleted_at) : "null") + ")");
 		v.push_back(std::to_string(e.illusion_block));
 
-		auto results = db.QueryDatabase(
-			fmt::format(
-				"{} VALUES ({})",
-				BaseReplace(),
-				Strings::Implode(",", v)
-			)
-		);
+		auto results = db.QueryDatabase(ReplaceSql(Strings::Implode(",", v), e.class_bitmask));
 
 		return (results.Success() ? results.RowsAffected() : 0);
 	}
@@ -1636,18 +1657,12 @@ public:
 			v.push_back("FROM_UNIXTIME(" + (e.deleted_at > 0 ? std::to_string(e.deleted_at) : "null") + ")");
 			v.push_back(std::to_string(e.illusion_block));
 
-			insert_chunks.push_back("(" + Strings::Implode(",", v) + ")");
+			insert_chunks.push_back("(" + Strings::Implode(",", v) + "," + std::to_string(e.class_bitmask) + ")");
 		}
 
 		std::vector<std::string> v;
 
-		auto results = db.QueryDatabase(
-			fmt::format(
-				"{} VALUES {}",
-				BaseReplace(),
-				Strings::Implode(",", insert_chunks)
-			)
-		);
+		auto results = db.QueryDatabase(ReplaceManySql(Strings::Implode(",", insert_chunks)));
 
 		return (results.Success() ? results.RowsAffected() : 0);
 	}

@@ -20,6 +20,7 @@
 #include "common/item_data.h"
 #include "common/multiclass.h"
 #include "common/races.h"
+#include "common/repositories/base/base_character_data_repository.h"
 #include "cppunit/cpptest.h"
 
 #include <fstream>
@@ -36,6 +37,7 @@ public:
 		TEST_ADD(MultiClassTest::CombatHelpersReadSkills);
 		TEST_ADD(MultiClassTest::CommandAddListRemove);
 		TEST_ADD(MultiClassTest::ZeroMaskIsPrimaryClass);
+		TEST_ADD(MultiClassTest::ReplaceWritesBitmaskInOneStatement);
 	}
 
 private:
@@ -323,5 +325,30 @@ private:
 			MultiClass::BestClassLevelFactor(MultiClass::NormalizeClassBitmask(Class::Ranger, 0), 10),
 			MultiClass::ClassLevelFactor(Class::Ranger, 10)
 		);
+	}
+
+	void ReplaceWritesBitmaskInOneStatement()
+	{
+		const uint16 mask = static_cast<uint16>(Bit(Class::Warrior) | Bit(Class::Cleric));
+		const std::string sql = BaseCharacterDataRepository::ReplaceSql("42,1", mask);
+
+		TEST_ASSERT(sql.find(';') == std::string::npos);
+		TEST_ASSERT(sql.find("UPDATE") == std::string::npos);
+		TEST_ASSERT(sql.find("`class_bitmask`") != std::string::npos);
+		TEST_ASSERT(sql.find("," + std::to_string(mask) + ")") != std::string::npos);
+		TEST_ASSERT(sql.find("REPLACE INTO") != std::string::npos);
+		TEST_ASSERT(sql.find("Wizard") == std::string::npos);
+		TEST_ASSERT(sql.find("DROP") == std::string::npos);
+
+		const std::string zero_mask = BaseCharacterDataRepository::ReplaceSql("42,1", 0);
+		TEST_ASSERT(zero_mask.find("`class_bitmask`") != std::string::npos);
+		TEST_ASSERT(zero_mask.find(",0)") != std::string::npos);
+
+		const std::string omitted = "REPLACE INTO character_data (id, `class`) VALUES (42,1)";
+		TEST_ASSERT(omitted.find("`class_bitmask`") == std::string::npos);
+
+		auto row = BaseCharacterDataRepository::NewEntity();
+		row.class_bitmask = mask;
+		TEST_ASSERT_EQUALS(row.class_bitmask, mask);
 	}
 };

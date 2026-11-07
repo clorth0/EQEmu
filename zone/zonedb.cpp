@@ -1175,6 +1175,7 @@ bool ZoneDatabase::SaveCharacterData(
 	e.e_last_invsnapshot      = m_epp->last_invsnapshot_time;
 	e.mailkey                 = c->GetMailKeyFull();
 	e.illusion_block          = c->GetIllusionBlock();
+	e.class_bitmask           = c->GetStoredClassBitmask();
 
 	const int replaced = CharacterDataRepository::ReplaceOne(database, e);
 
@@ -1182,10 +1183,6 @@ bool ZoneDatabase::SaveCharacterData(
 		LogError("Failed to save character data for [{}] ID [{}].", c->GetCleanName(), c->CharacterID());
 		return false;
 	}
-
-	// REPLACE INTO rewrites the row from the generated column list and would
-	// reset class_bitmask to 0. Write it back from the integer already on the client.
-	CharacterDataRepository::SetClassBitmask(database, c->CharacterID(), c->GetStoredClassBitmask());
 
 	LogDebug(
 		"ZoneDatabase::SaveCharacterData [{}], done Took [{}] seconds",

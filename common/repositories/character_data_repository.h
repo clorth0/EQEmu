@@ -64,9 +64,8 @@ public:
 
 	// Custom extended repository methods here
 
-	// class_bitmask is not part of the generated column list. REPLACE INTO character_data
-	// rewrites the row without it, so callers persist the mask with these two statements.
-	// Both bind only integer ids. Class names never reach SQL.
+	// Load and one-off normalize still use these integer statements. Character saves
+	// write class_bitmask inside CharacterDataRepository::ReplaceOne.
 	static uint16 GetClassBitmask(Database& db, uint32 character_id)
 	{
 		if (!character_id) {
